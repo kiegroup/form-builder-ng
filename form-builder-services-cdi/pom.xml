@@ -44,6 +44,12 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-persistence-jpa</artifactId>
+      <exclusions>
+      	<exclusion>
+      		<artifactId>ecj</artifactId>
+      		<groupId>org.eclipse.jdt.core.compiler</groupId>
+      	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
