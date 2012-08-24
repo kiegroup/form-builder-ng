@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.layout;
+package org.jbpm.form.builder.ng.client.view.canvas;
 
 
 //import org.jbpm.formbuilder.parent.client.bus.GetFormRepresentationEvent;
@@ -45,13 +45,13 @@ import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
  * populates both when they are loaded from the server,
  * changed by another view or saved.
  */
-public class LayoutPresenter {
+public class CanvasPresenter {
 
     private final I18NConstants i18n = CommonGlobals.getInstance().getI18n();
-    private final LayoutView layoutView;
+    private final CanvasView layoutView;
     private final UndoRedoManager mgr = UndoRedoManager.getInstance();
     
-    public LayoutPresenter(LayoutView view) {
+    public CanvasPresenter(CanvasView view) {
         final PickupDragController dragController = CommonGlobals.getInstance().getDragController();
         this.layoutView = view;
         this.layoutView.startDropController(dragController, layoutView);

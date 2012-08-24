@@ -65,7 +65,6 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public void listMenuItems() throws MenuServiceException {
         Map<String, List<MenuItemDescription>> listMenuItems = menuService.listMenuItems();
         
-        
         try {
             for (String groupName : listMenuItems.keySet()) {
                 for (MenuItemDescription itemDesc : listMenuItems.get(groupName)) {
@@ -73,7 +72,6 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
                 }
             }
         } catch (Exception ex) {
-            
             ex.printStackTrace();
             Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

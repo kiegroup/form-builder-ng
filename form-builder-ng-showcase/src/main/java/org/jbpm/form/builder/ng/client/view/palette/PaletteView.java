@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.layout;
+package org.jbpm.form.builder.ng.client.view.palette;
 
 
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.IsWidget;
-import org.jbpm.form.builder.ng.model.client.form.FBForm;
+import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 
-public interface LayoutView extends IsWidget {
+public interface PaletteView {
 
-    FBForm getFormDisplay();
+    void startDropController(PickupDragController dragController);
 
-    void startDropController(PickupDragController controller, IsWidget widget);
+    void addItem(String accordionName, FBMenuItem item);
+
+    void removeItem(String group, FBMenuItem item);
     
-    HasWidgets getUnderlyingLayout(Integer x, Integer y);
+    void removeAllItems();
+
 }

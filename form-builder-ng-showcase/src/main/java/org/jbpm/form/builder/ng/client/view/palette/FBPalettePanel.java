@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.menu;
+package org.jbpm.form.builder.ng.client.view.palette;
 
 
 import com.allen_sauer.gwt.dnd.client.DragController;
@@ -26,11 +26,11 @@ import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
  * Accordion piece panel. Handles a list of menu items for
  * a given group name
  */
-public class FBMenuPanel extends VerticalPanel {
+public class FBPalettePanel extends VerticalPanel {
 
     private DragController dragController;
 
-    public FBMenuPanel(DragController dragController) {
+    public FBPalettePanel(DragController dragController) {
         this.dragController = dragController;
         setSpacing(2);
         setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);

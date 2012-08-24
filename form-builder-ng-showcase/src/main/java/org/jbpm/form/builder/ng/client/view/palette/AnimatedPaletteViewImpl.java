@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.menu;
+package org.jbpm.form.builder.ng.client.view.palette;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,16 +33,16 @@ import org.jbpm.form.builder.ng.client.command.DisposeDropController;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 
-public class AnimatedMenuViewImpl extends ScrollPanel implements MenuView {
+public class AnimatedPaletteViewImpl extends ScrollPanel implements PaletteView {
 
     private PickupDragController dragController;
     private Map<String, List<FBMenuItem>> items = new HashMap<String, List<FBMenuItem>>();
-    private Map<String, FBMenuPanel> displays = new HashMap<String, FBMenuPanel>();
+    private Map<String, FBPalettePanel> displays = new HashMap<String, FBPalettePanel>();
     private StackPanel panel = new StackPanel() {
         @Override
         public void showStack(int index) {
             super.showStack(index);
-            FBMenuPanel panel = (FBMenuPanel) getWidget(index);
+            FBPalettePanel panel = (FBPalettePanel) getWidget(index);
             for (Widget widget : panel) {
                 dragController.makeDraggable(widget);
             }
@@ -51,7 +51,7 @@ public class AnimatedMenuViewImpl extends ScrollPanel implements MenuView {
 
     };
     
-    public AnimatedMenuViewImpl() {
+    public AnimatedPaletteViewImpl() {
 //        LayoutPanel layoutPanel = new LayoutPanel(new BoxLayout(BoxLayout.Orientation.VERTICAL));
 //        layoutPanel.setLayoutData(new BoxLayoutData(BoxLayoutData.FillStyle.BOTH));
 //        layoutPanel.setAnimationEnabled(true);
@@ -78,7 +78,7 @@ public class AnimatedMenuViewImpl extends ScrollPanel implements MenuView {
     public void addItem(String group, FBMenuItem item) {
         if (items.get(group) == null) {
             items.put(group, new ArrayList<FBMenuItem>());
-            FBMenuPanel listDisplay = new FBMenuPanel(dragController);
+            FBPalettePanel listDisplay = new FBPalettePanel(dragController);
             panel.add(listDisplay, group);
             displays.put(group, listDisplay);
         }
@@ -90,12 +90,16 @@ public class AnimatedMenuViewImpl extends ScrollPanel implements MenuView {
         List<FBMenuItem> groupItems = items.get(group);
         if (groupItems != null) {
             groupItems.remove(item);
-            FBMenuPanel display = displays.get(group);
+            FBPalettePanel display = displays.get(group);
             display.fullRemove(item);
             if (groupItems.isEmpty()) {
                 panel.remove(display);
                 panel.showStack(0);
             }
         }
+    }
+    
+    public void removeAllItems(){
+        items.clear();
     }
 }

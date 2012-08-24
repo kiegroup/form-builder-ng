@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.layout;
+package org.jbpm.form.builder.ng.client.view.canvas;
 
 //import org.jbpm.formbuilder.client.command.DropFormItemController;
 
@@ -31,17 +31,17 @@ import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 /**
  * layout view. Represents a single form
  */
-public class LayoutViewImpl extends ScrollPanel implements LayoutView {
+public class CanvasViewImpl extends ScrollPanel implements CanvasView {
 
     private FBForm formDisplay = new FBForm();
     
-    public LayoutViewImpl() {
+    public CanvasViewImpl() {
         setStyleName("formDisplay");
         formDisplay.setStyleName("formDisplay");
         formDisplay.setSize("700px", "700px");
         add(formDisplay);
         CommonGlobals.getInstance().registerEventBus(new SimpleEventBus());
-        new LayoutPresenter(this);
+        new CanvasPresenter(this);
     }
 
     @Override

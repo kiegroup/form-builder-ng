@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.menu;
+package org.jbpm.form.builder.ng.client.view.palette;
 
 
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
@@ -32,13 +32,13 @@ import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
  * notified, either from the current user
  * or from the server.
  */
-public class MenuPresenter {
+public class PalettePresenter {
 
     
-    private MenuView view;
+    private PaletteView view;
     private PickupDragController dragController;
     
-    public MenuPresenter(MenuView menuView) {
+    public PalettePresenter(PaletteView menuView) {
         
         this.view = menuView;
         this.dragController = CommonGlobals.getInstance().getDragController();

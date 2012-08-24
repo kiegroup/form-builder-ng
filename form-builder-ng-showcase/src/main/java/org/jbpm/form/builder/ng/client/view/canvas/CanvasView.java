@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.menu;
+package org.jbpm.form.builder.ng.client.view.canvas;
 
 
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
-import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IsWidget;
+import org.jbpm.form.builder.ng.model.client.form.FBForm;
 
-public interface MenuView {
+public interface CanvasView extends IsWidget {
 
-    void startDropController(PickupDragController dragController);
+    FBForm getFormDisplay();
 
-    void addItem(String accordionName, FBMenuItem item);
-
-    void removeItem(String group, FBMenuItem item);
-
+    void startDropController(PickupDragController controller, IsWidget widget);
+    
+    HasWidgets getUnderlyingLayout(Integer x, Integer y);
 }

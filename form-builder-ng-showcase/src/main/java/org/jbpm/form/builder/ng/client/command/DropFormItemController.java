@@ -26,7 +26,7 @@ import com.allen_sauer.gwt.dnd.client.drop.AbstractDropController;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.client.view.layout.LayoutView;
+import org.jbpm.form.builder.ng.client.view.canvas.CanvasView;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableHandler;
@@ -48,9 +48,9 @@ public class DropFormItemController extends AbstractDropController {
 
     private final EventBus bus = CommonGlobals.getInstance().getEventBus();
     private final List<PhantomPanel> phantoms = new ArrayList<PhantomPanel>();
-    private final LayoutView layoutView;
+    private final CanvasView layoutView;
     
-    public DropFormItemController(Widget dropTarget, LayoutView layoutView) {
+    public DropFormItemController(Widget dropTarget, CanvasView layoutView) {
         super(dropTarget);
         this.layoutView = layoutView;
     }

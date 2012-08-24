@@ -18,14 +18,22 @@ package org.jbpm.form.builder.ng.client.view;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import org.jbpm.form.builder.ng.client.view.layout.LayoutViewImpl;
-import org.jbpm.form.builder.ng.client.view.menu.AnimatedMenuViewImpl;
+import org.jbpm.form.builder.ng.client.view.canvas.CanvasViewImpl;
+import org.jbpm.form.builder.ng.client.view.palette.AnimatedPaletteViewImpl;
+import org.jbpm.form.builder.ng.client.view.palette.PalettePresenter;
+import org.jbpm.form.builder.ng.client.view.palette.PaletteView;
+import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
+import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
+import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
 import org.uberfire.client.mvp.PlaceManager;
 
 /**
@@ -51,8 +59,8 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
     
     @PostConstruct
     protected final void init() {
-            menuView = new AnimatedMenuViewImpl();
-            layoutView = new LayoutViewImpl();
+            menuView = new AnimatedPaletteViewImpl();
+            layoutView = new CanvasViewImpl();
             //initWidget(uiBinder.createAndBindUi(this));
             menuView.setAlwaysShowScrollBars(true);
             menuView.setSize("235px", "100%");
@@ -69,8 +77,24 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
 //            editionView.setHeight("100%");
             //ioAssociationView.setHeight("100%");
            // layoutView.setHeight(smallerHeight);
+            System.out.println("XXXX Components Initialized Cleaning up menu" + this.hashCode());
+            ((PaletteView)menuView).removeAllItems();
             
+    }
+    
+    public void addItem(@Observes MenuItemAddedEvent event) {
+        try {
+            System.out.println(" XXXXX An Item was added");
+            String group = event.getGroupName();
+            MenuItemDescription menuItemDescription = event.getMenuItemDescription();
+            Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getClassName());
+            FBMenuItem item = (FBMenuItem) newInstance;
             
+            ((PaletteView)menuView).addItem(group, item);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(PalettePresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ScrollPanel getMenuView() {

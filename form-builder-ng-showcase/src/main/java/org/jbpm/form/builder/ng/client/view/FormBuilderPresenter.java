@@ -30,8 +30,8 @@ import javax.inject.Inject;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.client.command.DisposeDropController;
-import org.jbpm.form.builder.ng.client.view.menu.MenuPresenter;
-import org.jbpm.form.builder.ng.client.view.menu.MenuView;
+import org.jbpm.form.builder.ng.client.view.palette.PalettePresenter;
+import org.jbpm.form.builder.ng.client.view.palette.PaletteView;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
@@ -81,7 +81,9 @@ public class FormBuilderPresenter {
 
                 }
             }).getFormBuilderProperties();
-            System.out.println("XXXXX  Calling List Menu Items");
+            
+            System.out.println("XXXXX  Calling List Menu Items" + this.hashCode());
+            
             formServices.call(new RemoteCallback<Void>() {
                 @Override
                 public void callback(Void nothing) {
@@ -90,7 +92,7 @@ public class FormBuilderPresenter {
             }).listMenuItems();
 
 
-
+           
 
 
 
@@ -116,23 +118,9 @@ public class FormBuilderPresenter {
         } catch (MenuServiceException ex) {
             Logger.getLogger(FormBuilderPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
     
-    public void addItem(@Observes MenuItemAddedEvent event) {
-        try {
-            System.out.println(" XXXXX An Item was added");
-            String group = event.getGroupName();
-            MenuItemDescription menuItemDescription = event.getMenuItemDescription();
-            Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getClassName());
-            FBMenuItem item = (FBMenuItem) newInstance;
-            
-            ((MenuView)view.getMenuView()).addItem(group, item);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Logger.getLogger(MenuPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     @WorkbenchPartTitle
     public String getTitle() {
