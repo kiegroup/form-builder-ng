@@ -27,7 +27,6 @@ import org.uberfire.java.nio.file.FileSystems;
 import org.uberfire.java.nio.file.Files;
 import org.uberfire.java.nio.file.Path;
 import org.uberfire.java.nio.file.Paths;
-import sun.plugin.dom.exception.InvalidStateException;
 
 /**
  *
@@ -62,7 +61,7 @@ public class VFSFileServiceImpl {
         checkFileSystem();
 
         if (!file.getFileSystem().equals(fileSystem)) {
-            throw new InvalidStateException("file's fileSystem not supported.");
+            throw new IllegalStateException( "file's fileSystem not supported.");
         }
 
         try {
