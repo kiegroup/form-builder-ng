@@ -38,7 +38,7 @@ public class ShowcaseEntryPoint {
 
     @Inject private IOCBeanManager manager;
     
-    private String[] menuItems = new String[]{"Form Builder"};
+    private String[] menuItems = new String[]{"Form Builder", "Form Display"};
     
     @Inject
     private PlaceManager              placeManager;

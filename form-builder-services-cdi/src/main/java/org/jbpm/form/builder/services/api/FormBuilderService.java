@@ -191,4 +191,7 @@ public interface FormBuilderService {
     void applySettings(Settings settings);
     
     void loadSettings();
+    
+    String getFormDisplay();
+    
 }

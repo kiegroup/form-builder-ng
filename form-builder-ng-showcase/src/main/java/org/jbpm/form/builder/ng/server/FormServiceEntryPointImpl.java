@@ -34,6 +34,9 @@ import javax.enterprise.inject.spi.BeanManager;
 import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
+import org.jbpm.form.builder.services.api.FileException;
+import org.jbpm.form.builder.services.api.FileService;
+import org.jbpm.form.builder.services.api.FormDisplayService;
 
 /**
  *
@@ -45,6 +48,11 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
 
     @Inject
     private MenuService menuService;
+    @Inject
+    private FileService fileService;
+    @Inject
+    private FormDisplayService displayService;
+    
     @Inject
     Event<MenuItemAddedEvent> itemAddedEvents;
     @Inject
@@ -82,4 +90,27 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public Map<String, String> getFormBuilderProperties() throws MenuServiceException {
         return menuService.getFormBuilderProperties();
     }
+
+    public String storeFile(String packageName, String fileName, byte[] content) throws FileException {
+        return fileService.storeFile(packageName, fileName, content);
+    }
+
+    public void deleteFile(String packageName, String fileName) throws FileException {
+        fileService.deleteFile(packageName, fileName);
+    }
+
+    public List<String> loadFilesByType(String packageName, String fileType) throws FileException {
+        return fileService.loadFilesByType(packageName, fileType);
+    }
+
+    public byte[] loadFile(String packageName, String fileName) throws FileException {
+        return fileService.loadFile(packageName, fileName);
+    }
+
+    public String getFormDisplay(long taskId) {
+        return displayService.getFormDisplay(taskId);
+    }
+    
+    
+    
 }
