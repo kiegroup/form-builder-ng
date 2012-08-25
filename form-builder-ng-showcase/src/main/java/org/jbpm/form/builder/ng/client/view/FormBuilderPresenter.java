@@ -44,6 +44,7 @@ import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
+import org.uberfire.client.mvp.UberView;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Builder")
@@ -56,7 +57,7 @@ public class FormBuilderPresenter {
 
     public interface FormBuilderView
             extends
-            IsWidget {
+            UberView<FormBuilderPresenter> {
 
         ScrollPanel getMenuView();
 
@@ -128,7 +129,7 @@ public class FormBuilderPresenter {
     }
 
     @WorkbenchPartView
-    public IsWidget getView() {
+    public UberView<FormBuilderPresenter> getView() {
         return view;
     }
 }

@@ -26,6 +26,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+
+import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jbpm.form.builder.ng.client.view.canvas.CanvasViewImpl;
 import org.jbpm.form.builder.ng.client.view.palette.AnimatedPaletteViewImpl;
 import org.jbpm.form.builder.ng.client.view.palette.PalettePresenter;
@@ -48,16 +50,18 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
 
     @Inject
     private PlaceManager placeManager;
-    @Inject
+
     private FormBuilderPresenter presenter;
     
     public @UiField(provided=true) ScrollPanel menuView;
     public @UiField(provided=true) ScrollPanel layoutView;
-   
 
-    
-    
-    @PostConstruct
+    @Override
+    public void init(final FormBuilderPresenter presenter) {
+        this.presenter = presenter;
+        init();
+    }
+
     protected final void init() {
             menuView = new AnimatedPaletteViewImpl();
             layoutView = new CanvasViewImpl();
@@ -108,9 +112,9 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
     public AbsolutePanel getPanel(){
         return this;
     }
-    
-    
 
-    
-    
+
+
+
+
 }
