@@ -4,6 +4,7 @@
  */
 package org.jbpm.form.builder.services.internal;
 
+import org.jbpm.form.builder.services.annotations.FormPersistence;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManagerFactory;
@@ -13,8 +14,9 @@ import org.jboss.solder.core.ExtensionManaged;
 /**
  *
  */
-public class TaskDatabaseProducer {
 
+public class FormDatabaseProducer {
+    @FormPersistence
     @PersistenceUnit(unitName = "org.jbpm.form.builder")
     @ExtensionManaged
     @ApplicationScoped

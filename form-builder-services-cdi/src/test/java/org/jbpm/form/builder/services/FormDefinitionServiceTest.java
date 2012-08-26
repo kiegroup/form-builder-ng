@@ -47,7 +47,7 @@ public class FormDefinitionServiceTest extends FormDefinitionServiceBaseTest {
                 //.addPackage("org.jbpm.task.commands") // This should not be required here 
                 .addAsManifestResource("META-INF/persistence.xml", ArchivePaths.create("persistence.xml"))
                 .addAsManifestResource("META-INF/Settingsorm.xml", ArchivePaths.create("Settingsorm.xml"))
-                .addAsManifestResource("META-INF/beans.xml", ArchivePaths.create("beans.xml"));
+                .addAsManifestResource("beans-default.xml", ArchivePaths.create("beans.xml"));
 
     }
     
