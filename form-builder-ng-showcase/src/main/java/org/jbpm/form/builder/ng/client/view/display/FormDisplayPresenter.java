@@ -22,6 +22,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
+import org.jbpm.form.builder.ng.client.view.FormBuilderPresenter;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
@@ -37,32 +38,27 @@ public class FormDisplayPresenter {
     private FormBuilderView view;
     @Inject
     private Caller<FormServiceEntryPoint> formServices;
-
     @Inject
     private Event<FormRenderedEvent> formRendered;
-    
+
     public interface FormBuilderView
             extends
             UberView<FormDisplayPresenter> {
-
     }
 
-    
     public void renderForm(long taskId) {
 
-            System.out.println("XXXXX  Calling Render Form Items" + this.hashCode());
-            
-            formServices.call(new RemoteCallback<String>() {
-                @Override
-                public void callback(String form) {
-                    System.out.println("XXXXX  RETURN load file  Items");
-                    formRendered.fire(new FormRenderedEvent(form));
-                }
-            }).getFormDisplay(taskId);
+        System.out.println("XXXXX  Calling Render Form Items" + this.hashCode());
+
+        formServices.call(new RemoteCallback<String>() {
+            @Override
+            public void callback(String form) {
+                System.out.println("XXXXX  RETURN load file  Items");
+                formRendered.fire(new FormRenderedEvent(form));
+            }
+        }).getFormDisplay(taskId);
 
     }
-    
-    
 
     @WorkbenchPartTitle
     public String getTitle() {
@@ -70,7 +66,7 @@ public class FormDisplayPresenter {
     }
 
     @WorkbenchPartView
-    public IsWidget getView() {
+    public UberView<FormDisplayPresenter> getView() {
         return view;
     }
 }

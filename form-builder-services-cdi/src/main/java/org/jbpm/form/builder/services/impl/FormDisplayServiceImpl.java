@@ -20,21 +20,19 @@ import freemarker.template.Template;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import org.jbpm.form.builder.services.api.FormDisplayService;
-import org.jbpm.task.Content;
 import org.jbpm.task.I18NText;
 import org.jbpm.task.Task;
 import org.jbpm.task.api.TaskContentService;
 import org.jbpm.task.api.TaskQueryService;
 import org.jbpm.task.impl.factories.TaskFactory;
-import org.jbpm.task.utils.ContentMarshallerHelper;
 
 
 public class FormDisplayServiceImpl implements FormDisplayService {
@@ -68,6 +66,8 @@ public class FormDisplayServiceImpl implements FormDisplayService {
         input.put("key2", "value2");
         input.put("key3", "value3");
         input.put("key4", "value4");
+        input.put("key5", "");
+        input.put("key6", "");
 
         // check if a template exists
         String name = null;
@@ -107,11 +107,11 @@ public class FormDisplayServiceImpl implements FormDisplayService {
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             cfg.setTemplateUpdateDelay(0);
             Template temp = new Template(name, new InputStreamReader(src), cfg);
-            final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            Writer out = new OutputStreamWriter(bout);
+            //final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            StringWriter out = new StringWriter();
             temp.process(renderContext, out);
             out.flush();
-            str = out.toString();
+            str = out.getBuffer().toString();
         } catch (Exception e) {
             throw new RuntimeException("Failed to process form template", e);
         }
