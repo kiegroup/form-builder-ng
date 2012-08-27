@@ -25,9 +25,10 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 import org.uberfire.client.mvp.PlaceManager;
 
 /**
@@ -42,6 +43,7 @@ public class FormDisplayViewImpl extends Composite implements FormDisplayPresent
     @Inject
     private PlaceManager placeManager;
     
+    private FormDisplayPresenter presenter;
     
     @UiField
     public ScrollPanel formView;
@@ -52,18 +54,26 @@ public class FormDisplayViewImpl extends Composite implements FormDisplayPresent
     @UiField
     public Button renderButton;
 
-    @PostConstruct
-    protected final void init() {
-            initWidget(uiBinder.createAndBindUi(this));
-    }
     
     @UiHandler("renderButton")
     public void renderAction(ClickEvent e){
         formView.setSize("400px", "400px");
-        formView.add(new HTML("HI There!!! "));
+        presenter.renderForm(1);
     
     }
 
+    public void renderForm(@Observes FormRenderedEvent formRendered){
+        formView.add(new HTML(formRendered.getForm()));
+        
+    }
+
+    @Override
+    public void init(FormDisplayPresenter presenter) {
+        System.out.println("Init is being called");
+        this.presenter = presenter;
+        initWidget(uiBinder.createAndBindUi(this));
+        
+    }
    
     
     

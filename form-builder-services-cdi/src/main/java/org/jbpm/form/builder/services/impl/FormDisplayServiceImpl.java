@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.jbpm.task.I18NText;
 import org.jbpm.task.Task;
 import org.jbpm.task.api.TaskContentService;
 import org.jbpm.task.api.TaskQueryService;
+import org.jbpm.task.impl.factories.TaskFactory;
 import org.jbpm.task.utils.ContentMarshallerHelper;
 
 
@@ -42,16 +44,30 @@ public class FormDisplayServiceImpl implements FormDisplayService {
     @Inject
     private TaskContentService contentService;
     public String getFormDisplay(long taskId) {
-        Task task = queryService.getTaskInstanceById(taskId);
+        //Task task = queryService.getTaskInstanceById(taskId);
         
-        Object input = null;
-        long contentId = task.getTaskData().getDocumentContentId();
-        if (contentId != -1) {
-            Content content = null;
-            
-            content = contentService.getContentById(contentId);
-            input = ContentMarshallerHelper.unmarshall(content.getContent(), null);
-        }
+         String str = "(with (new Task()) { priority = 55, taskData = (with( new TaskData()) { } ), ";
+        str += "peopleAssignments = (with ( new PeopleAssignments() ) { }),";
+        str += "names = [ new I18NText( 'en-UK', 'This is my task name')] })";
+
+
+        Task task = TaskFactory.evalTask(new StringReader(str));
+        
+        
+//        Object input = null;
+//        long contentId = task.getTaskData().getDocumentContentId();
+//        if (contentId != -1) {
+//            Content content = null;
+//            
+//            content = contentService.getContentById(contentId);
+//            input = ContentMarshallerHelper.unmarshall(content.getContent(), null);
+//        }
+        
+        Map<String, Object> input = new HashMap<String, Object>();
+        input.put("key1", "value1");
+        input.put("key2", "value2");
+        input.put("key3", "value3");
+        input.put("key4", "value4");
 
         // check if a template exists
         String name = null;

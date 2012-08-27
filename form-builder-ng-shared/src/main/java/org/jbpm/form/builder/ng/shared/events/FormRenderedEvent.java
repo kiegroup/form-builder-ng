@@ -15,32 +15,25 @@
  */
 package org.jbpm.form.builder.ng.shared.events;
 
-import java.io.Serializable;
 import org.jboss.errai.common.client.api.annotations.Portable;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 
 /**
  *
  */
 @Portable
-public class MenuItemAddedEvent implements Serializable{
-    private MenuItemDescription menuItemDesc;
-    private String groupName;
+public class FormRenderedEvent {
+    private String form;
 
-    public MenuItemAddedEvent(MenuItemDescription menuItem, String groupName) {
-        this.menuItemDesc = menuItem;
-        this.groupName = groupName;
+    public FormRenderedEvent() {
     }
 
-    public MenuItemAddedEvent() {
+    
+    public FormRenderedEvent(String form) {
+        this.form = form;
     }
 
-    public MenuItemDescription getMenuItemDescription() {
-        return menuItemDesc;
-    }
-
-    public String getGroupName() {
-        return groupName;
+    public String getForm() {
+        return form;
     }
     
     

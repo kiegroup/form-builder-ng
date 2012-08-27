@@ -28,7 +28,7 @@ import org.jbpm.form.builder.services.api.MenuService;
 import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.jbpm.form.builder.services.encoders.FormRepresentationDecoderImpl;
 import org.jbpm.form.builder.services.encoders.FormRepresentationEncoderImpl;
-import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.BeanManager;
 import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
@@ -54,7 +54,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     private FormDisplayService displayService;
     
     @Inject
-    Event<MenuItemAddedEvent> itemAddedEvents;
+    Event<PaletteItemAddedEvent> itemAddedEvents;
     @Inject
     private BeanManager manager;
 
@@ -76,7 +76,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
         try {
             for (String groupName : listMenuItems.keySet()) {
                 for (MenuItemDescription itemDesc : listMenuItems.get(groupName)) {
-                        itemAddedEvents.fire(new MenuItemAddedEvent(itemDesc, groupName));
+                        itemAddedEvents.fire(new PaletteItemAddedEvent(itemDesc, groupName));
                 }
             }
         } catch (Exception ex) {

@@ -35,7 +35,7 @@ import org.jbpm.form.builder.ng.client.view.palette.PaletteView;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.uberfire.client.mvp.PlaceManager;
 
 /**
@@ -65,30 +65,18 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
     protected final void init() {
             menuView = new AnimatedPaletteViewImpl();
             layoutView = new CanvasViewImpl();
-            //initWidget(uiBinder.createAndBindUi(this));
             menuView.setAlwaysShowScrollBars(true);
             menuView.setSize("235px", "100%");
             layoutView.setSize("700px", "700px");
             layoutView.setAlwaysShowScrollBars(true);
             add(uiBinder.createAndBindUi(this));
-            //adopt(this);
-//            
-//            int fullHeight = Window.getClientHeight();
-//            String height = "" + (fullHeight - 80) + "px";
-//            String smallerHeight = "" + (fullHeight - 105) + "px";
-            //treeView.setHeight("100%");
-           // menuView.setHeight("100%");
-//            editionView.setHeight("100%");
-            //ioAssociationView.setHeight("100%");
-           // layoutView.setHeight(smallerHeight);
-            System.out.println("XXXX Components Initialized Cleaning up menu" + this.hashCode());
+
             ((PaletteView)menuView).removeAllItems();
             
     }
     
-    public void addItem(@Observes MenuItemAddedEvent event) {
+    public void addItem(@Observes PaletteItemAddedEvent event) {
         try {
-            System.out.println(" XXXXX An Item was added");
             String group = event.getGroupName();
             MenuItemDescription menuItemDescription = event.getMenuItemDescription();
             Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getClassName());

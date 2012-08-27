@@ -34,9 +34,10 @@
         </gwt:Dock>
         <gwt:Dock direction="SOUTH" size="100px">   
             <gwt:VerticalPanel>
+                <gwt:Label>Task Id</gwt:Label>
                 <gwt:TextBox  ui:field="taskIdText"/>
              
-                <gwt:Button  ui:field="renderButton"/>   
+                <gwt:Button  ui:field="renderButton">Render Form</gwt:Button>   
             </gwt:VerticalPanel>
             
         </gwt:Dock>

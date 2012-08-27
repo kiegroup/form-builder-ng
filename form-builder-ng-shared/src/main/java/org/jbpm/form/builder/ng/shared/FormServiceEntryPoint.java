@@ -34,8 +34,8 @@ public interface FormServiceEntryPoint {
     void listMenuItems() throws MenuServiceException;
 
     List<MenuOptionDescription> listOptions() throws MenuServiceException;
-    
-     public String storeFile(String packageName, String fileName, byte[] content) throws FileException;
+
+    public String storeFile(String packageName, String fileName, byte[] content) throws FileException;
 
     public void deleteFile(String packageName, String fileName) throws FileException;
 
@@ -43,6 +43,5 @@ public interface FormServiceEntryPoint {
 
     public byte[] loadFile(String packageName, String fileName) throws FileException;
     
-    
-    
+    public String getFormDisplay(long taskId);
 }

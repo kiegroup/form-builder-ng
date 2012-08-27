@@ -24,7 +24,7 @@ import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 
 /**
  * Menu presenter. Handles the adding and

@@ -15,20 +15,19 @@
  */
 package org.jbpm.form.builder.ng.client.view.display;
 
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.IsWidget;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
-import org.jbpm.form.builder.services.api.FileException;
+import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
+import org.uberfire.client.mvp.UberView;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Display")
@@ -39,52 +38,28 @@ public class FormDisplayPresenter {
     @Inject
     private Caller<FormServiceEntryPoint> formServices;
 
+    @Inject
+    private Event<FormRenderedEvent> formRendered;
+    
     public interface FormBuilderView
             extends
-            IsWidget {
+            UberView<FormDisplayPresenter> {
 
     }
 
-    @PostConstruct
-    public void init() {
-        
-        
+    
+    public void renderForm(long taskId) {
+
+            System.out.println("XXXXX  Calling Render Form Items" + this.hashCode());
             
-            
-//            System.out.println("XXXXX  Calling List Menu Items" + this.hashCode());
-//            
-//            formServices.call(new RemoteCallback<Void>() {
-//                @Override
-//                public void callback(Void nothing) {
-//                    System.out.println("XXXXX  RETURN load file  Items");
-//                }
-//            }).
+            formServices.call(new RemoteCallback<String>() {
+                @Override
+                public void callback(String form) {
+                    System.out.println("XXXXX  RETURN load file  Items");
+                    formRendered.fire(new FormRenderedEvent(form));
+                }
+            }).getFormDisplay(taskId);
 
-            
-           
-
-
-
-            //
-            //        bus.addHandler(RepresentationFactoryPopulatedEvent.TYPE, new RepresentationFactoryPopulatedHandler() {
-            //            @Override
-            //            public void onEvent(RepresentationFactoryPopulatedEvent event) {
-            //                try {
-            //                    service.getMenuItems();
-            //                    service.getMenuOptions();
-            //                } catch (FormBuilderException e) {
-            //                    //implementation never throws this
-            //                }
-            //                List<GwtEvent<?>> events = setDataPanel(rootPanel);
-            //
-            //                //events are fired deferred since they might need that ui components are already attached
-            //                fireEvents(events);
-            //            }
-            //        });
-            //        populateRepresentationFactory(service);
-            //        populateRepresentationFactory(service);
-
-       
     }
     
     

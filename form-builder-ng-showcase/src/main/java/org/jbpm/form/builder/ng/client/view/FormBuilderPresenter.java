@@ -39,7 +39,7 @@ import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
-import org.jbpm.form.builder.ng.shared.events.MenuItemAddedEvent;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
@@ -92,29 +92,6 @@ public class FormBuilderPresenter {
                 }
             }).listMenuItems();
 
-
-           
-
-
-
-            //
-            //        bus.addHandler(RepresentationFactoryPopulatedEvent.TYPE, new RepresentationFactoryPopulatedHandler() {
-            //            @Override
-            //            public void onEvent(RepresentationFactoryPopulatedEvent event) {
-            //                try {
-            //                    service.getMenuItems();
-            //                    service.getMenuOptions();
-            //                } catch (FormBuilderException e) {
-            //                    //implementation never throws this
-            //                }
-            //                List<GwtEvent<?>> events = setDataPanel(rootPanel);
-            //
-            //                //events are fired deferred since they might need that ui components are already attached
-            //                fireEvents(events);
-            //            }
-            //        });
-            //        populateRepresentationFactory(service);
-            //        populateRepresentationFactory(service);
 
         } catch (MenuServiceException ex) {
             Logger.getLogger(FormBuilderPresenter.class.getName()).log(Level.SEVERE, null, ex);
