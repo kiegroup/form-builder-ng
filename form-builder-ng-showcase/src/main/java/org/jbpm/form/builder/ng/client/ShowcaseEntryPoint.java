@@ -15,7 +15,6 @@
  */
 package org.jbpm.form.builder.ng.client;
 
-
 import java.util.Arrays;
 import javax.inject.Inject;
 
@@ -30,25 +29,33 @@ import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBar;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
 import org.uberfire.shared.mvp.PlaceRequest;
 
+import com.google.gwt.animation.client.Animation;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.ui.RootPanel;
+
 /**
  *
  */
 @EntryPoint
 public class ShowcaseEntryPoint {
 
-    @Inject private IOCBeanManager manager;
-    
-    private String[] menuItems = new String[]{"Form Builder", "Form Display"};
-    
+    @Inject
+    private IOCBeanManager            manager;
+
+    private String[]                  menuItems = new String[]{"Form Builder", "Form Display"};
+
     @Inject
     private PlaceManager              placeManager;
-    
+
     @Inject
     private WorkbenchMenuBarPresenter menubar;
+
     @AfterInitialization
     public void startApp() {
         loadStyles();
         setupMenu();
+        hideLoadingPopup();
     }
 
     private void loadStyles() {
@@ -56,8 +63,8 @@ public class ShowcaseEntryPoint {
         //ShowcaseResources.INSTANCE.showcaseCss().ensureInjected();
         //RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
     }
-    
-     private void setupMenu() {
+
+    private void setupMenu() {
         //Places sub-menu
         final WorkbenchMenuBar placesMenuBar = new WorkbenchMenuBar();
         final SubMenuItem placesMenu = new SubMenuItem( "Places",
@@ -78,6 +85,24 @@ public class ShowcaseEntryPoint {
             placesMenuBar.addItem( item );
         }
         menubar.addMenuItem( placesMenu );
+    }
+
+    //Fade out the "Loading application" pop-up
+    private void hideLoadingPopup() {
+        final Element e = RootPanel.get( "loading" ).getElement();
+
+        new Animation() {
+
+            @Override
+            protected void onUpdate(double progress) {
+                e.getStyle().setOpacity( 1.0 - progress );
+            }
+
+            @Override
+            protected void onComplete() {
+                e.getStyle().setVisibility( Style.Visibility.HIDDEN );
+            }
+        }.run( 500 );
     }
 
 }
