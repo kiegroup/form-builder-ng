@@ -45,7 +45,7 @@ public class TaskDefinitionServiceTest extends TaskDefinitionServiceBaseTest {
                 .addPackage("org.jbpm.form.builder.services.tasks")
                 
                 //.addPackage("org.jbpm.task.commands") // This should not be required here 
-                .addAsManifestResource("META-INF/persistence.xml", ArchivePaths.create("persistence.xml"))
+                .addAsManifestResource("persistence.xml", ArchivePaths.create("persistence.xml"))
                 .addAsManifestResource("META-INF/Settingsorm.xml", ArchivePaths.create("Settingsorm.xml"))
                 .addAsManifestResource("beans-default.xml", ArchivePaths.create("beans.xml"));
 

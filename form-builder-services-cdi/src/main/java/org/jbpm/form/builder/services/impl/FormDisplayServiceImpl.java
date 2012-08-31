@@ -31,6 +31,7 @@ import org.jbpm.form.builder.services.api.FormDisplayService;
 import org.jbpm.task.I18NText;
 import org.jbpm.task.Task;
 import org.jbpm.task.api.TaskContentService;
+import org.jbpm.task.api.TaskInstanceService;
 import org.jbpm.task.api.TaskQueryService;
 import org.jbpm.task.impl.factories.TaskFactory;
 
@@ -41,6 +42,10 @@ public class FormDisplayServiceImpl implements FormDisplayService {
     private TaskQueryService queryService;
     @Inject
     private TaskContentService contentService;
+    
+    @Inject
+    private TaskInstanceService instanceService;
+    
     public String getFormDisplay(long taskId) {
         //Task task = queryService.getTaskInstanceById(taskId);
         
@@ -50,7 +55,7 @@ public class FormDisplayServiceImpl implements FormDisplayService {
 
 
         Task task = TaskFactory.evalTask(new StringReader(str));
-        
+        task.setId(1);
         
 //        Object input = null;
 //        long contentId = task.getTaskData().getDocumentContentId();
@@ -99,6 +104,10 @@ public class FormDisplayServiceImpl implements FormDisplayService {
     
     }
     
+    public void completeForm(long id, Map<String, String> params) {
+        System.out.println("Completing the Form (id = "+id+") With Paramers: "+params);
+    }
+    
     
     public String render(String name, InputStream src, Map<String, Object> renderContext) {
         String str = null;
@@ -117,6 +126,9 @@ public class FormDisplayServiceImpl implements FormDisplayService {
         }
         return str;
     }
+    
+    
+    
     
     
 }

@@ -15,7 +15,6 @@
  */
 package org.jbpm.form.builder.ng.client;
 
-
 import java.util.Arrays;
 import javax.inject.Inject;
 
@@ -36,15 +35,16 @@ import org.uberfire.shared.mvp.PlaceRequest;
 @EntryPoint
 public class ShowcaseEntryPoint {
 
-    @Inject private IOCBeanManager manager;
-    
-    private String[] menuItems = new String[]{"Form Builder", "Form Display"};
-    
     @Inject
-    private PlaceManager              placeManager;
-    
+    private IOCBeanManager manager;
+    private String[] menuItems = new String[]{"Form Builder", "Form Display"};
+    @Inject
+    private PlaceManager placeManager;
     @Inject
     private WorkbenchMenuBarPresenter menubar;
+
+    
+
     @AfterInitialization
     public void startApp() {
         loadStyles();
@@ -56,28 +56,25 @@ public class ShowcaseEntryPoint {
         //ShowcaseResources.INSTANCE.showcaseCss().ensureInjected();
         //RoundedCornersResource.INSTANCE.roundCornersCss().ensureInjected();
     }
-    
-     private void setupMenu() {
+
+    private void setupMenu() {
         //Places sub-menu
         final WorkbenchMenuBar placesMenuBar = new WorkbenchMenuBar();
-        final SubMenuItem placesMenu = new SubMenuItem( "Places",
-                                                        placesMenuBar );
+        final SubMenuItem placesMenu = new SubMenuItem("Places",
+                placesMenuBar);
 
         //Add places
-        Arrays.sort( menuItems );
-        for ( final String menuItem : menuItems ) {
-            final CommandMenuItem item = new CommandMenuItem( menuItem,
-                                                              new Command() {
-
-                                                                  @Override
-                                                                  public void execute() {
-                                                                      placeManager.goTo( new PlaceRequest( menuItem ) );
-                                                                  }
-
-                                                              } );
-            placesMenuBar.addItem( item );
+        Arrays.sort(menuItems);
+        for (final String menuItem : menuItems) {
+            final CommandMenuItem item = new CommandMenuItem(menuItem,
+                    new Command() {
+                        @Override
+                        public void execute() {
+                            placeManager.goTo(new PlaceRequest(menuItem));
+                        }
+                    });
+            placesMenuBar.addItem(item);
         }
-        menubar.addMenuItem( placesMenu );
+        menubar.addMenuItem(placesMenu);
     }
-
 }

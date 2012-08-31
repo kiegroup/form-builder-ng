@@ -15,10 +15,13 @@
  */
 package org.jbpm.form.builder.services.api;
 
+import java.util.Map;
+
 /**
  *
  * @author salaboy
  */
 public interface FormDisplayService {
     String getFormDisplay(long taskId);
+    void completeForm(long id, Map<String, String> params);
 }

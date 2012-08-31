@@ -55,8 +55,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     
     @Inject
     Event<PaletteItemAddedEvent> itemAddedEvents;
-    @Inject
-    private BeanManager manager;
+    
 
     @PostConstruct
     public void init() {
@@ -110,7 +109,9 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public String getFormDisplay(long taskId) {
         return displayService.getFormDisplay(taskId);
     }
-    
-    
+
+    public void completeForm(long id, Map<String, String> params) {
+        displayService.completeForm(id, params);
+    }
     
 }

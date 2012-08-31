@@ -44,4 +44,6 @@ public interface FormServiceEntryPoint {
     public byte[] loadFile(String packageName, String fileName) throws FileException;
     
     public String getFormDisplay(long taskId);
+    
+    public void completeForm(long id, Map<String, String> params);
 }
