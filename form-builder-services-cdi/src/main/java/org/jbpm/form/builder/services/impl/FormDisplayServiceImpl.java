@@ -17,26 +17,24 @@ package org.jbpm.form.builder.services.impl;
 
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import org.jbpm.form.builder.services.api.FormDisplayService;
+import org.jbpm.task.Content;
 import org.jbpm.task.I18NText;
 import org.jbpm.task.Task;
 import org.jbpm.task.api.TaskContentService;
 import org.jbpm.task.api.TaskInstanceService;
 import org.jbpm.task.api.TaskQueryService;
-import org.jbpm.task.impl.factories.TaskFactory;
+import org.jbpm.task.utils.ContentMarshallerHelper;
 
 
-public class FormDisplayServiceImpl implements FormDisplayService {
+public class FormDisplayServiceImpl implements FormDisplayService { 
     
     @Inject
     private TaskQueryService queryService;
@@ -47,33 +45,17 @@ public class FormDisplayServiceImpl implements FormDisplayService {
     private TaskInstanceService instanceService;
     
     public String getFormDisplay(long taskId) {
-        //Task task = queryService.getTaskInstanceById(taskId);
+        Task task = queryService.getTaskInstanceById(taskId);
         
-         String str = "(with (new Task()) { priority = 55, taskData = (with( new TaskData()) { } ), ";
-        str += "peopleAssignments = (with ( new PeopleAssignments() ) { }),";
-        str += "names = [ new I18NText( 'en-UK', 'This is my task name')] })";
-
-
-        Task task = TaskFactory.evalTask(new StringReader(str));
-        task.setId(1);
         
-//        Object input = null;
-//        long contentId = task.getTaskData().getDocumentContentId();
-//        if (contentId != -1) {
-//            Content content = null;
-//            
-//            content = contentService.getContentById(contentId);
-//            input = ContentMarshallerHelper.unmarshall(content.getContent(), null);
-//        }
+        Object input = null;
+        long contentId = task.getTaskData().getDocumentContentId();
+        if (contentId != -1) {
+            Content content = contentService.getContentById(contentId);
+            input = ContentMarshallerHelper.unmarshall(content.getContent(), null);
+        }
         
-        Map<String, Object> input = new HashMap<String, Object>();
-        input.put("key1", "value1");
-        input.put("key2", "value2");
-        input.put("key3", "value3");
-        input.put("key4", "value4");
-        input.put("key5", "");
-        input.put("key6", "");
-
+  
         // check if a template exists
         String name = null;
         List<I18NText> names = task.getNames();
@@ -104,8 +86,8 @@ public class FormDisplayServiceImpl implements FormDisplayService {
     
     }
     
-    public void completeForm(long id, Map<String, String> params) {
-        System.out.println("Completing the Form (id = "+id+") With Paramers: "+params);
+    public void completeForm(long id, String userId, Map<String, String> params) {
+        instanceService.complete(id, userId, (Map)params);
     }
     
     
@@ -126,9 +108,5 @@ public class FormDisplayServiceImpl implements FormDisplayService {
         }
         return str;
     }
-    
-    
-    
-    
-    
+ 
 }
