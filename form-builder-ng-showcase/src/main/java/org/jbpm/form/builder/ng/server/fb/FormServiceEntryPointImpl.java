@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.server;
+package org.jbpm.form.builder.ng.server.fb;
 
-import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,12 +27,12 @@ import org.jbpm.form.builder.services.api.MenuService;
 import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.jbpm.form.builder.services.encoders.FormRepresentationDecoderImpl;
 import org.jbpm.form.builder.services.encoders.FormRepresentationEncoderImpl;
-import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import javax.enterprise.event.Event;
-import javax.enterprise.inject.spi.BeanManager;
 import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
+import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormDisplayService;
@@ -44,7 +43,7 @@ import org.jbpm.form.builder.services.api.FormDisplayService;
  */
 @Service
 @ApplicationScoped
-public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
+public class FormServiceEntryPointImpl implements FormServiceEntryPoint { 
 
     @Inject
     private MenuService menuService;
@@ -110,8 +109,8 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
         return displayService.getFormDisplay(taskId);
     }
 
-    public void completeForm(long id, Map<String, String> params) {
-        displayService.completeForm(id, params);
+    public void completeForm(long id, String userId, Map<String, String> params) {
+        displayService.completeForm(id, userId, params);
     }
     
 }

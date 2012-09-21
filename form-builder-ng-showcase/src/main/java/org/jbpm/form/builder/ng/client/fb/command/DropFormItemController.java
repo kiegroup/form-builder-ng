@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.command;
+package org.jbpm.form.builder.ng.client.fb.command;
 
 import java.util.ArrayList;
 import java.util.HashMap;

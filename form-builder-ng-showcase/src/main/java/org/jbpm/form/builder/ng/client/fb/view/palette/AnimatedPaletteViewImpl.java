@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.palette;
+package org.jbpm.form.builder.ng.client.fb.view.palette;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.DecoratedStackPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.client.command.DisposeDropController;
+import org.jbpm.form.builder.ng.client.fb.command.DisposeDropController;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 

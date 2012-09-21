@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.palette;
+package org.jbpm.form.builder.ng.client.fb.view.palette;
 
 
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.event.Observes;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
-import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
-import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 
 /**
  * Menu presenter. Handles the adding and

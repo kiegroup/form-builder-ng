@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.canvas;
+package org.jbpm.form.builder.ng.client.fb.view.canvas;
 
 //import org.jbpm.formbuilder.client.command.DropFormItemController;
 
@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.client.command.DropFormItemController;
+import org.jbpm.form.builder.ng.client.fb.command.DropFormItemController;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.form.FBForm;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;

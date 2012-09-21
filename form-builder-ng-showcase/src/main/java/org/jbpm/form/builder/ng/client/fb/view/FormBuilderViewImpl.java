@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view;
+package org.jbpm.form.builder.ng.client.fb.view;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -22,16 +23,14 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import org.jboss.errai.ioc.client.api.AfterInitialization;
-import org.jbpm.form.builder.ng.client.view.canvas.CanvasViewImpl;
-import org.jbpm.form.builder.ng.client.view.palette.AnimatedPaletteViewImpl;
-import org.jbpm.form.builder.ng.client.view.palette.PalettePresenter;
-import org.jbpm.form.builder.ng.client.view.palette.PaletteView;
+import org.jbpm.form.builder.ng.client.fb.view.canvas.CanvasViewImpl;
+import org.jbpm.form.builder.ng.client.fb.view.palette.AnimatedPaletteViewImpl;
+import org.jbpm.form.builder.ng.client.fb.view.palette.PalettePresenter;
+import org.jbpm.form.builder.ng.client.fb.view.palette.PaletteView;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
@@ -44,8 +43,13 @@ import org.uberfire.client.mvp.PlaceManager;
 @Dependent
 public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPresenter.FormBuilderView{
 
-    @Inject
-    private UiBinder<Widget, FormBuilderViewImpl> uiBinder;
+    interface FormBuilderViewBinder
+         extends
+             UiBinder<Widget, FormBuilderPresenter.FormBuilderView> {
+    }
+    
+    
+    private static FormBuilderViewBinder uiBinder = GWT.create(FormBuilderViewBinder.class);
 
 
     @Inject

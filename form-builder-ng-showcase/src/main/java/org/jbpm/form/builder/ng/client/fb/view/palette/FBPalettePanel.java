@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.palette;
+package org.jbpm.form.builder.ng.client.fb.view.palette;
 
 
 import com.allen_sauer.gwt.dnd.client.DragController;

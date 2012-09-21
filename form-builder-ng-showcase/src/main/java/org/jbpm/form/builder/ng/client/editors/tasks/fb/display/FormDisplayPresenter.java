@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.view.display;
+package org.jbpm.form.builder.ng.client.editors.tasks.fb.display;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +25,7 @@ import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
+import org.jbpm.task.api.TaskServiceEntryPoint;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
@@ -39,6 +40,8 @@ public class FormDisplayPresenter {
     @Inject
     private Caller<FormServiceEntryPoint> formServices;
     @Inject
+    private Caller<TaskServiceEntryPoint> taskServices;
+    @Inject
     private Event<FormRenderedEvent> formRendered;
 
     
@@ -47,6 +50,9 @@ public class FormDisplayPresenter {
     public interface FormBuilderView
             extends
             UberView<FormDisplayPresenter> {
+            String getUserId();
+            void displayNotification(String text);
+     
     }
 
     @PostConstruct
@@ -59,12 +65,10 @@ public class FormDisplayPresenter {
     
     public void renderForm(long taskId) {
 
-        System.out.println("XXXXX  Calling Render Form Items" + this.hashCode());
-
         formServices.call(new RemoteCallback<String>() {
             @Override
             public void callback(String form) {
-                System.out.println("XXXXX  RETURN load file  Items");
+                
                 formRendered.fire(new FormRenderedEvent(form));
             }
         }).getFormDisplay(taskId);
@@ -83,16 +87,16 @@ public class FormDisplayPresenter {
         return view;
     }
     
-    // Expose the following method into JavaScript.
+    
     public void completeForm(String values) {
-        Map<String, String> params = getUrlParameters(values);
+        final Map<String, String> params = getUrlParameters(values);
         formServices.call(new RemoteCallback<Void>() {
             @Override
             public void callback(Void nothing) {
-                System.out.println("XXXXX  RETURN Complete Form");
+                view.displayNotification("Form for Task Id: "+params.get("taskId")+ " was completed!");
                
             }
-        }).completeForm(Long.parseLong(params.get("taskId")), params);
+        }).completeForm(Long.parseLong(params.get("taskId")), view.getUserId(),  params);
 
     }
 
@@ -102,7 +106,7 @@ public class FormDisplayPresenter {
     private native void publish(FormDisplayPresenter fdp) /*-{
      
      $wnd.completeForm = function(from) {
-        fdp.@org.jbpm.form.builder.ng.client.view.display.FormDisplayPresenter::completeForm(Ljava/lang/String;)(from);
+        fdp.@org.jbpm.console.ng.client.editors.tasks.fb.display.FormDisplayPresenter::completeForm(Ljava/lang/String;)(from);
      }
      
         

@@ -3,7 +3,6 @@
     "http://google-web-toolkit.googlecode.com/svn/tags/2.4.0/distro-source/core/src/gwt-module.dtd">
 <module>
   <inherits name="org.jboss.errai.enterprise.CDI"/>
-  <inherits name="org.jboss.errai.uibinder.UIBinderForIOC"/>
   <inherits name="org.uberfire.UberfireWorkbench"/>
   <inherits name="org.uberfire.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.UberfireBackend"/>
@@ -11,10 +10,16 @@
   <inherits name="com.gwtent.GwtEnt" />
   <inherits name="com.google.gwt.xml.XML" />
   <inherits name="org.uberfire.security.UberfireSecurityClient"/>
+  <inherits name="org.jbpm.form.builder.services.FormBuilderServicesCDI"/>
+  <inherits name="org.jbpm.form.builder.ng.model.FormBuilderModel"/>
+
+  <inherits name="com.github.gwtbootstrap.Bootstrap" />
   
   <inherits name="org.jbpm.form.builder.ng.FormBuilderShared"/>
   <inherits name="org.jbpm.form.builder.services.FormBuilderServicesCDI"/>
   <inherits name="org.jbpm.form.builder.ng.model.FormBuilderModel"/>
+
+  <set-property name="bootstrap.responsiveDesign" value="true"/>
   
   
 
