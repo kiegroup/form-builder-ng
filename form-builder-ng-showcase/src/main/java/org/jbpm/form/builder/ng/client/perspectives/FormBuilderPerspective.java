@@ -18,10 +18,9 @@ package org.jbpm.form.builder.ng.client.perspectives;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.uberfire.client.annotations.Perspective;
-import org.uberfire.client.workbench.Position;
-import org.uberfire.client.workbench.model.PanelDefinition;
-import org.uberfire.client.workbench.model.PartDefinition;
 import org.uberfire.client.workbench.model.PerspectiveDefinition;
+import org.uberfire.client.workbench.model.impl.PartDefinitionImpl;
+import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.shared.mvp.PlaceRequest;
 
 /**
@@ -32,9 +31,9 @@ public class FormBuilderPerspective {
 
     @Perspective(identifier = "Form Builder Perspective",  isDefault = true)
     public PerspectiveDefinition getPerspective() {
-         final PerspectiveDefinition p = new PerspectiveDefinition();
+         final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
             p.setName( "Form Builder Perspective" );
-            p.getRoot().addPart( new PartDefinition( new PlaceRequest( "Form Builder" ) ) );
+            p.getRoot().addPart( new PartDefinitionImpl( new PlaceRequest( "Form Builder" ) ) );
             
             return p;
 
