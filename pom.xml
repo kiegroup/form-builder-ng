@@ -83,7 +83,7 @@
             </dependency>
             <dependency>
                 <groupId>org.jbpm</groupId>
-                <artifactId>jbpm-human-task-core-cdi</artifactId>
+                <artifactId>jbpm-human-task-services</artifactId>
                 <version>${jbpm.version}</version>
                 <exclusions>
                     <exclusion>

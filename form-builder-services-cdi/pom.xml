@@ -119,7 +119,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbpm</groupId>
-      <artifactId>jbpm-human-task-core-cdi</artifactId>
+      <artifactId>jbpm-human-task-services</artifactId>
     </dependency>
     <dependency>
       <groupId>freemarker</groupId>
