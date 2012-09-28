@@ -52,7 +52,7 @@ public interface FormBuilderService {
      * @param form The form to be saved
      * @throws FormBuilderException in case of error
      */
-    void saveForm(FormRepresentation form) throws FormBuilderException;
+    String saveForm(FormRepresentation form) throws FormBuilderException;
     
     /**
      * Saves a UI component on the server
@@ -158,6 +158,10 @@ public interface FormBuilderService {
      * @throws FormBuilderException in case of error.
      */
     void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderException;
+
+    public FormRepresentation loadForm(String json);
+
+    
     
     interface RolesResponseHandler {
         void onResponse(List<String> roles);

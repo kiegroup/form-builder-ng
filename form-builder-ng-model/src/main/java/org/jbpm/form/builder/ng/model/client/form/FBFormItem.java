@@ -48,6 +48,7 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 
 /**
  * Base class for UI components. Contains most of the edition definitions: right
@@ -319,7 +320,7 @@ public abstract class FBFormItem extends FocusPanel {
         if (rep == null) {
             return null;
         }
-        String className = rep.getItemClassName();
+        String className = RepresentationFactory.getItemClassName(rep.getClass().getName());
         try {
             FBFormItem item = (FBFormItem) ReflectionHelper
                     .newInstance(className);

@@ -53,6 +53,8 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Display class for a {@link FormRepresentation}
@@ -308,7 +310,7 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
         return rep;
     }
 
-    public void populate(FormRepresentation rep) throws FormBuilderException {
+    public void populate(FormRepresentation rep){
         setName(rep.getName());
         setTaskId(rep.getTaskId());
         setProcessId(rep.getProcessName());
@@ -317,16 +319,26 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
         setEnctype(rep.getEnctype());
         for (FBFormItem item : new ArrayList<FBFormItem>(formItems)) {
             remove(item);
-            bus.fireEvent(new FormItemRemovedEvent(item));
+            //bus.fireEvent(new FormItemRemovedEvent(item));
         }
         for (FormItemRepresentation itemRep : rep.getFormItems()) {
-            FBFormItem item = FBFormItem.createItem(itemRep);
+            FBFormItem item = null;
+            try {
+                item = FBFormItem.createItem(itemRep);
+            } catch (FormBuilderException ex) {
+                Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
             add(item);
             ensureMinimumSize(item);
-            bus.fireEvent(new FormItemAddedEvent(item, this));
+            //bus.fireEvent(new FormItemAddedEvent(item, this));
         }
         for (FBValidation validationRep : rep.getFormValidations()) {
-            FBValidationItem validation = FBValidationItem.createValidation(validationRep);
+            FBValidationItem validation = null;
+            try {
+                validation = FBValidationItem.createValidation(validationRep);
+            } catch (FormBuilderException ex) {
+                Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
             addValidation(validation);
         }
         setInputs(rep.getInputs());

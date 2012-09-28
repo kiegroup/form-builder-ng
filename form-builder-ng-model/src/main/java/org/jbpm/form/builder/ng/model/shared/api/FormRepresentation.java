@@ -22,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.gwtent.reflection.client.Reflectable;
+import org.jboss.errai.common.client.api.annotations.Portable;
 
 @Reflectable
+@Portable
 public class FormRepresentation implements Serializable {
 
     private static final long serialVersionUID = 6207901499318773670L;
