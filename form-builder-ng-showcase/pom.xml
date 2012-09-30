@@ -70,11 +70,23 @@
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
+            <artifactId>uberfire-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>uberfire-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uberfire</groupId>
             <artifactId>widgets-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>security-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>security-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
@@ -217,6 +229,7 @@
                     <module>org.jbpm.form.builder.ng.FastCompiledFormBuilderShowcase</module>
                     <logLevel>INFO</logLevel>
                     <compileSourcesArtifacts>
+			            <compileSourcesArtifact>org.uberfire:uberfire-commons</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:security-api</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:security-client</compileSourcesArtifact>

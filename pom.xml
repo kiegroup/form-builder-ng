@@ -38,7 +38,7 @@
     </modules>
     <properties>
         <jbpm.version>5.4.0-SNAPSHOT</jbpm.version>
-        <errai.version>2.1.0.Beta1</errai.version>
+        <errai.version>2.1.0.Final</errai.version>
         <uberfire.version>0.1-SNAPSHOT</uberfire.version>
         <hibernate.em.version>3.4.0.GA</hibernate.em.version>
         <hibernate.core.version>3.3.2.GA</hibernate.core.version>
