@@ -16,18 +16,22 @@
 package org.jbpm.form.builder.ng.client;
 
 import java.util.Arrays;
+
 import javax.inject.Inject;
 
 import org.jboss.errai.ioc.client.api.AfterInitialization;
 import org.jboss.errai.ioc.client.api.EntryPoint;
 import org.jboss.errai.ioc.client.container.IOCBeanManager;
+import org.uberfire.client.mvp.Command;
 import org.uberfire.client.mvp.PlaceManager;
-import org.uberfire.client.workbench.widgets.menu.Command;
-import org.uberfire.client.workbench.widgets.menu.CommandMenuItem;
-import org.uberfire.client.workbench.widgets.menu.SubMenuItem;
-import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBar;
+import org.uberfire.client.workbench.widgets.menu.MenuBar;
+import org.uberfire.client.workbench.widgets.menu.MenuItemCommand;
+import org.uberfire.client.workbench.widgets.menu.MenuItemSubMenu;
 import org.uberfire.client.workbench.widgets.menu.WorkbenchMenuBarPresenter;
-import org.uberfire.shared.mvp.PlaceRequest;
+import org.uberfire.client.workbench.widgets.menu.impl.DefaultMenuBar;
+import org.uberfire.client.workbench.widgets.menu.impl.DefaultMenuItemCommand;
+import org.uberfire.client.workbench.widgets.menu.impl.DefaultMenuItemSubMenu;
+import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.Element;
@@ -65,18 +69,18 @@ public class ShowcaseEntryPoint {
 
     private void setupMenu() {
         //Places sub-menu
-        final WorkbenchMenuBar placesMenuBar = new WorkbenchMenuBar();
-        final SubMenuItem placesMenu = new SubMenuItem("Places",
+        final MenuBar placesMenuBar = new DefaultMenuBar();
+        final MenuItemSubMenu placesMenu = new DefaultMenuItemSubMenu("Places",
                 placesMenuBar);
 
         //Add places
         Arrays.sort(menuItems);
         for (final String menuItem : menuItems) {
-            final CommandMenuItem item = new CommandMenuItem(menuItem,
+            final MenuItemCommand item = new DefaultMenuItemCommand(menuItem,
                     new Command() {
                         @Override
                         public void execute() {
-                            placeManager.goTo(new PlaceRequest(menuItem));
+                            placeManager.goTo(new DefaultPlaceRequest(menuItem));
                         }
                     });
             placesMenuBar.addItem(item);
