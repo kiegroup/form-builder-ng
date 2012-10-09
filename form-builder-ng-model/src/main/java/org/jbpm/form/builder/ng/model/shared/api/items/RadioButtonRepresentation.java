@@ -84,7 +84,15 @@ public class RadioButtonRepresentation extends FormItemRepresentation {
         this.name = (String) data.get("name");
         this.id = (String) data.get("id");
         this.value = (String) data.get("value");
-        this.selected = (Boolean) data.get("selected");
+        //this.selected = (Boolean) data.get("selected");
+        Object obj = data.get("selected");
+    	if (obj == null) {
+    		this.selected = null;
+    	} else if (obj instanceof Boolean) {
+    		this.selected = (Boolean) obj;
+    	} else if (obj instanceof String) {
+    		this.selected = Boolean.valueOf((String) obj);
+    	}
     }
     
     @Override
