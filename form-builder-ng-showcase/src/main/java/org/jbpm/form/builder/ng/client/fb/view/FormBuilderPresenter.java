@@ -17,6 +17,7 @@ package org.jbpm.form.builder.ng.client.fb.view;
 
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import java.util.Map;
@@ -28,8 +29,10 @@ import javax.inject.Inject;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.client.fb.command.DisposeDropController;
+import org.jbpm.form.builder.ng.client.fb.view.canvas.CanvasViewImpl;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.services.api.MenuServiceException;
@@ -89,9 +92,31 @@ public class FormBuilderPresenter {
             Logger.getLogger(FormBuilderPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @UiHandler(value="saveButton")
+    public void saveForm(FormRepresentation formRep){
+        
+        formServices.call(new RemoteCallback<String>() {
+                @Override
+                public void callback(String content) {
+                    System.out.println("XXXXX  RETURN List Menu Items"+content);
+                }
+        }).saveForm(formRep);
+    
+    }
     
     
-
+    public void decodeForm(String jsonForm) {
+        
+        formServices.call(new RemoteCallback<FormRepresentation>() {
+                @Override
+                public void callback(FormRepresentation formRep) {
+                    ((CanvasViewImpl)view.getLayoutView()).getFormDisplay().populate(formRep);
+                }
+        }).loadForm(jsonForm);
+    
+    }
+    
+    
     @WorkbenchPartTitle
     public String getTitle() {
         return "Form Builder";

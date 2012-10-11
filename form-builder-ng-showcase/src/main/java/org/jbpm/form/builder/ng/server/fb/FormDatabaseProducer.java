@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jbpm.form.builder.services.internal;
+package org.jbpm.form.builder.ng.server.fb;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

@@ -14,11 +14,13 @@
  * the License.
  */
 package org.jbpm.form.builder.ng.client.perspectives;
-
 import javax.enterprise.context.ApplicationScoped;
 
 import org.uberfire.client.annotations.Perspective;
+import org.uberfire.client.workbench.Position;
+import org.uberfire.client.workbench.model.PanelDefinition;
 import org.uberfire.client.workbench.model.PerspectiveDefinition;
+import org.uberfire.client.workbench.model.impl.PanelDefinitionImpl;
 import org.uberfire.client.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.client.workbench.model.impl.PerspectiveDefinitionImpl;
 import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
@@ -29,14 +31,18 @@ import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
 @ApplicationScoped
 public class FormBuilderPerspective {
 
-    @Perspective(identifier = "Form Builder Perspective",  isDefault = true)
+    @Perspective(identifier = "Form Perspective")
     public PerspectiveDefinition getPerspective() {
          final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
-            p.setName( "Form Builder Perspective" );
-            p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Form Builder" ) ) );
-            
-            return p;
+        p.setName( "Form Perspective" );
+        p.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "Form Builder" ) ) );
+        final PanelDefinition southPanel = new PanelDefinitionImpl();
+        southPanel.setHeight(400);
+        southPanel.setMinHeight(200);
+        southPanel.addPart( new PartDefinitionImpl( new DefaultPlaceRequest(   "Form Display" ) ) );      
+        p.getRoot().setChild( Position.SOUTH , southPanel );
+        p.setTransient(true);
+        return p;
 
     }
-
 }

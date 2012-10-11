@@ -18,12 +18,12 @@ package org.jbpm.form.builder.services.impl;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.Settings;
 import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
 import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
 import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.encoders.FormEncodingServerFactory;
 import org.jbpm.form.builder.services.tasks.TaskRef;
@@ -32,6 +32,7 @@ import org.jbpm.form.builder.services.tasks.TaskRef;
  *
  * @author salaboy
  */
+@ApplicationScoped
 public class FormBuilderServiceImpl implements FormBuilderService{
 
     public void getMenuItems() throws FormBuilderException {

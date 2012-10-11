@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 JBoss Inc
+ * Copyright 2012 JBoss by Red Hat.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.jbpm.form.builder.ng.shared.events;
 
-package org.jbpm.form.builder.ng.client.resources;
+import org.jboss.errai.common.client.api.annotations.Portable;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
+/**
+ *
+ * @author salaboy
+ */
+@Portable
+public class FormLoadedEvent {
+    private String jsonForm;
 
-public interface ShowcaseImages
-        extends
-        ClientBundle {
+    public FormLoadedEvent() {
+    }
 
-    ShowcaseImages INSTANCE = GWT.create( ShowcaseImages.class );
+    
+    public FormLoadedEvent(String jsonForm) {
+        this.jsonForm = jsonForm;
+    }
 
-    @Source("images/monitoring.png")
-    ImageResource monitoringScreenshot();
+    public String getJsonForm() {
+        return jsonForm;
+    }
 
-    @Source("images/hdrlogo_drools.gif")
-    ImageResource hdrlogoDrools();
-
+    
+    
 }

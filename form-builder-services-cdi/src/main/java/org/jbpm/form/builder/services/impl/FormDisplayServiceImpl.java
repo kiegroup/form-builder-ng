@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.jbpm.form.builder.services.api.FormDisplayService;
 import org.jbpm.task.Content;
@@ -33,7 +34,7 @@ import org.jbpm.task.api.TaskInstanceService;
 import org.jbpm.task.api.TaskQueryService;
 import org.jbpm.task.utils.ContentMarshallerHelper;
 
-
+@ApplicationScoped
 public class FormDisplayServiceImpl implements FormDisplayService { 
     
     @Inject

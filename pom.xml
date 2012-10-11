@@ -38,14 +38,15 @@
     </modules>
     <properties>
         <jbpm.version>5.4.0-SNAPSHOT</jbpm.version>
-        <errai.version>2.1.0.Final</errai.version>
+        <errai.version>2.1.0.Beta1</errai.version>
         <uberfire.version>0.1-SNAPSHOT</uberfire.version>
-        <hibernate.em.version>3.4.0.GA</hibernate.em.version>
-        <hibernate.core.version>3.3.2.GA</hibernate.core.version>
         <seam.version>3.1.0.Final</seam.version>
         <weld.version>1.1.8.Final</weld.version>
         <arquillian.version>1.0.1.Final</arquillian.version>
         <arquillian_weld.version>1.0.0.CR3</arquillian_weld.version>
+        <hibernate-core.version>3.3.2.GA</hibernate-core.version>
+        <hibernate-em.version>3.4.0.GA</hibernate-em.version>
+        <com.h2database.version>[1.3.166,)</com.h2database.version>
     </properties>
 
     <dependencyManagement>
@@ -76,6 +77,11 @@
                 <version>${jbpm.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.uberfire</groupId>
+                <artifactId>security-client</artifactId>
+                <version>${uberfire.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jbpm</groupId>
                 <artifactId>form-builder-services-cdi</artifactId>
                 <version>${project.version}</version>
@@ -92,30 +98,25 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.jbpm</groupId>
+                <artifactId>jbpm-human-task-workitems</artifactId>
+                <version>${jbpm.version}</version>
+            </dependency>
              <dependency>
                 <groupId>org.jboss.errai</groupId>
-                <artifactId>errai-bus</artifactId>
+                <artifactId>errai-ui</artifactId>
                 <version>${errai.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.errai</groupId>
-                <artifactId>errai-common</artifactId>
+                <artifactId>errai-data-binding</artifactId>
                 <version>${errai.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>1.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.em.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -143,9 +144,37 @@
                 <version>1.0-2</version>
             </dependency>
             <dependency>
+                <groupId>org.jboss.weld.se</groupId>
+                <artifactId>weld-se</artifactId>
+                <version>${weld.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.se</groupId>
+                <artifactId>weld-se-core</artifactId>
+                <version>${weld.version}</version>
+                <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-api</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate-em.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate-core.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.3.161</version>
+                <version>${com.h2database.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

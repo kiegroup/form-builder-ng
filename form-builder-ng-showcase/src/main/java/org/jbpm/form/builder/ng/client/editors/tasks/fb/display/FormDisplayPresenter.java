@@ -15,6 +15,8 @@
  */
 package org.jbpm.form.builder.ng.client.editors.tasks.fb.display;
 
+
+import com.google.gwt.user.client.ui.TextBox;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -26,10 +28,14 @@ import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 import org.jbpm.task.api.TaskServiceEntryPoint;
+import org.uberfire.client.annotations.OnReveal;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
+import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.mvp.UberView;
+import org.uberfire.security.Identity;
+import org.uberfire.shared.mvp.PlaceRequest;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Display")
@@ -43,39 +49,42 @@ public class FormDisplayPresenter {
     private Caller<TaskServiceEntryPoint> taskServices;
     @Inject
     private Event<FormRenderedEvent> formRendered;
-
-    
+    @Inject
+    private Identity identity;
+    @Inject
+    private PlaceManager                     placeManager;
     
     
     public interface FormBuilderView
             extends
             UberView<FormDisplayPresenter> {
-            String getUserId();
-            void displayNotification(String text);
-     
+
+        String getUserId();
+
+        void displayNotification(String text);
+        
+        TextBox getUserIdText();
+        
+        TextBox getTaskIdText();
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         publish(this);
         publishGetFormValues();
     }
-    
-    
-    
+
     public void renderForm(long taskId) {
 
         formServices.call(new RemoteCallback<String>() {
             @Override
             public void callback(String form) {
-                
+
                 formRendered.fire(new FormRenderedEvent(form));
             }
         }).getFormDisplay(taskId);
 
     }
-    
-   
 
     @WorkbenchPartTitle
     public String getTitle() {
@@ -86,27 +95,24 @@ public class FormDisplayPresenter {
     public UberView<FormDisplayPresenter> getView() {
         return view;
     }
-    
-    
+
     public void completeForm(String values) {
         final Map<String, String> params = getUrlParameters(values);
         formServices.call(new RemoteCallback<Void>() {
             @Override
             public void callback(Void nothing) {
-                view.displayNotification("Form for Task Id: "+params.get("taskId")+ " was completed!");
-               
+                view.displayNotification("Form for Task Id: " + params.get("taskId") + " was completed!");
+
             }
-        }).completeForm(Long.parseLong(params.get("taskId")), view.getUserId(),  params);
+        }).completeForm(Long.parseLong(params.get("taskId")), view.getUserId(), params);
 
     }
-
-   
 
     // Set up the JS-callable signature as a global JS function.
     private native void publish(FormDisplayPresenter fdp) /*-{
      
      $wnd.completeForm = function(from) {
-        fdp.@org.jbpm.console.ng.client.editors.tasks.fb.display.FormDisplayPresenter::completeForm(Ljava/lang/String;)(from);
+     fdp.@org.jbpm.form.builder.ng.client.editors.tasks.fb.display.FormDisplayPresenter::completeForm(Ljava/lang/String;)(from);
      }
      
         
@@ -114,18 +120,18 @@ public class FormDisplayPresenter {
 
     private native void publishGetFormValues() /*-{
      $wnd.getFormValues = function(form){
-            var params = '';
-            for(i=0; i<form.elements.length; i++)
-            {
-                var fieldName = form.elements[i].name;
-                var fieldValue = form.elements[i].value;
-                params += fieldName + '=' + fieldValue + '&';
-            }
-            return params;
-            };
+     var params = '';
+     for(i=0; i<form.elements.length; i++)
+     {
+     var fieldName = form.elements[i].name;
+     var fieldValue = form.elements[i].value;
+     params += fieldName + '=' + fieldValue + '&';
+     }
+     return params;
+     };
      }-*/;
 
-    public static Map<String, String> getUrlParameters(String values){
+    public static Map<String, String> getUrlParameters(String values) {
         Map<String, String> params = new HashMap<String, String>();
         for (String param : values.split("&")) {
             String pair[] = param.split("=");
@@ -138,6 +144,10 @@ public class FormDisplayPresenter {
         }
         return params;
     }
-    
-   
+
+    @OnReveal
+    public void onReveal() {
+        System.out.println("I'm HERE!!");
+    }
 }
+

@@ -20,7 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.jbpm.form.builder.ng.model.client.Settings;
-import org.jbpm.form.builder.services.annotations.FormPersistence;
 import org.jbpm.form.builder.services.api.SettingsService;
 
 /**
@@ -28,7 +27,7 @@ import org.jbpm.form.builder.services.api.SettingsService;
  */
 public class DBSettingsService implements SettingsService {
 
-    @Inject @FormPersistence
+    @Inject 
     private EntityManager em;
 
     public DBSettingsService() {
