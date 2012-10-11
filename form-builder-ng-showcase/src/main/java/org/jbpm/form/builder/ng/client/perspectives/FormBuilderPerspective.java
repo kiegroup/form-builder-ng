@@ -17,6 +17,7 @@ package org.jbpm.form.builder.ng.client.perspectives;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.uberfire.client.annotations.Perspective;
+import org.uberfire.client.annotations.WorkbenchPerspective;
 import org.uberfire.client.workbench.Position;
 import org.uberfire.client.workbench.model.PanelDefinition;
 import org.uberfire.client.workbench.model.PerspectiveDefinition;
@@ -29,9 +30,10 @@ import org.uberfire.shared.mvp.impl.DefaultPlaceRequest;
  * A Perspective to show File Explorer
  */
 @ApplicationScoped
+@WorkbenchPerspective(identifier = "Form Perspective")
 public class FormBuilderPerspective {
 
-    @Perspective(identifier = "Form Perspective")
+    @Perspective
     public PerspectiveDefinition getPerspective() {
          final PerspectiveDefinition p = new PerspectiveDefinitionImpl();
         p.setName( "Form Perspective" );

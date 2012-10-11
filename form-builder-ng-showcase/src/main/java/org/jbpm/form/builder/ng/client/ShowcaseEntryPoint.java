@@ -37,7 +37,6 @@ import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.RootPanel;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,9 +46,8 @@ import java.util.List;
 import java.util.Set;
 import org.jboss.errai.ioc.client.container.IOCBeanDef;
 import org.jbpm.form.builder.ng.client.resources.ShowcaseResources;
-import org.uberfire.client.mvp.AbstractPerspectiveActivity;
+import org.uberfire.client.mvp.AbstractWorkbenchPerspectiveActivity;
 import org.uberfire.client.mvp.ActivityManager;
-import org.uberfire.client.workbench.annotations.DefaultPerspective;
 
 /**
  *
@@ -87,7 +85,7 @@ public class ShowcaseEntryPoint {
         final MenuItemSubMenu placesMenu = new DefaultMenuItemSubMenu("Places",
                 placesMenuBar);
          //Home
-        final AbstractPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
+        final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         if ( defaultPerspective != null ) {
             menubar.addMenuItem( new DefaultMenuItemCommand( "Home",
                                                              new Command() {
@@ -102,8 +100,8 @@ public class ShowcaseEntryPoint {
         final MenuBar perspectivesMenuBar = new DefaultMenuBar();
         final MenuItemSubMenu perspectivesMenu = new DefaultMenuItemSubMenu( "Perspectives",
                                                                              perspectivesMenuBar );
-        final List<AbstractPerspectiveActivity> perspectives = getPerspectiveActivities();
-        for ( final AbstractPerspectiveActivity perspective : perspectives ) {
+        final List<AbstractWorkbenchPerspectiveActivity> perspectives = getPerspectiveActivities();
+        for ( final AbstractWorkbenchPerspectiveActivity perspective : perspectives ) {
             final String name = perspective.getPerspective().getName();
             final Command cmd = new Command() {
 
@@ -141,36 +139,36 @@ public class ShowcaseEntryPoint {
         menubar.addMenuItem(placesMenu);
     }
     
-    private AbstractPerspectiveActivity getDefaultPerspectiveActivity() {
-        AbstractPerspectiveActivity defaultPerspective = null;
-        Collection<IOCBeanDef<AbstractPerspectiveActivity>> perspectives = iocManager.lookupBeans( AbstractPerspectiveActivity.class );
-        Iterator<IOCBeanDef<AbstractPerspectiveActivity>> perspectivesIterator = perspectives.iterator();
+    private AbstractWorkbenchPerspectiveActivity getDefaultPerspectiveActivity() {
+        AbstractWorkbenchPerspectiveActivity defaultPerspective = null;
+        final Collection<IOCBeanDef<AbstractWorkbenchPerspectiveActivity>> perspectives = iocManager.lookupBeans( AbstractWorkbenchPerspectiveActivity.class );
+        final Iterator<IOCBeanDef<AbstractWorkbenchPerspectiveActivity>> perspectivesIterator = perspectives.iterator();
         outer_loop : while ( perspectivesIterator.hasNext() ) {
-            IOCBeanDef<AbstractPerspectiveActivity> perspective = perspectivesIterator.next();
-            Set<Annotation> annotations = perspective.getQualifiers();
-            for ( Annotation a : annotations ) {
-                if ( a instanceof DefaultPerspective ) {
-                    defaultPerspective = perspective.getInstance();
-                    break outer_loop;
-                }
+            final IOCBeanDef<AbstractWorkbenchPerspectiveActivity> perspective = perspectivesIterator.next();
+            final AbstractWorkbenchPerspectiveActivity instance = perspective.getInstance();
+            if ( instance.isDefault() ) {
+                defaultPerspective = instance;
+                break outer_loop;
+            } else {
+                iocManager.destroyBean( instance );
             }
         }
         return defaultPerspective;
     }
 
-    private List<AbstractPerspectiveActivity> getPerspectiveActivities() {
+    private List<AbstractWorkbenchPerspectiveActivity> getPerspectiveActivities() {
 
         //Get Perspective Providers
-        final Set<AbstractPerspectiveActivity> activities = activityManager.getActivities( AbstractPerspectiveActivity.class );
+        final Set<AbstractWorkbenchPerspectiveActivity> activities = activityManager.getActivities( AbstractWorkbenchPerspectiveActivity.class );
 
         //Sort Perspective Providers so they're always in the same sequence!
-        List<AbstractPerspectiveActivity> sortedActivities = new ArrayList<AbstractPerspectiveActivity>( activities );
+        List<AbstractWorkbenchPerspectiveActivity> sortedActivities = new ArrayList<AbstractWorkbenchPerspectiveActivity>( activities );
         Collections.sort( sortedActivities,
-                          new Comparator<AbstractPerspectiveActivity>() {
+                          new Comparator<AbstractWorkbenchPerspectiveActivity>() {
 
                               @Override
-                              public int compare(AbstractPerspectiveActivity o1,
-                                                 AbstractPerspectiveActivity o2) {
+                              public int compare(AbstractWorkbenchPerspectiveActivity o1,
+                                                 AbstractWorkbenchPerspectiveActivity o2) {
                                   return o1.getPerspective().getName().compareTo( o2.getPerspective().getName() );
                               }
 
