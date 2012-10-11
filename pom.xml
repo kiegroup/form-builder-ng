@@ -33,8 +33,8 @@
     <modules>
         <module>form-builder-services-cdi</module>
         <module>form-builder-ng-shared</module>
-        <module>form-builder-ng-showcase</module>
         <module>form-builder-ng-model</module>
+        <module>form-builder-ng-showcase</module>
     </modules>
     <properties>
         <jbpm.version>5.4.0-SNAPSHOT</jbpm.version>

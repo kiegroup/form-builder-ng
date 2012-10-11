@@ -35,7 +35,6 @@ import org.uberfire.client.annotations.WorkbenchScreen;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.mvp.UberView;
 import org.uberfire.security.Identity;
-import org.uberfire.shared.mvp.PlaceRequest;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Display")
