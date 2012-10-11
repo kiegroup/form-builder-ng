@@ -18,7 +18,6 @@ package org.jbpm.form.builder.ng.shared;
 import java.util.List;
 import java.util.Map;
 import org.jboss.errai.bus.server.annotations.Remote;
-import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;

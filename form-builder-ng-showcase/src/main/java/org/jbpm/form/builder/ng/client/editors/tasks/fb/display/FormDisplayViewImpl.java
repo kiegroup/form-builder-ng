@@ -37,7 +37,7 @@ import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 /**
  * Main view. 
  */
-@Dependent
+@Dependent 
 @Templated(value="FormDisplayViewImpl.html")
 public class FormDisplayViewImpl extends Composite
     implements
