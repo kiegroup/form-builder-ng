@@ -265,7 +265,7 @@
         }
         
      ],
-     "Wufoo Fields": [
+     "Simple Fields": [
         {   "name": "Single Line Text",
             "itemRepresentation": {
                "eventActions": {},
@@ -273,15 +273,15 @@
                "external": null,
                "width": "95%",
                "effectClasses": [
-                  "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                  "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                  "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                  "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                  "org.jbpm.formbuilder.client.effect.DoneEffect",
-                  "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                  "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                  "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                  "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                  "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                ],
                "id": "",
                "input": null,
@@ -295,18 +295,18 @@
                      "width": "300px",
                      "format": null,
                      "effectClasses": [
-                        "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                        "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                        "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                        "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                        "org.jbpm.formbuilder.client.effect.DoneEffect",
-                        "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                        "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                        "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                        "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                        "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                        "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                        "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                        "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                      ],
                      "id": "",
                      "input": null,
@@ -315,7 +315,7 @@
                      "i18n": {},
                      "output": null,
                      "typeId": "label",
-                     "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                   },
                   {
                      "eventActions": {},
@@ -323,17 +323,17 @@
                      "external": null,
                      "width": "300px",
                      "effectClasses": [
-                        "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                        "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                        "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                        "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                        "org.jbpm.formbuilder.client.effect.DoneEffect",
-                        "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                        "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                        "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                        "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                        "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                        "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                        "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                      ],
                      "id": "",
                      "input": null,
@@ -343,26 +343,26 @@
                      "output": null,
                      "defaultValue": "",
                      "typeId": "textField",
-                     "@className": "org.jbpm.formapi.shared.api.items.TextFieldRepresentation"
+                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.TextFieldRepresentation"
                   }
                ],
                "output": null,
                "typeId": "flowPanel",
-               "@className": "org.jbpm.formapi.shared.api.items.FlowPanelRepresentation",
+               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                "cssClassName": ""
             },
             "effects": [
-               { "className": "org.jbpm.formbuilder.client.effect.RemoveEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.CopyFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.CutFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.PasteFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.DoneEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.ResizeEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.MoveItemFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"}
+               { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.DoneEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.ResizeEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"}
             ],
-            "className": "org.jbpm.formbuilder.client.menu.items.CustomMenuItem",
+            "className": "org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem",
             "allowedEvents": [
                "onclick", "ondblclick", "onmousedown", "onmousemove", "onmouseout",
                "onmouseover", "onmouseup", "onkeydown", "onkeypress", "onkeyup"
@@ -376,15 +376,15 @@
                "external": null,
                "width": "95%",
                "effectClasses": [
-                  "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                  "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                  "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                  "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                  "org.jbpm.formbuilder.client.effect.DoneEffect",
-                  "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                  "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                  "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                  "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                  "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                ],
                "id": "",
                "input": null,
@@ -398,18 +398,18 @@
                      "width": "300px",
                      "format": null,
                      "effectClasses": [
-                        "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                        "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                        "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                        "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                        "org.jbpm.formbuilder.client.effect.DoneEffect",
-                        "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                        "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                        "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                        "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                        "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                        "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                        "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                        "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                      ],
                      "id": "",
                      "input": null,
@@ -418,7 +418,7 @@
                      "i18n": {},
                      "output": null,
                      "typeId": "label",
-                     "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                   },
                   {
                      "eventActions": {},
@@ -426,17 +426,17 @@
                      "external": null,
                      "width": "300px",
                      "effectClasses": [
-                        "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                        "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                        "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                        "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                        "org.jbpm.formbuilder.client.effect.DoneEffect",
-                        "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                        "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                        "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                        "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                        "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                        "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                        "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                        "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                      ],
                      "id": "",
                      "input": null,
@@ -446,26 +446,26 @@
                      "output": null,
                      "defaultValue": null,
                      "typeId": "numberField",
-                     "@className": "org.jbpm.formapi.shared.api.items.NumberFieldRepresentation"
+                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.NumberFieldRepresentation"
                   }
                ],
                "output": null,
                "typeId": "flowPanel",
-               "@className": "org.jbpm.formapi.shared.api.items.FlowPanelRepresentation",
+               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                "cssClassName": ""
             },
             "effects": [
-               { "className": "org.jbpm.formbuilder.client.effect.RemoveEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.CopyFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.CutFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.PasteFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.DoneEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.ResizeEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.MoveItemFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect"},
-               { "className": "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"}
+               { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.DoneEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.ResizeEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect"},
+               { "className": "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"}
             ],
-            "className": "org.jbpm.formbuilder.client.menu.items.CustomMenuItem",
+            "className": "org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem",
             "allowedEvents": [
                "onclick", "ondblclick", "onmousedown", "onmousemove", "onmouseout",
                "onmouseover", "onmouseup", "onkeydown", "onkeypress", "onkeyup"
@@ -479,15 +479,15 @@
                "external": null,
                "width": "95%",
                "effectClasses": [
-                  "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                  "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                   "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                   "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                   "org.jbpm.formbuilder.client.effect.DoneEffect",
-                   "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                   "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                   "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                   "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                  "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                  "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                   "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                 ],
                 "id": "",
                 "input": null,
@@ -501,18 +501,18 @@
                       "width": "300px",
                       "format": null,
                       "effectClasses": [
-                         "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                         "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                         "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                         "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                         "org.jbpm.formbuilder.client.effect.DoneEffect",
-                         "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                         "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                         "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                         "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                         "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                         "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                         "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                         "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                       ],
                       "id": "",
                       "input": null,
@@ -521,7 +521,7 @@
                       "i18n": {},
                       "output": null,
                       "typeId": "label",
-                      "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                    },
                    {
                       "cols": 50,
@@ -530,17 +530,17 @@
                       "external": null,
                       "width": "90%",
                       "effectClasses": [
-                         "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                         "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                         "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                         "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                         "org.jbpm.formbuilder.client.effect.DoneEffect",
-                         "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                         "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                         "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                         "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                         "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                         "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                         "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                         "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                       ],
                       "rows": 7,
                       "id": null,
@@ -550,26 +550,26 @@
                       "value": "",
                       "output": null,
                       "typeId": "textArea",
-                      "@className": "org.jbpm.formapi.shared.api.items.TextAreaRepresentation"
+                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.TextAreaRepresentation"
                    }
                 ],
                 "output": null,
                 "typeId": "flowPanel",
-                "@className": "org.jbpm.formapi.shared.api.items.FlowPanelRepresentation",
+                "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                 "cssClassName": ""
              },
              "effects": [
-                { "className": "org.jbpm.formbuilder.client.effect.RemoveEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.CopyFormEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.CutFormEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.PasteFormEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.DoneEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.ResizeEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.MoveItemFormEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect"},
-                { "className": "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"}
+                { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.DoneEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.ResizeEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect"},
+                { "className": "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"}
              ],
-             "className": "org.jbpm.formbuilder.client.menu.items.CustomMenuItem",
+             "className": "org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem",
              "allowedEvents": [
              "onclick", "ondblclick", "onmousedown", "onmousemove", "onmouseout",
              "onmouseover", "onmouseup", "onkeydown", "onkeypress", "onkeyup"
@@ -583,15 +583,15 @@
               "external": null,
               "width": "95%",
               "effectClasses": [
-                 "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                 "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                 "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                 "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                 "org.jbpm.formbuilder.client.effect.DoneEffect",
-                 "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                 "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                 "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                 "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                 "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
               ],
               "id": "",
               "input": null,
@@ -605,18 +605,18 @@
                     "width": "300px",
                     "format": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                       "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                       "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                       "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                     ],
                     "id": "",
                     "input": null,
@@ -625,7 +625,7 @@
                     "i18n": {},
                     "output": null,
                     "typeId": "label",
-                    "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                  },
                  {
                     "eventActions": {},
@@ -634,15 +634,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -658,17 +658,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -677,7 +677,7 @@
                           "output": null,
                           "typeId": "checkBox",
                           "checked": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.CheckBoxRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
                        {
                           "cssName": null,
@@ -687,18 +687,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -707,13 +707,13 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
                  {
@@ -723,15 +723,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -747,17 +747,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -766,7 +766,7 @@
                           "output": null,
                           "typeId": "checkBox",
                           "checked": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.CheckBoxRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
                        {
                           "cssName": null,
@@ -776,18 +776,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -796,13 +796,13 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
                  {
@@ -812,15 +812,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -836,17 +836,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -855,7 +855,7 @@
                           "output": null,
                           "typeId": "checkBox",
                           "checked": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.CheckBoxRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
                        {
                           "cssName": null,
@@ -865,18 +865,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -885,33 +885,33 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  }
               ],
               "output": null,
               "typeId": "flowPanel",
-              "@className": "org.jbpm.formapi.shared.api.items.FlowPanelRepresentation",
+              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
               "cssClassName": ""
            },
            "effects": [
-             { "className": "org.jbpm.formbuilder.client.effect.RemoveEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.CopyFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.CutFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.PasteFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.DoneEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.ResizeEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.MoveItemFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"}
+             { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.DoneEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.ResizeEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"}
           ],
-          "className": "org.jbpm.formbuilder.client.menu.items.CustomMenuItem",
+          "className": "org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem",
           "allowedEvents": [
              "onclick", "ondblclick", "onmousedown", "onmousemove", "onmouseout",
              "onmouseover", "onmouseup", "onkeydown", "onkeypress", "onkeyup"
@@ -925,15 +925,15 @@
               "external": null,
               "width": "95%",
               "effectClasses": [
-                 "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                 "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                 "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                 "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                 "org.jbpm.formbuilder.client.effect.DoneEffect",
-                 "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                 "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                 "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                 "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                 "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                 "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
               ],
               "id": "",
               "input": null,
@@ -947,18 +947,18 @@
                     "width": "300px",
                     "format": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                       "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                       "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                       "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                     ],
                     "id": "",
                     "input": null,
@@ -967,7 +967,7 @@
                     "i18n": {},
                     "output": null,
                     "typeId": "label",
-                    "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                  },
                  {
                     "eventActions": {},
@@ -976,15 +976,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -1000,17 +1000,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1019,7 +1019,7 @@
                           "output": null,
                           "typeId": "radioButton",
                           "selected": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.RadioButtonRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
                        {
                           "cssName": null,
@@ -1029,18 +1029,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1049,13 +1049,13 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
                  {
@@ -1065,15 +1065,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -1089,17 +1089,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1108,7 +1108,7 @@
                           "output": null,
                           "typeId": "radioButton",
                           "selected": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.RadioButtonRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
                        {
                           "cssName": null,
@@ -1118,18 +1118,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1138,13 +1138,13 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
                  {
@@ -1154,15 +1154,15 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                       "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                       "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                       "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                       "org.jbpm.formbuilder.client.effect.DoneEffect",
-                       "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                       "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                       "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                       "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"
+                       "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                       "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -1178,17 +1178,17 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.ValidationsEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ValidationsEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1197,7 +1197,7 @@
                           "output": null,
                           "typeId": "radioButton",
                           "selected": false,
-                          "@className": "org.jbpm.formapi.shared.api.items.RadioButtonRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
                        {
                           "cssName": null,
@@ -1207,18 +1207,18 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             "org.jbpm.formbuilder.client.effect.RemoveEffect",
-                             "org.jbpm.formbuilder.client.effect.CopyFormEffect",
-                             "org.jbpm.formbuilder.client.effect.CutFormEffect",
-                             "org.jbpm.formbuilder.client.effect.PasteFormEffect",
-                             "org.jbpm.formbuilder.client.effect.DoneEffect",
-                             "org.jbpm.formbuilder.client.effect.ResizeEffect",
-                             "org.jbpm.formbuilder.client.effect.MoveItemFormEffect",
-                             "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect",
-                             "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect",
-                             "org.jbpm.formbuilder.client.effect.I18NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.L10NFormEffect",
-                             "org.jbpm.formbuilder.client.effect.IoBindingEffect"
+                             "org.jbpm.formbuilder.parent.client.effect.RemoveEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.CutFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.DoneEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.ResizeEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.I18NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.L10NFormEffect",
+                             "org.jbpm.formbuilder.parent.client.effect.IoBindingEffect"
                           ],
                           "id": null,
                           "input": null,
@@ -1227,37 +1227,38 @@
                           "i18n": {},
                           "output": null,
                           "typeId": "label",
-                          "@className": "org.jbpm.formapi.shared.api.items.LabelRepresentation"
+                          "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
                     ],
                     "borderWidth": 0,
                     "output": null,
                     "typeId": "horizontalPanel",
-                    "@className": "org.jbpm.formapi.shared.api.items.HorizontalPanelRepresentation",
+                    "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  }
               ],
               "output": null,
               "typeId": "flowPanel",
-              "@className": "org.jbpm.formapi.shared.api.items.FlowPanelRepresentation",
+              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
               "cssClassName": ""
            },
            "effects": [
-             { "className": "org.jbpm.formbuilder.client.effect.RemoveEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.CopyFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.CutFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.PasteFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.DoneEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.ResizeEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.MoveItemFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.EventHandlingFormEffect"},
-             { "className": "org.jbpm.formbuilder.client.effect.SaveAsMenuOptionFormEffect"}
+             { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.DoneEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.ResizeEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.MoveItemFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.EventHandlingFormEffect"},
+             { "className": "org.jbpm.formbuilder.parent.client.effect.SaveAsMenuOptionFormEffect"}
           ],
-          "className": "org.jbpm.formbuilder.client.menu.items.CustomMenuItem",
+          "className": "org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem",
           "allowedEvents": [
              "onclick", "ondblclick", "onmousedown", "onmousemove", "onmouseout",
              "onmouseover", "onmouseup", "onkeydown", "onkeypress", "onkeyup"
           ]
+       }
     ]
  }
  
