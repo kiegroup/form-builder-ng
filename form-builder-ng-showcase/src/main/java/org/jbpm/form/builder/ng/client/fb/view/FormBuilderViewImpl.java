@@ -15,51 +15,62 @@
  */
 package org.jbpm.form.builder.ng.client.fb.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.Widget;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
+import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
+import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+import org.uberfire.client.mvp.PlaceManager;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Widget;
 import org.jbpm.form.builder.ng.client.fb.view.canvas.CanvasViewImpl;
 import org.jbpm.form.builder.ng.client.fb.view.palette.AnimatedPaletteViewImpl;
 import org.jbpm.form.builder.ng.client.fb.view.palette.PalettePresenter;
 import org.jbpm.form.builder.ng.client.fb.view.palette.PaletteView;
-import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
-import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+import org.jbpm.form.builder.ng.model.client.form.FBForm;
+import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
+import org.jbpm.form.builder.ng.shared.events.FormLoadedEvent;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
-import org.uberfire.client.mvp.PlaceManager;
 
 /**
  * Main view. Uses UIBinder to define the correct position of components
  */
 @Dependent
-public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPresenter.FormBuilderView{
+public class FormBuilderViewImpl extends AbsolutePanel
+        implements
+        FormBuilderPresenter.FormBuilderView {
 
-    interface FormBuilderViewBinder
-         extends
-             UiBinder<Widget, FormBuilderPresenter.FormBuilderView> {
+    interface FormBuilderViewImplBinder
+            extends
+            UiBinder<Widget, FormBuilderViewImpl> {
     }
-    
-    
-    private static FormBuilderViewBinder uiBinder = GWT.create(FormBuilderViewBinder.class);
-
-
+    private static FormBuilderViewImplBinder uiBinder = GWT.create(FormBuilderViewImplBinder.class);
     @Inject
     private PlaceManager placeManager;
-
     private FormBuilderPresenter presenter;
-    
-    public @UiField(provided=true) ScrollPanel menuView;
-    public @UiField(provided=true) ScrollPanel layoutView;
+    public @UiField(provided = true)
+    ScrollPanel menuView;
+    public @UiField(provided = true)
+    ScrollPanel layoutView;
+    @UiField
+    public Button saveButton;
 
+    @UiField
+    public Button clearButton;
+    
     @Override
     public void init(final FormBuilderPresenter presenter) {
         this.presenter = presenter;
@@ -67,30 +78,51 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
     }
 
     protected final void init() {
-            menuView = new AnimatedPaletteViewImpl();
-            layoutView = new CanvasViewImpl();
-            menuView.setAlwaysShowScrollBars(true);
-            menuView.setSize("235px", "100%");
-            layoutView.setSize("700px", "700px");
-            layoutView.setAlwaysShowScrollBars(true);
-            add(uiBinder.createAndBindUi(this));
+        menuView = new AnimatedPaletteViewImpl();
+        layoutView = new CanvasViewImpl();
+        menuView.setAlwaysShowScrollBars(true);
+        menuView.setSize("235px",
+                "100%");
+        layoutView.setSize("700px",
+                "700px");
+        layoutView.setAlwaysShowScrollBars(true);
+        add(uiBinder.createAndBindUi(this));
 
-            ((PaletteView)menuView).removeAllItems();
-            
+        ((PaletteView) menuView).removeAllItems();
+
     }
-    
+
     public void addItem(@Observes PaletteItemAddedEvent event) {
         try {
             String group = event.getGroupName();
             MenuItemDescription menuItemDescription = event.getMenuItemDescription();
             Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getClassName());
             FBMenuItem item = (FBMenuItem) newInstance;
-            
-            ((PaletteView)menuView).addItem(group, item);
+
+            ((PaletteView) menuView).addItem(group,
+                    item);
         } catch (Exception ex) {
             ex.printStackTrace();
-            Logger.getLogger(PalettePresenter.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PalettePresenter.class.getName()).log(Level.SEVERE,
+                    null,
+                    ex);
         }
+    }
+
+    @UiHandler("saveButton")
+    public void saveButton(ClickEvent e) {
+        
+            FBForm formDisplay = ((CanvasViewImpl) layoutView).getFormDisplay();
+            FormRepresentation createRepresentation = formDisplay.createRepresentation();
+            presenter.saveForm(createRepresentation);
+        
+    }
+
+    @UiHandler("clearButton")
+    public void clearButton(ClickEvent e) {
+
+        ((CanvasViewImpl) layoutView).getFormDisplay().clear();
+
     }
 
     public ScrollPanel getMenuView() {
@@ -101,12 +133,11 @@ public class FormBuilderViewImpl extends AbsolutePanel implements FormBuilderPre
         return layoutView;
     }
 
-    public AbsolutePanel getPanel(){
+    public AbsolutePanel getPanel() {
         return this;
     }
 
-
-
-
-
+    public void loadForm(@Observes FormLoadedEvent event)  {
+        presenter.decodeForm(event.getJsonForm());
+    }
 }

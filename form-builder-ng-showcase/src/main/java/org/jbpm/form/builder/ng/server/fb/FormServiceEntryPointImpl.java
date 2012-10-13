@@ -28,6 +28,9 @@ import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.jbpm.form.builder.services.encoders.FormRepresentationDecoderImpl;
 import org.jbpm.form.builder.services.encoders.FormRepresentationEncoderImpl;
 import javax.enterprise.event.Event;
+import org.jbpm.form.builder.ng.model.client.FormBuilderException;
+import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
 import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
@@ -35,6 +38,7 @@ import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
+import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.api.FormDisplayService;
 
 /**
@@ -51,6 +55,9 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     private FileService fileService;
     @Inject
     private FormDisplayService displayService;
+    
+    @Inject 
+    private FormBuilderService formService;
     
     @Inject
     Event<PaletteItemAddedEvent> itemAddedEvents;
@@ -112,5 +119,29 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public void completeForm(long id, String userId, Map<String, String> params) {
         displayService.completeForm(id, userId, params);
     }
+
+    public String saveForm(FormRepresentation form) {
+        try {
+            return formService.saveForm(form);
+        } catch (FormBuilderException ex) {
+            Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void saveFormItem(FormItemRepresentation formItem, String formItemName) {
+        try {
+            formService.saveFormItem(formItem, formItemName);
+        } catch (FormBuilderException ex) {
+            Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public FormRepresentation loadForm(String json)  {
+        return formService.loadForm(json);
+    }
+    
+   
+    
     
 }

@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jbpm.form.builder.services.internal;
+package org.jbpm.form.builder.ng.server.fb;
 
-import org.jbpm.form.builder.services.annotations.FormPersistence;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManagerFactory;
@@ -16,7 +15,6 @@ import org.jboss.solder.core.ExtensionManaged;
  */
 
 public class FormDatabaseProducer {
-    @FormPersistence
     @PersistenceUnit(unitName = "org.jbpm.form.builder")
     @ExtensionManaged
     @ApplicationScoped
