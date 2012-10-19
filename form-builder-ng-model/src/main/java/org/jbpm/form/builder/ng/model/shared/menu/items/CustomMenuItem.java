@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableHandler;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
@@ -31,11 +32,9 @@ import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
 import org.jbpm.form.builder.ng.model.common.panels.CommandPopupPanel;
 import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 
-import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -56,6 +55,7 @@ public class CustomMenuItem extends FBMenuItem {
     private FormItemRepresentation representation;
     private String groupName;
     private String iconUrlAsString;
+
     
     public CustomMenuItem() {
         //needs a default constructor for reconstruction from xml in GWT

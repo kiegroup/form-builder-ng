@@ -20,7 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionHandler;
+import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
+import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
+import org.jbpm.form.builder.ng.model.shared.api.FBScript;
 
 import com.allen_sauer.gwt.dnd.client.HasDragHandle;
 import com.google.gwt.resources.client.ImageResource;
@@ -32,9 +35,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
-import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FBScript;
 
 /**
  * Base class for all menu items.
@@ -45,6 +45,7 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
     private FocusPanel shim = new FocusPanel();
     private final List<FBFormEffect> formEffects;
     private final List<String> allowedEvents = new ArrayList<String>();
+    private FormItemSelectionHandler itemSelectionHandler;
     
     public FBMenuItem() {
         this(new ArrayList<FBFormEffect>());
@@ -173,6 +174,7 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
                 item.addAllowedEvent(allowedEvent);
             }
         }
+        item.setItemSelectionHandler(this.itemSelectionHandler);
         return item;
     }
     
@@ -185,6 +187,7 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
         if (getAllowedEvents() != null) {
             item.setEventActions(getAllowedEventsAsMap());
         }
+        item.setItemSelectionHandler(this.itemSelectionHandler);
         return item;
     }
     
@@ -219,4 +222,9 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
         }
         return map;
     }
+    
+	public void setItemSelectionHandler(FormItemSelectionHandler itemSelectionHandler) {
+		this.itemSelectionHandler = itemSelectionHandler;
+	}
+
 }
