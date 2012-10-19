@@ -37,8 +37,8 @@
         <module>form-builder-ng-showcase</module>
     </modules>
     <properties>
-        <jbpm.version>5.5.0-SNAPSHOT</jbpm.version>
-        <errai.version>2.1.0.Beta1</errai.version>
+        <jbpm.version>6.0.0-SNAPSHOT</jbpm.version>
+        <errai.version>2.1.0.Final</errai.version>
         <uberfire.version>0.1-SNAPSHOT</uberfire.version>
         <seam.version>3.1.0.Final</seam.version>
         <weld.version>1.1.8.Final</weld.version>
@@ -75,11 +75,6 @@
                 <groupId>org.jbpm</groupId>
                 <artifactId>jbpm-persistence-jpa</artifactId>
                 <version>${jbpm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.uberfire</groupId>
-                <artifactId>security-client</artifactId>
-                <version>${uberfire.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jbpm</groupId>
