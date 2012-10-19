@@ -22,24 +22,26 @@ import java.util.Map;
 
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
-import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.common.panels.CommandPopupPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableHandler;
+import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
+import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
+import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
+import org.jbpm.form.builder.ng.model.common.panels.CommandPopupPanel;
+import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 
+import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 
 /**
  * This class is used to store a POJO representation of
@@ -53,6 +55,7 @@ public class CustomMenuItem extends FBMenuItem {
     private String optionName;
     private FormItemRepresentation representation;
     private String groupName;
+    private String iconUrlAsString;
     
     public CustomMenuItem() {
         //needs a default constructor for reconstruction from xml in GWT
@@ -154,8 +157,17 @@ public class CustomMenuItem extends FBMenuItem {
     }
 
     @Override
+    protected String getIconUrlAsString() {
+    	return iconUrlAsString;
+    }
+    
+    public void setIconUrlAsString(String iconUrlAsString) {
+		this.iconUrlAsString = iconUrlAsString;
+	}
+
+    @Override
     protected ImageResource getIconUrl() {
-        return FormBuilderResources.INSTANCE.questionIcon();
+   		return FormBuilderResources.INSTANCE.questionIcon();
     }
 
     @Override
@@ -165,8 +177,10 @@ public class CustomMenuItem extends FBMenuItem {
 
     @Override
     public FBMenuItem cloneWidget() {
-        return clone(new CustomMenuItem(representation, optionName, 
-                new ArrayList<FBFormEffect>(getFormEffects()), groupName));
+    	CustomMenuItem customItem = new CustomMenuItem(representation, optionName, new ArrayList<FBFormEffect>(getFormEffects()), groupName);
+    	customItem.setIconUrlAsString(this.iconUrlAsString);
+    	customItem.repaint();
+        return clone(customItem);
     }
 
     @Override

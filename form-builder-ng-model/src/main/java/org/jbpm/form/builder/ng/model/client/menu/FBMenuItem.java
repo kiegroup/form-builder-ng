@@ -60,7 +60,11 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
             remove(0);
         }
         Panel panel = new HorizontalPanel();
-        panel.add(new Image(getIconUrl().getURL()));
+        String urlIcon = getIconUrl().getSafeUri().asString();
+        if (getIconUrlAsString() != null) {
+        	urlIcon = getIconUrlAsString();
+        }
+        panel.add(new Image(urlIcon));
         panel.add(new HTML("&nbsp;"));
         panel.add(getDescription());
         add(panel);
@@ -136,6 +140,14 @@ public abstract class FBMenuItem extends AbsolutePanel implements HasDragHandle 
         this.formEffects.add(effect);
     }
 
+    /**
+     * This method can be overriden so that you can specify at runtime the URL of an icon.
+     * @return an URL, but it will always return null unless you override it
+     */
+    protected String getIconUrlAsString() {
+    	return null;
+    }
+    
     /**
      * This method returns an icon that visually represents 
      * the UI component this menu item creates.

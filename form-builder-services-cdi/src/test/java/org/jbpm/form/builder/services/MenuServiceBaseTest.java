@@ -227,6 +227,7 @@ public abstract class MenuServiceBaseTest {
         sampleDescription.setEffects(new ArrayList<FormEffectDescription>());
         FormItemRepresentation item = MockFormHelper.createMockForm("form", "param1").getFormItems().iterator().next();
         sampleDescription.setItemRepresentation(item);
+        sampleDescription.setIconUrl("https://www.google.com/images/srpr/logo3w.png");
         sampleDescription.setName("name");
         try {
             service.saveMenuItem("group", sampleDescription);
