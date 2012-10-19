@@ -286,7 +286,6 @@
                      "width": "300px",
                      "format": null,
                      "effectClasses": [
-                        
                      ],
                      "id": "",
                      "input": null,
@@ -303,7 +302,6 @@
                      "external": null,
                      "width": "300px",
                      "effectClasses": [
-                        
                      ],
                      "id": "",
                      "input": null,
@@ -318,7 +316,7 @@
                ],
                "output": null,
                "typeId": "flowPanel",
-               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
+               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                "cssClassName": ""
             },
             "effects": [
@@ -351,7 +349,6 @@
                "external": null,
                "width": "95%",
                "effectClasses": [
-                  
                ],
                "id": "",
                "input": null,
@@ -365,7 +362,6 @@
                      "width": "300px",
                      "format": null,
                      "effectClasses": [
-                        
                      ],
                      "id": "",
                      "input": null,
@@ -381,9 +377,7 @@
                      "itemValidations": [],
                      "external": null,
                      "width": "300px",
-                     "effectClasses": [
-                        
-                     ],
+                     "effectClasses": [],
                      "id": "",
                      "input": null,
                      "height": "25px",
@@ -397,7 +391,7 @@
                ],
                "output": null,
                "typeId": "flowPanel",
-               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
+               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                "cssClassName": ""
             },
             "effects": [
@@ -430,7 +424,6 @@
                "external": null,
                "width": "95%",
                "effectClasses": [
-                  
                 ],
                 "id": "",
                 "input": null,
@@ -444,7 +437,6 @@
                       "width": "300px",
                       "format": null,
                       "effectClasses": [
-                         
                       ],
                       "id": "",
                       "input": null,
@@ -462,7 +454,6 @@
                       "external": null,
                       "width": "90%",
                       "effectClasses": [
-                         
                       ],
                       "rows": 7,
                       "id": null,
@@ -477,7 +468,7 @@
                 ],
                 "output": null,
                 "typeId": "flowPanel",
-                "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
+                "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
                 "cssClassName": ""
              },
              "effects": [
@@ -510,7 +501,6 @@
               "external": null,
               "width": "95%",
               "effectClasses": [
-                 
               ],
               "id": "",
               "input": null,
@@ -524,7 +514,6 @@
                     "width": "300px",
                     "format": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "input": null,
@@ -542,7 +531,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -558,7 +546,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -577,7 +564,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                            
                           ],
                           "id": null,
                           "input": null,
@@ -602,7 +588,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -618,7 +603,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                            
                           ],
                           "id": null,
                           "input": null,
@@ -637,7 +621,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                            
                           ],
                           "id": null,
                           "input": null,
@@ -662,7 +645,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -678,7 +660,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -697,7 +678,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                            
                           ],
                           "id": null,
                           "input": null,
@@ -718,7 +698,7 @@
               ],
               "output": null,
               "typeId": "flowPanel",
-              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
+              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
               "cssClassName": ""
            },
            "effects": [
@@ -751,7 +731,6 @@
               "external": null,
               "width": "95%",
               "effectClasses": [
-                
               ],
               "id": "",
               "input": null,
@@ -765,7 +744,6 @@
                     "width": "300px",
                     "format": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "input": null,
@@ -783,7 +761,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -799,7 +776,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -818,7 +794,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -843,7 +818,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -859,7 +833,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -878,7 +851,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -903,7 +875,6 @@
                     "width": "300px",
                     "spacing": null,
                     "effectClasses": [
-                       
                     ],
                     "id": "",
                     "horizontalAlignment": "",
@@ -919,7 +890,6 @@
                           "external": null,
                           "width": "15px",
                           "effectClasses": [
-                            
                           ],
                           "id": null,
                           "input": null,
@@ -938,7 +908,6 @@
                           "width": "200px",
                           "format": null,
                           "effectClasses": [
-                             
                           ],
                           "id": null,
                           "input": null,
@@ -959,7 +928,7 @@
               ],
               "output": null,
               "typeId": "flowPanel",
-              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
+              "@className": "org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation",
               "cssClassName": ""
            },
            "effects": [
@@ -983,7 +952,7 @@
                 "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup",
                 "onkeydown", "onkeypress", "onkeyup", "onselect"
           ]
-      }
+       }
     ]
  }
  

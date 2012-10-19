@@ -111,6 +111,9 @@ public interface FormBuilderResources extends ClientBundle {
 
     @Source("images/flow_layout_icon.png")
     ImageResource flowLayoutIcon();
+    
+    @Source("images/vertical_layout_icon.png")
+    ImageResource verticalLayoutIcon();
 
     @Source("images/lineGraph.png")
     ImageResource lineGraph();

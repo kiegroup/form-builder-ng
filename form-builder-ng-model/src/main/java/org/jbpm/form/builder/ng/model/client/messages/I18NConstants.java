@@ -132,6 +132,7 @@ public interface I18NConstants extends Messages {
     String MenuItemTableLayout();
     String MenuItemFlexibleTable();
     String MenuItemFlowLayout();
+    String MenuItemVerticalLayout();
     String MenuItemHeader();
     String MenuItemLabel();
     String MenuItemPasswordField();
