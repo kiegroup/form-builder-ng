@@ -15,43 +15,43 @@
  */
 package org.jbpm.form.builder.ng.model.client.bus;
 
-import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
+import java.io.Serializable;
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.jboss.errai.common.client.api.annotations.Portable;
+import org.jbpm.form.builder.ng.model.client.form.EditionContext;
 
 /**
  * Notifies an instance of FBFormItem has focus
  */
-public class FormItemSelectionEvent extends GwtEvent<FormItemSelectionHandler> {
+@Portable
+public class FormItemSelectionEvent implements Serializable{
 
-    public static Type<FormItemSelectionHandler> TYPE = new Type<FormItemSelectionHandler>();
+    private EditionContext context;
+    private boolean selected;
+
+    public FormItemSelectionEvent() {
+		// default constructor for errai injection
+	}
     
-    private final FBFormItem formItemSelected;
-    private final boolean selected;
-    
-    public FormItemSelectionEvent(FBFormItem formItemSelected, boolean selected) {
+    public FormItemSelectionEvent(EditionContext context, boolean selected) {
         super();
-        this.formItemSelected = formItemSelected;
+        this.context = context;
         this.selected = selected;
     }
     
-    public FBFormItem getFormItemSelected() {
-        return formItemSelected;
+    public EditionContext getContext() {
+        return context;
     }
     
     public boolean isSelected() {
         return selected;
     }
     
-    @Override
-    public Type<FormItemSelectionHandler> getAssociatedType() {
-        return TYPE;
-    }
-
-    @Override
-    protected void dispatch(FormItemSelectionHandler handler) {
-        handler.onEvent(this);
-        
-    }
-
+    public void setContext(EditionContext context) {
+		this.context = context;
+	}
+    
+    public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }

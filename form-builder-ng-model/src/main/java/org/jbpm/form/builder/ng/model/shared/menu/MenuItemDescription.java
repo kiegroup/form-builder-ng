@@ -35,6 +35,7 @@ public class MenuItemDescription implements Mappable {
 
     private String className;
     private String name;
+    private String iconUrl;
     private FormItemRepresentation itemRepresentation;
     private List<FormEffectDescription> effects = new ArrayList<FormEffectDescription>();
     private List<String> allowedEvents = new ArrayList<String>();
@@ -55,6 +56,14 @@ public class MenuItemDescription implements Mappable {
         this.name = name;
     }
 
+    public String getIconUrl() {
+		return iconUrl;
+	}
+    
+    public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+    
     public FormItemRepresentation getItemRepresentation() {
         return itemRepresentation;
     }
@@ -95,6 +104,7 @@ public class MenuItemDescription implements Mappable {
             data.put("effects", effectsMap);
         }
         data.put("allowedEvents", this.allowedEvents);
+        data.put("iconUrl", this.iconUrl);
         return data;
     }
 
@@ -103,6 +113,7 @@ public class MenuItemDescription implements Mappable {
     public void setDataMap(Map<String, Object> data) throws FormEncodingException {
         this.className = (String) data.get("className");
         this.name = (String) data.get("name");
+        this.iconUrl = (String) data.get("iconUrl");
         List<Object> effectsMap = (List<Object>) data.get("effects");
         this.effects.clear();
         if (effectsMap != null) {
