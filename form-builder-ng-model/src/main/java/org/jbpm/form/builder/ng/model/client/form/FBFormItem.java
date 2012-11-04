@@ -23,6 +23,7 @@ import java.util.Map;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionEvent;
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionHandler;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.menu.EffectsPopupPanel;
 import org.jbpm.form.builder.ng.model.client.validation.FBValidationItem;
@@ -37,18 +38,17 @@ import org.jbpm.form.builder.ng.model.shared.api.FBValidation;
 import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
 import org.jbpm.form.builder.ng.model.shared.api.InputData;
 import org.jbpm.form.builder.ng.model.shared.api.OutputData;
+import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 
 /**
  * Base class for UI components. Contains most of the edition definitions: right
@@ -60,6 +60,7 @@ public abstract class FBFormItem extends FocusPanel {
     private List<FBValidationItem> validations = new ArrayList<FBValidationItem>();
     private Map<String, FBScript> eventActions = new HashMap<String, FBScript>();
     private List<FBFormEffect> effects = new ArrayList<FBFormEffect>();
+    private FormItemSelectionHandler itemSelectionHandler;
 
     private int desiredX;
     private int desiredY;
@@ -73,6 +74,9 @@ public abstract class FBFormItem extends FocusPanel {
     private InputData input = null;
     private OutputData output = null;
     private ExternalData external = null;
+    
+    //unique identifier for this instance on runtime
+    private final String ID = FormIDGenerator.nextId();
 
     public FBFormItem(List<FBFormEffect> formEffects) {
         this.effects.addAll(formEffects);
@@ -125,7 +129,7 @@ public abstract class FBFormItem extends FocusPanel {
 
     private void makeEditor() {
         if (!getFormItemPropertiesMap().isEmpty() && !isAlreadyEditing()) {
-            fireSelectionEvent(new FormItemSelectionEvent(this, true));
+            fireSelectionEvent(new FormItemSelectionEvent(getContext(), true));
         }
         FBInplaceEditor inplaceEditor = createInplaceEditor();
         if (inplaceEditor != null && !isAlreadyEditing()) {
@@ -150,7 +154,7 @@ public abstract class FBFormItem extends FocusPanel {
             clear();
             add(auxiliarWidget);
             setAlreadyEditing(false);
-            fireSelectionEvent(new FormItemSelectionEvent(this, false));
+            fireSelectionEvent(new FormItemSelectionEvent(getContext(), false));
         }
     }
 
@@ -159,8 +163,7 @@ public abstract class FBFormItem extends FocusPanel {
     }
 
     public final void fireSelectionEvent(FormItemSelectionEvent event) {
-        EventBus bus = CommonGlobals.getInstance().getEventBus();
-        bus.fireEvent(event);
+        itemSelectionHandler.onEvent(event);
     }
 
     @Override
@@ -286,6 +289,10 @@ public abstract class FBFormItem extends FocusPanel {
     protected void setEffects(List<FBFormEffect> effects) {
         this.effects = effects;
     }
+    
+    public void setItemSelectionHandler(FormItemSelectionHandler itemSelectionHandler) {
+		this.itemSelectionHandler = itemSelectionHandler;
+	}
 
     protected <T extends FBFormItem> T cloneItem(T clone) {
         clone.setValidations(this.validations);
@@ -364,6 +371,22 @@ public abstract class FBFormItem extends FocusPanel {
     public FBInplaceEditor createInplaceEditor() {
         return null;
     }
+    
+    
+    public EditionContext getContext() {
+    	Map<String, Object> map = this.getFormItemPropertiesMap();
+    	EditionContext context = new EditionContext();
+    	context.setMap(map);
+    	context.setId(ID);
+    	return context;
+    }
+    
+    public void save(EditionContext context) {
+    	if (ID.equals(context.getId())) {
+    		saveValues(context.getMap());
+    	}
+    }
+    
 
     /**
      * This method must be defined to tell outside default editors what
