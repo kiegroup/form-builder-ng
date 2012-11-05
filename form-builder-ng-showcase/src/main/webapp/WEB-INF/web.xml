@@ -5,34 +5,6 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-  <context-param>
-    <param-name>resteasy.injector.factory</param-name>
-    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
-  </context-param>
-
-  <context-param>
-    <param-name>resteasy.scan</param-name>
-    <param-value>true</param-value>
-  </context-param>
-
-  <!-- We have to register RestEasy providers manually during integration testing because the scan doesn't see them. -->
-  <context-param>
-    <param-name>resteasy.providers</param-name>
-    <param-value>org.jboss.errai.jaxrs.ErraiProvider</param-value>
-  </context-param>
-
-  <filter>
-    <filter-name>Resteasy</filter-name>
-    <filter-class>
-      org.jboss.resteasy.plugins.server.servlet.FilterDispatcher
-    </filter-class>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>Resteasy</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
   <filter>
     <filter-name>UberFire Security Filter</filter-name>
     <filter-class>
@@ -54,6 +26,22 @@
   <servlet-mapping>
     <servlet-name>UberFireServlet</servlet-name>
     <url-pattern>/org.jbpm.form.builder.ng.FormBuilderShowcase/FormBuilder.html</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>UberFireImageServlet</servlet-name>
+    <servlet-class>org.uberfire.server.UberfireImageServlet</servlet-class>
+    <init-param>
+      <param-name>org.uberfire.images.paths</param-name>
+      <param-value>/org.uberfire.UberfireShowcase</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UberFireImageServlet</servlet-name>
+    <url-pattern>/org.uberfire.UberfireShowcase/uberFireImages/*</url-pattern>
   </servlet-mapping>
 
   <servlet>

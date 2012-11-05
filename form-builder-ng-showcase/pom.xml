@@ -76,11 +76,19 @@
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>widgets-core</artifactId>
+            <artifactId>widgets-core-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>widgets-core-backend</artifactId>
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>widgets-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uberfire</groupId>
+            <artifactId>widget-markdown</artifactId>
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
@@ -100,33 +108,26 @@
         <!-- Errai Core -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-bus</artifactId>
+            <artifactId>errai-cdi-client</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-ui</artifactId>
+            <artifactId>errai-javax-enterprise</artifactId>
+            <scope>provided</scope>
         </dependency>
                 
         <dependency>
             <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-data-binding</artifactId>
+            <artifactId>errai-weld-integration</artifactId>
         </dependency>
 
 
         <!-- CDI Integration Modules -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-cdi-client</artifactId>
+            <artifactId>errai-cdi-jetty</artifactId>
         </dependency>
-
-        <!-- TODO I'd like to remove this from here, but it's a dependency of errai-cdi-client -->
-        <dependency>
-            <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-javax-enterprise</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
 
         <!-- CDI Development Utils -->
         <!-- This must be placed above com.google.gwt:gwt-dev to override the Jetty that is present there -->
@@ -141,26 +142,30 @@
         </dependency>
         
         <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty-naming</artifactId>
         </dependency>
-    
-        <!-- Weld Modules -->
+
         <dependency>
             <groupId>org.jboss.errai</groupId>
-            <artifactId>errai-weld-integration</artifactId>
+            <artifactId>errai-ui</artifactId>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.jboss.errai</groupId>
+            <artifactId>errai-data-binding</artifactId>
         </dependency>
 
+        <!-- Weld Modules -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+        </dependency>
 
         <!-- GWT and GWT Extensions -->
         <dependency>
@@ -199,6 +204,7 @@
         <dependency>
             <groupId>org.mvel</groupId>
             <artifactId>mvel2</artifactId>
+            <version>2.1.3.Final</version>
         </dependency>
 
         <!-- Form Builder Related -->
@@ -228,8 +234,22 @@
             <artifactId>gwt-visualization</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <scope>provided</scope>
+        </dependency>
        
-       
+        <!-- Charts -->
+        <dependency>
+            <groupId>com.googlecode.gchart</groupId>
+            <artifactId>gchart</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -366,7 +386,7 @@
 
         <pluginManagement>
             <plugins>
-                <plugin>
+                <!--plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
                     <configuration>
@@ -401,7 +421,7 @@
                             </pluginExecutions>
                         </lifecycleMappingMetadata>
                     </configuration>
-                </plugin>
+                </plugin-->
             </plugins>
         </pluginManagement>
     </build>

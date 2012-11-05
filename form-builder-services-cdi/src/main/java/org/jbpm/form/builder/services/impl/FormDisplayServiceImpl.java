@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import org.droolsjbpm.services.api.KnowledgeDomainService;
+import org.droolsjbpm.services.api.bpmn2.BPMN2DataService;
 import org.jbpm.form.builder.services.api.FormDisplayService;
 import org.jbpm.task.Content;
 import org.jbpm.task.I18NText;
@@ -35,63 +37,70 @@ import org.jbpm.task.api.TaskQueryService;
 import org.jbpm.task.utils.ContentMarshallerHelper;
 
 @ApplicationScoped
-public class FormDisplayServiceImpl implements FormDisplayService { 
-    
+public class FormDisplayServiceImpl implements FormDisplayService {
+
     @Inject
     private TaskQueryService queryService;
     @Inject
     private TaskContentService contentService;
-    
     @Inject
     private TaskInstanceService instanceService;
-    
+    @Inject
+    private BPMN2DataService bpmn2Service;
+    @Inject
+    private KnowledgeDomainService domainService;
+
     public String getFormDisplay(long taskId) {
         Task task = queryService.getTaskInstanceById(taskId);
-        
-        
+
+
         Object input = null;
         long contentId = task.getTaskData().getDocumentContentId();
         if (contentId != -1) {
             Content content = contentService.getContentById(contentId);
             input = ContentMarshallerHelper.unmarshall(content.getContent(), null);
         }
-        
-  
+        if(input == null){
+            input = new HashMap<String, String>();
+        }
+
         // check if a template exists
         String name = null;
         List<I18NText> names = task.getNames();
-        for (I18NText text: names) {
+        for (I18NText text : names) {
             if ("en-UK".equals(text.getLanguage())) {
                 name = text.getText();
             }
         }
-       
-        
+
+
         InputStream template = getClass().getResourceAsStream("/ftl/DefaultTask.ftl");
-        
+        String processId = task.getTaskData().getProcessId();
+        Map<String, String> taskOutputMappings = null;
+        if (processId != null && !processId.equals("")) {
+            String processDef = domainService.getAvailableProcesses().get(processId);
+            
+            if (processDef != null && !processDef.equals("")) {
+   
+                taskOutputMappings = bpmn2Service.getTaskOutputMappings(processDef, task.getNames().iterator().next().getText());
+            }
+        }
+        if(taskOutputMappings == null){
+             taskOutputMappings = new HashMap<String, String>();
+        }
 
         // merge template with process variables
         Map<String, Object> renderContext = new HashMap<String, Object>();
         renderContext.put("task", task);
-        renderContext.put("content", input);
-        if (input instanceof Map) {
-            Map<?, ?> map = (Map) input;
-            for (Map.Entry<?, ?> entry: map.entrySet()) {
-                if (entry.getKey() instanceof String) {
-                    renderContext.put((String) entry.getKey(), entry.getValue());
-                }
-            }
-        }
+        renderContext.put("inputs", input);
+        renderContext.put("outputs", taskOutputMappings);
+
         return render(name, template, renderContext);
-    
-    
+
+
     }
-    
-    public void completeForm(long id, String userId, Map<String, String> params) {
-        instanceService.complete(id, userId, (Map)params);
-    }
-    
-    
+
+
     public String render(String name, InputStream src, Map<String, Object> renderContext) {
         String str = null;
         try {
@@ -109,5 +118,4 @@ public class FormDisplayServiceImpl implements FormDisplayService {
         }
         return str;
     }
- 
 }

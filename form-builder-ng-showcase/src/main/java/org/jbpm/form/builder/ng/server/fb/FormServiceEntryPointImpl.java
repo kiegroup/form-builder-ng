@@ -40,6 +40,7 @@ import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.api.FormDisplayService;
+import org.jbpm.task.api.TaskServiceEntryPoint;
 
 /**
  *
@@ -116,9 +117,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
         return displayService.getFormDisplay(taskId);
     }
 
-    public void completeForm(long id, String userId, Map<String, String> params) {
-        displayService.completeForm(id, userId, params);
-    }
+  
 
     public String saveForm(FormRepresentation form) {
         try {

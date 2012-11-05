@@ -13,48 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.client.fb.view;
+package org.jbpm.form.builder.ng.client.fb.view.canvas;
 
-import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
-import org.jbpm.form.builder.ng.client.fb.command.DisposeDropController;
-import org.jbpm.form.builder.ng.client.fb.view.canvas.CanvasViewImpl;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
-import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
 import org.uberfire.client.mvp.UberView;
+import org.uberfire.client.workbench.widgets.dnd.WorkbenchPickupDragController;
 
 @Dependent
-@WorkbenchScreen(identifier = "Form Builder")
-public class FormBuilderPresenter {
+@WorkbenchScreen(identifier = "Form Builder - Canvas")
+public class FormBuilderCanvasPresenter {
 
     @Inject
     private FormBuilderView view;
     @Inject
     private Caller<FormServiceEntryPoint> formServices;
 
+    @Inject WorkbenchPickupDragController dndController;
+    
     public interface FormBuilderView
             extends
-            UberView<FormBuilderPresenter> {
+            UberView<FormBuilderCanvasPresenter> {
 
-        ScrollPanel getMenuView();
+        
 
         ScrollPanel getLayoutView();
         
@@ -64,45 +59,10 @@ public class FormBuilderPresenter {
     @PostConstruct
     public void init() {
         CommonGlobals.getInstance().registerI18n((I18NConstants) GWT.create(I18NConstants.class));
-        PickupDragController dragController = new PickupDragController(view.getPanel(), true);
-        dragController.registerDropController(new DisposeDropController(view.getPanel()));
-        CommonGlobals.getInstance().registerDragController(dragController);
-        try {
-            formServices.call(new RemoteCallback<Map<String, String>>() {
-                @Override
-                public void callback(Map<String, String> properties) {
-                    for (String key : properties.keySet()) {
-                        RepresentationFactory.registerItemClassName(key, properties.get(key));
-                    }
-
-                }
-            }).getFormBuilderProperties();
-            
-            System.out.println("XXXXX  Calling List Menu Items" + this.hashCode());
-            
-            formServices.call(new RemoteCallback<Void>() {
-                @Override
-                public void callback(Void nothing) {
-                    System.out.println("XXXXX  RETURN List Menu Items");
-                }
-            }).listMenuItems();
-
-
-        } catch (MenuServiceException ex) {
-            Logger.getLogger(FormBuilderPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    @UiHandler(value="saveButton")
-    public void saveForm(FormRepresentation formRep){
         
-        formServices.call(new RemoteCallback<String>() {
-                @Override
-                public void callback(String content) {
-                    System.out.println("XXXXX  RETURN List Menu Items"+content);
-                }
-        }).saveForm(formRep);
-    
+        
     }
+   
     
     
     public void decodeForm(String jsonForm) {
@@ -116,14 +76,27 @@ public class FormBuilderPresenter {
     
     }
     
+    @UiHandler(value="saveButton")
+    public void saveForm(FormRepresentation formRep){
+        
+        formServices.call(new RemoteCallback<String>() {
+                @Override
+                public void callback(String content) {
+                    System.out.println("XXXXX  RETURN List Menu Items"+content);
+                }
+        }).saveForm(formRep);
+    
+    }
+    
+    
     
     @WorkbenchPartTitle
     public String getTitle() {
-        return "Form Builder";
+        return "Form Builder - Canvas";
     }
 
     @WorkbenchPartView
-    public UberView<FormBuilderPresenter> getView() {
+    public UberView<FormBuilderCanvasPresenter> getView() {
         return view;
     }
 }

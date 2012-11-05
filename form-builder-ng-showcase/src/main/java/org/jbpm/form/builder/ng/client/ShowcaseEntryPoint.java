@@ -56,7 +56,7 @@ import org.uberfire.client.mvp.ActivityManager;
 public class ShowcaseEntryPoint {
 
     
-    private String[] menuItems = new String[]{"Form Builder", "Form Display"};
+    private String[] menuItems = new String[]{"Form Builder - Canvas", "Form Builder - Palette", "Form Builder - Properties", "Form Display"};
     @Inject
     private PlaceManager placeManager;
     @Inject
@@ -87,7 +87,7 @@ public class ShowcaseEntryPoint {
          //Home
         final AbstractWorkbenchPerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
         if ( defaultPerspective != null ) {
-            menubar.addMenuItem( new DefaultMenuItemCommand( "Home",
+            menubar.addWorkbenchItem( new DefaultMenuItemCommand( "Home",
                                                              new Command() {
                                                                  @Override
                                                                  public void execute() {
@@ -115,7 +115,7 @@ public class ShowcaseEntryPoint {
                                                                      cmd );
             perspectivesMenuBar.addItem( item );
         }
-        menubar.addMenuItem( perspectivesMenu );
+        menubar.addWorkbenchItem( perspectivesMenu );
         //Add places
         Arrays.sort(menuItems);
         for (final String menuItem : menuItems) {
@@ -136,7 +136,7 @@ public class ShowcaseEntryPoint {
             }
         });
         placesMenuBar.addItem(item);
-        menubar.addMenuItem(placesMenu);
+        menubar.addWorkbenchItem(placesMenu);
     }
     
     private AbstractWorkbenchPerspectiveActivity getDefaultPerspectiveActivity() {

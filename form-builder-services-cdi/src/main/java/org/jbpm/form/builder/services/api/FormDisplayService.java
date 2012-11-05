@@ -23,5 +23,4 @@ import java.util.Map;
  */
 public interface FormDisplayService {
     String getFormDisplay(long taskId);
-    void completeForm(long id, String userId, Map<String, String> params);
 }
