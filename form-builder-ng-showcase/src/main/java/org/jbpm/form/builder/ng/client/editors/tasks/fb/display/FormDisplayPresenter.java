@@ -124,11 +124,11 @@ public class FormDisplayPresenter {
     private native void publish(FormDisplayPresenter fdp) /*-{
      
      $wnd.completeTask = function(from) {
-     fdp.@org.jbpm.console.ng.client.editors.tasks.fb.display.FormDisplayPresenter::completeTask(Ljava/lang/String;)(from);
+     fdp.@org.jbpm.form.builder.ng.client.editors.tasks.fb.display.FormDisplayPresenter::completeTask(Ljava/lang/String;)(from);
      }
      
      $wnd.startTask = function(from) {
-     fdp.@org.jbpm.console.ng.client.editors.tasks.fb.display.FormDisplayPresenter::startTask(Ljava/lang/String;)(from);
+     fdp.@org.jbpm.form.builder.ng.client.editors.tasks.fb.display.FormDisplayPresenter::startTask(Ljava/lang/String;)(from);
      }
         
      }-*/;
