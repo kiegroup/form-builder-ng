@@ -19,12 +19,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionEvent;
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionHandler;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+import org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem;
+import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.uberfire.client.mvp.PlaceManager;
 
 import com.google.gwt.core.client.GWT;
@@ -33,8 +38,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem;
-import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 
 /**
  * Main view. Uses UIBinder to define the correct position of components
@@ -52,10 +55,10 @@ public class FormBuilderPaletteViewImpl extends AbsolutePanel
     @Inject
     private PlaceManager placeManager;
     private FormBuilderPalettePresenter presenter;
+    @Inject
+    private Event<FormItemSelectionEvent> eventSelection;
     public @UiField(provided = true)
     ScrollPanel menuView;
-    
-    
     
     @Override
     public void init(final FormBuilderPalettePresenter presenter) {
@@ -89,10 +92,19 @@ public class FormBuilderPaletteViewImpl extends AbsolutePanel
                    customItem.setRepresentation(menuItemDescription.getItemRepresentation());
                    customItem.setOptionName(optionName);
                    customItem.setGroupName(event.getGroupName());
-                   
+                   if (menuItemDescription.getIconUrl() != null) {
+                     String baseUrl = GWT.getHostPageBaseURL().replace(GWT.getModuleName() + "/", "");
+                     customItem.setIconUrlAsString(baseUrl + menuItemDescription.getIconUrl());
+                   }
+                   customItem.repaint();                   
                }
             FBMenuItem item = (FBMenuItem) newInstance;
-
+            item.setItemSelectionHandler(new FormItemSelectionHandler() {
+                @Override
+            	public void onEvent(FormItemSelectionEvent event) {
+            		eventSelection.fire(event);
+            	}
+            });
             ((PaletteView) menuView).addItem(group,
                     item);
             

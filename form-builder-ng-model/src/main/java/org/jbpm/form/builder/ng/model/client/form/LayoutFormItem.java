@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionHandler;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBCompositeItem;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
@@ -146,5 +147,13 @@ public abstract class LayoutFormItem extends FBFormItem implements
             return getPanel();
         }
         return null;
+    }
+    
+    @Override
+    public void setItemSelectionHandler(FormItemSelectionHandler itemSelectionHandler) {
+    	super.setItemSelectionHandler(itemSelectionHandler);
+    	for (FBFormItem item : items) {
+    		item.setItemSelectionHandler(itemSelectionHandler);
+    	}
     }
 }
