@@ -15,9 +15,10 @@
  */
 package org.jbpm.form.builder.ng.model.client;
 
+import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.event.shared.EventBus;
-import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 /**
  * 
@@ -36,7 +37,7 @@ public class CommonGlobals {
     private AbstractFormItemCommand paste;
     private PickupDragController dragController;
     private I18NConstants i18n;
-    private Settings settings;
+    private SettingsDTO settings;
     
     private CommonGlobals() {
     }
@@ -93,11 +94,11 @@ public class CommonGlobals {
         this.i18n = i18n;
     }
 
-    public Settings getSettings() {
+    public SettingsDTO getSettings() {
         return settings;
     }
 
-    public void setSettings(Settings settings) {
+    public void setSettings(SettingsDTO settings) {
         this.settings = settings;
     }
     

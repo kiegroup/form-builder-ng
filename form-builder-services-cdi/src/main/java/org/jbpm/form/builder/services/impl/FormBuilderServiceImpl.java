@@ -21,12 +21,12 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.Settings;
 import org.jbpm.form.builder.services.api.FormBuilderService;
+import org.jbpm.form.builder.services.api.FormBuilderServiceException;
 import org.jbpm.form.builder.services.encoders.FormEncodingServerFactory;
 import org.jbpm.form.builder.services.model.FormItemRepresentation;
 import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.Settings;
 import org.jbpm.form.builder.services.model.forms.FormEncodingException;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
@@ -37,15 +37,15 @@ import org.jbpm.form.builder.services.tasks.TaskRef;
 @ApplicationScoped
 public class FormBuilderServiceImpl implements FormBuilderService{
 
-    public void getMenuItems() throws FormBuilderException {
+    public void getMenuItems() throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getMenuOptions() throws FormBuilderException {
+    public void getMenuOptions() throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public String saveFormGWT(Map<String, Object> form) throws FormBuilderException {
+    public String saveFormGWT(Map<String, Object> form) throws FormBuilderServiceException {
     	FormRepresentation formRep = new FormRepresentation();
         String encode = null;
         try {
@@ -58,7 +58,7 @@ public class FormBuilderServiceImpl implements FormBuilderService{
     }
 
     @Override
-    public String saveForm(FormRepresentation form) throws FormBuilderException {
+    public String saveForm(FormRepresentation form) throws FormBuilderServiceException {
         String encode = null;
         try {
             encode = FormEncodingServerFactory.getEncoder().encode(form);
@@ -69,60 +69,60 @@ public class FormBuilderServiceImpl implements FormBuilderService{
     }
     
     @Override
-    public void saveFormItemGWT(Map<String, Object> formItem, String formItemName) throws FormBuilderException {
+    public void saveFormItemGWT(Map<String, Object> formItem, String formItemName) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void saveFormItem(FormItemRepresentation formItem, String formItemName) throws FormBuilderException {
+    public void saveFormItem(FormItemRepresentation formItem, String formItemName) throws FormBuilderServiceException {
     	throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public void deleteForm(FormRepresentation form) throws FormBuilderException {
+    public void deleteForm(FormRepresentation form) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void deleteFile(String url) throws FormBuilderException {
+    public void deleteFile(String url) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void deleteFormItem(String formItemName, FormItemRepresentation formItem) throws FormBuilderException {
+    public void deleteFormItem(String formItemName, FormItemRepresentation formItem) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void generateForm(FormRepresentation form, String language, Map<String, Object> inputs) throws FormBuilderException {
+    public void generateForm(FormRepresentation form, String language, Map<String, Object> inputs) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getExistingIoAssociations(String filter) throws FormBuilderException {
+    public void getExistingIoAssociations(String filter) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void selectIoAssociation(String pkgName, String processName, String taskName) throws FormBuilderException {
+    public void selectIoAssociation(String pkgName, String processName, String taskName) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getExistingValidations() throws FormBuilderException {
+    public void getExistingValidations() throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getForm(String formName) throws FormBuilderException {
+    public void getForm(String formName) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getForms() throws FormBuilderException {
+    public void getForms() throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void populateRepresentationFactory() throws FormBuilderException {
+    public void populateRepresentationFactory() throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderException {
+    public void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void getCurrentRoles(RolesResponseHandler handler) throws FormBuilderException {
+    public void getCurrentRoles(RolesResponseHandler handler) throws FormBuilderServiceException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

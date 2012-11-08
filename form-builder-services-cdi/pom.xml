@@ -24,10 +24,6 @@
             <artifactId>vfs-fs</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>form-builder-ng-model</artifactId>
-        </dependency>
         <!-- VFS: Simple FileSystem -->
         <dependency>
             <groupId>commons-io</groupId>

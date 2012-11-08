@@ -15,7 +15,9 @@
  */
 package org.jbpm.form.builder.services.api;
 
-import org.jbpm.form.builder.ng.model.client.Settings;
+import java.util.Map;
+
+import org.jbpm.form.builder.services.model.Settings;
 
 /**
  *
@@ -24,4 +26,7 @@ import org.jbpm.form.builder.ng.model.client.Settings;
 public interface SettingsService {
     public Settings getSettingsByUserId(String userName);
     public void applySettings(Settings settings, String userName);
+    
+    public Map<String, Object> getSettingsByUserIdGWT(String userName);
+    public void applySettingsGWT(Map<String, Object> settingsDto, String userName);
 }

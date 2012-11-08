@@ -16,8 +16,9 @@
 package org.jbpm.form.builder.ng.model.client.bus;
 
 
+import org.jbpm.form.builder.ng.model.client.SettingsDTO;
+
 import com.google.gwt.event.shared.GwtEvent;
-import org.jbpm.form.builder.ng.model.client.Settings;
 
 /**
  * Tells whoever asked that the form representation of the current client edition has been loaded
@@ -28,14 +29,14 @@ public class ApplySettingsEvent extends
     public static final Type<ApplySettingsHandler> TYPE = new Type<ApplySettingsHandler>();
     
     
-    private final Settings settings;
+    private final SettingsDTO settings;
     
-    public ApplySettingsEvent( Settings settings) {
+    public ApplySettingsEvent( SettingsDTO settings) {
         super();
         this.settings = settings;
     }
 
-    public Settings getSettings() {
+    public SettingsDTO getSettings() {
         return settings;
     }
 

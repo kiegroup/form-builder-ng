@@ -26,12 +26,12 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.jboss.errai.bus.server.annotations.Service;
-import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormBuilderService;
+import org.jbpm.form.builder.services.api.FormBuilderServiceException;
 import org.jbpm.form.builder.services.api.FormDisplayService;
 import org.jbpm.form.builder.services.api.MenuService;
 import org.jbpm.form.builder.services.api.MenuServiceException;
@@ -119,7 +119,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public String saveForm(Map<String, Object> form) {
         try {
             return formService.saveFormGWT(form);
-        } catch (FormBuilderException ex) {
+        } catch (FormBuilderServiceException ex) {
             Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -128,7 +128,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     public void saveFormItem(Map<String, Object> formItem, String formItemName) {
         try {
             formService.saveFormItemGWT(formItem, formItemName);
-        } catch (FormBuilderException ex) {
+        } catch (FormBuilderServiceException ex) {
             Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

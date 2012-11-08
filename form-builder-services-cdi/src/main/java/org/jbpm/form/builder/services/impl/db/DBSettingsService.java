@@ -15,12 +15,15 @@
  */
 package org.jbpm.form.builder.services.impl.db;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import org.jbpm.form.builder.ng.model.client.Settings;
+
 import org.jbpm.form.builder.services.api.SettingsService;
+import org.jbpm.form.builder.services.model.Settings;
 
 /**
  *
@@ -63,5 +66,19 @@ public class DBSettingsService implements SettingsService {
             ex.printStackTrace();
         }
 
+    }
+    
+    public Map<String, Object> getSettingsByUserIdGWT(String userName) {
+    	Settings settings = getSettingsByUserId(userName);
+    	if (settings == null) {
+    		return null;
+    	}
+    	return settings.getDataMap();
+    }
+    
+    public void applySettingsGWT(Map<String, Object> settingsDto, String userName) {
+    	Settings settings = new Settings();
+    	settings.setDataMap(settingsDto);
+    	applySettings(settings, userName);
     }
 }

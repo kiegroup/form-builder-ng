@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jbpm.form.builder.ng.model.client;
+package org.jbpm.form.builder.services.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -92,6 +94,37 @@ public class Settings implements Serializable {
     public String toString() {
         return "Settings{" + "id=" + id + ", userId=" + userId + ", entries=" + entries +  '}';
     }
+
+	public Map<String, Object> getDataMap() {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("org.jbpm.form.builder.services.model.Settings.userId", this.userId);
+		dataMap.put("org.jbpm.form.builder.services.model.Settings.id", this.id == null ? null : String.valueOf(this.id));
+		for (SettingsEntry entry : entries) {
+			dataMap.put(entry.getKey(), entry.getValue());
+			dataMap.put(entry.getKey() + "@org.jbpm.form.builder.services.model.SettingsEntry.id", 
+					entry.getId() == null ? null : String.valueOf(entry.getId()));
+		}
+		return dataMap;
+	}
+
+	public void setDataMap(Map<String, Object> settingsDto) {
+		Object objUserId = settingsDto.remove("org.jbpm.form.builder.services.model.Settings.userId");
+    	this.userId = objUserId == null ? null : String.valueOf(objUserId);
+    	Object objId = settingsDto.remove("org.jbpm.form.builder.services.model.Settings.id");
+    	this.id = objId == null ? null : Long.valueOf(String.valueOf(objId));
+    	this.entries.clear();
+    	for (Map.Entry<String, Object> entry : settingsDto.entrySet()) {
+    		if (entry.getKey().endsWith("@org.jbpm.form.builder.services.model.SettingsEntry.id")) {
+    			continue;
+    		}
+    		String value = entry.getValue() == null ? null : String.valueOf(entry.getValue());
+    		Object objEntryId = settingsDto.get(entry.getKey() + "@org.jbpm.form.builder.services.model.SettingsEntry.id"); 
+    		Long entryId = objEntryId == null ? null : Long.valueOf(String.valueOf(objEntryId));
+    		SettingsEntry settingsEntry = new SettingsEntry(entry.getKey(), value);
+    		settingsEntry.setId(entryId);
+    		entries.add(settingsEntry);
+    	}
+	}
 
     
     

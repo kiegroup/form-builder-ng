@@ -28,8 +28,8 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <mapping-file>META-INF/Settingsorm.xml</mapping-file>
      <mapping-file>META-INF/Taskorm.xml</mapping-file>
-    <class>org.jbpm.model.formapi.client.SettingsEntry</class>
-    <class>org.jbpm.model.formapi.client.Settings</class>
+    <class>org.jbpm.form.builder.services.model.SettingsEntry</class>
+    <class>org.jbpm.form.builder.services.model.Settings</class>
   
     <!--mapping-file>META-INF/TaskEventsorm.xml</mapping-file-->
 

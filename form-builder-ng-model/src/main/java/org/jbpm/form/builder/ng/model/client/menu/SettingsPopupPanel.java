@@ -15,7 +15,10 @@
  */
 package org.jbpm.form.builder.ng.model.client.menu;
 
-import org.jbpm.form.builder.ng.model.client.bus.FormDataPopulatedEvent;
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.client.SettingsDTO;
+import org.jbpm.form.builder.ng.model.client.SettingsEntryDTO;
+import org.jbpm.form.builder.ng.model.client.bus.ApplySettingsEvent;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,18 +27,12 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
-import org.jbpm.form.builder.ng.model.client.Settings;
-import org.jbpm.form.builder.ng.model.client.SettingsEntry;
-import org.jbpm.form.builder.ng.model.client.bus.ApplySettingsEvent;
-import org.jbpm.form.builder.ng.model.client.bus.SettingsPopulatedEvent;
 
 /**
  * form data popup panel. UI to alter form properties (enctype, action, name,
@@ -49,7 +46,7 @@ public class SettingsPopupPanel extends PopupPanel {
 
   
 
-    public SettingsPopupPanel( final Settings settings) {
+    public SettingsPopupPanel( final SettingsDTO settings) {
         super(true);
         setStyleName("commandPopupPanel");
         VerticalPanel vPanel = new VerticalPanel();
@@ -58,7 +55,7 @@ public class SettingsPopupPanel extends PopupPanel {
         
         storage.addItem("guvnor");
         storage.addItem("fs");
-        SettingsEntry entry = settings.getEntry("storage");
+        SettingsEntryDTO entry = settings.getEntry("storage");
         
         if(entry == null || "guvnor".equals(entry.getValue())){
             storage.setSelectedIndex(0);
@@ -81,7 +78,7 @@ public class SettingsPopupPanel extends PopupPanel {
             public void onClick(ClickEvent event) {
                 String storageValue = storage.getItemText(storage.getSelectedIndex());
                 if(settings.getEntry("storage") == null){
-                    settings.addEntry(new SettingsEntry("storage", storageValue));
+                    settings.addEntry(new SettingsEntryDTO("storage", storageValue));
                 }else{
                     settings.getEntry("storage").setValue(storageValue);
                 }

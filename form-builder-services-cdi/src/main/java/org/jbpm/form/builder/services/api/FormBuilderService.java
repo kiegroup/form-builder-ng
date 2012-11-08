@@ -18,11 +18,9 @@ package org.jbpm.form.builder.services.api;
 import java.util.List;
 import java.util.Map;
 
-import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.Settings;
-import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 import org.jbpm.form.builder.services.model.FormItemRepresentation;
 import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.Settings;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
 
@@ -38,7 +36,7 @@ public interface FormBuilderService {
      * @return a map of groups with its lists of menu items.
      * @throws FormBuilderException in case of error.
      */
-    void getMenuItems() throws FormBuilderException;
+    void getMenuItems() throws FormBuilderServiceException;
     
     /**
      * Gets a list of menu options, generally for a menu bar. Each option has a name, and 
@@ -46,16 +44,16 @@ public interface FormBuilderService {
      * @return a list of menu options.
      * @throws FormBuilderException in case of error.
      */
-    void getMenuOptions() throws FormBuilderException;
+    void getMenuOptions() throws FormBuilderServiceException;
     
     /**
      * Saves a form on the server
      * @param form The form to be saved
      * @throws FormBuilderException in case of error
      */
-    String saveFormGWT(Map<String, Object> form) throws FormBuilderException;
+    String saveFormGWT(Map<String, Object> form) throws FormBuilderServiceException;
     
-    String saveForm(FormRepresentation form) throws FormBuilderException;
+    String saveForm(FormRepresentation form) throws FormBuilderServiceException;
     
     /**
      * Saves a UI component on the server
@@ -63,18 +61,18 @@ public interface FormBuilderService {
      * @param formItemName the UI component name
      * @throws FormBuilderException in case of error
      */
-    void saveFormItemGWT(final Map<String, Object> formItem, String formItemName) throws FormBuilderException;
+    void saveFormItemGWT(final Map<String, Object> formItem, String formItemName) throws FormBuilderServiceException;
     
-    void saveFormItem(final FormItemRepresentation formItem, String formItemName) throws FormBuilderException;
+    void saveFormItem(final FormItemRepresentation formItem, String formItemName) throws FormBuilderServiceException;
     
     /**
      * Deletes a form from the server
      * @param form The form to be deleted
      * @throws FormBuilderException in case of error
      */
-    void deleteForm(FormRepresentation form) throws FormBuilderException;
+    void deleteForm(FormRepresentation form) throws FormBuilderServiceException;
     
-    void deleteFile(String url) throws FormBuilderException;
+    void deleteFile(String url) throws FormBuilderServiceException;
     
     /**
      * Deletes a UI component from the server
@@ -82,7 +80,7 @@ public interface FormBuilderService {
      * @param formItem the UI component to be deleted
      * @throws FormBuilderException in case of error
      */
-    void deleteFormItem(String formItemName, final FormItemRepresentation formItem) throws FormBuilderException;
+    void deleteFormItem(String formItemName, final FormItemRepresentation formItem) throws FormBuilderServiceException;
     
     /**
      * Translates a form. An event exposes where to retrieve the form from.
@@ -91,7 +89,7 @@ public interface FormBuilderService {
      * @param language Language to translate the form
      * @throws FormBuilderException in case of error
      */
-    void generateForm(FormRepresentation form, String language, Map<String, Object> inputs) throws FormBuilderException;
+    void generateForm(FormRepresentation form, String language, Map<String, Object> inputs) throws FormBuilderServiceException;
     
     /**
      * Saves a new (custom) menu item on the server
@@ -115,7 +113,7 @@ public interface FormBuilderService {
      * @return all best fit task definition references to the filter
      * @throws FormBuilderException in case of error
      */
-    void getExistingIoAssociations(String filter) throws FormBuilderException;
+    void getExistingIoAssociations(String filter) throws FormBuilderServiceException;
 
     /**
      * Fires a TaskSelectedEvent in case you can find the proper task in the server
@@ -124,14 +122,14 @@ public interface FormBuilderService {
      * @param taskName the name of the task
      * @throws FormBuilderException in case of error
      */
-    void selectIoAssociation(String pkgName, String processName, String taskName) throws FormBuilderException;
+    void selectIoAssociation(String pkgName, String processName, String taskName) throws FormBuilderServiceException;
     
     /**
      * Returns existing validations from the server
      * @return all existing validation types available on server side
      * @throws FormBuilderException in case of error
      */
-    void getExistingValidations() throws FormBuilderException;
+    void getExistingValidations() throws FormBuilderServiceException;
 
     /**
      * Returns a single form
@@ -139,14 +137,14 @@ public interface FormBuilderService {
      * @return the requested form
      * @throws FormBuilderException in case of error.
      */
-    void getForm(String formName) throws FormBuilderException;
+    void getForm(String formName) throws FormBuilderServiceException;
     
     /**
      * Returns all forms
      * @return all existing forms
      * @throws FormBuilderException in case of error.
      */
-    void getForms() throws FormBuilderException;
+    void getForms() throws FormBuilderServiceException;
     
     /**
      * Populates the {@link RepresentationFactory} with the form items and representations
@@ -154,7 +152,7 @@ public interface FormBuilderService {
      * @param callback callback to tell the client what to do once it finishes
      * @throws FormBuilderException in case of error.
      */
-    void populateRepresentationFactory() throws FormBuilderException;
+    void populateRepresentationFactory() throws FormBuilderServiceException;
 
     /**
      * Loads a file from the server that contains a given language's form template
@@ -162,7 +160,7 @@ public interface FormBuilderService {
      * @param language the result template expected language
      * @throws FormBuilderException in case of error.
      */
-    void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderException;
+    void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderServiceException;
 
     public Map<String, Object> loadForm(String json);
 
@@ -172,7 +170,7 @@ public interface FormBuilderService {
         void onResponse(List<String> roles);
     }
     
-    void getCurrentRoles(RolesResponseHandler handler) throws FormBuilderException;
+    void getCurrentRoles(RolesResponseHandler handler) throws FormBuilderServiceException;
     
     /**
      * Returns the form representation that basically describes a task
