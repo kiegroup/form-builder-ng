@@ -20,21 +20,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.services.model.FBValidation;
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.InputData;
+import org.jbpm.form.builder.services.model.Mappable;
+import org.jbpm.form.builder.services.model.OutputData;
+import org.jbpm.form.builder.services.model.ScriptRepresentation;
+import org.jbpm.form.builder.services.model.forms.FormEncodingException;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
+import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.jbpm.form.builder.ng.model.shared.api.FBScript;
-import org.jbpm.form.builder.ng.model.shared.api.FBValidation;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.InputData;
-import org.jbpm.form.builder.ng.model.shared.api.Mappable;
-import org.jbpm.form.builder.ng.model.shared.api.OutputData;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationDecoder;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 
 public class FormRepresentationDecoderImpl implements FormRepresentationDecoder {
 
@@ -169,9 +169,9 @@ public class FormRepresentationDecoderImpl implements FormRepresentationDecoder 
             form.setOutputs(decodeStringIndexedMap(jsonObj.get("outputs"),
                     OutputData.class));
             form.setOnLoadScripts(decodeList(jsonObj.get("onLoadScripts"),
-                    FBScript.class));
+                    ScriptRepresentation.class));
             form.setOnSubmitScripts(decodeList(jsonObj.get("onSubmitScripts"),
-                    FBScript.class));
+            		ScriptRepresentation.class));
         }
         return form;
     }

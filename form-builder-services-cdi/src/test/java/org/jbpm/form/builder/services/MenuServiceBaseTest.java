@@ -15,6 +15,11 @@
  */
 package org.jbpm.form.builder.services;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
@@ -25,19 +30,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.easymock.EasyMock;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationDecoder;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationEncoder;
-import org.jbpm.form.builder.ng.model.shared.menu.FormEffectDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.ValidationDescription;
 import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.jbpm.form.builder.services.encoders.FormEncodingServerFactory;
 import org.jbpm.form.builder.services.impl.fs.FSMenuService;
-import static org.junit.Assert.*;
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.forms.FormEncodingException;
+import org.jbpm.form.builder.services.model.forms.FormEncodingFactory;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationEncoder;
+import org.jbpm.form.builder.services.model.menu.FormEffectDescription;
+import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
+import org.jbpm.form.builder.services.model.menu.ValidationDescription;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -118,7 +121,7 @@ public abstract class MenuServiceBaseTest {
     @Test
     public void testListOptionsOK() throws Exception {
         FSMenuService service = new FSMenuService();
-        List<MenuOptionDescription> options = service.listOptions();
+        List<Map<String, Object>> options = service.listOptionsGWT();
         assertNotNull("options shouldn't be null", options);
         assertFalse("options shouldn't be empty", options.isEmpty());
     }
@@ -174,7 +177,7 @@ public abstract class MenuServiceBaseTest {
     @Test
     public void testListItemsOK() throws Exception {
         FSMenuService service = new FSMenuService();
-        Map<String, List<MenuItemDescription>> items = service.listMenuItems();
+        Map<String, List<Map<String, Object>>> items = service.listMenuItemsGWT();
         assertNotNull("items shouldn't be null", items);
         assertFalse("items shouldn't be empty", items.isEmpty());
         for (String key : items.keySet()) {
@@ -226,7 +229,7 @@ public abstract class MenuServiceBaseTest {
         sampleDescription.setAllowedEvents(new ArrayList<String>());
         sampleDescription.setEffects(new ArrayList<FormEffectDescription>());
         FormItemRepresentation item = MockFormHelper.createMockForm("form", "param1").getFormItems().iterator().next();
-        sampleDescription.setItemRepresentation(item);
+        sampleDescription.setItemRepresentationMap(item.getDataMap());
         sampleDescription.setIconUrl("https://www.google.com/images/srpr/logo3w.png");
         sampleDescription.setName("name");
         try {
@@ -262,7 +265,7 @@ public abstract class MenuServiceBaseTest {
         sampleDescription.setAllowedEvents(new ArrayList<String>());
         sampleDescription.setEffects(new ArrayList<FormEffectDescription>());
         FormItemRepresentation item = MockFormHelper.createMockForm("form", "param1").getFormItems().iterator().next();
-        sampleDescription.setItemRepresentation(item);
+        sampleDescription.setItemRepresentationMap(item.getDataMap());
         sampleDescription.setName("name");
         FormRepresentationEncoder encoder = EasyMock.createMock(FormRepresentationEncoder.class);
         FormEncodingException exception = new FormEncodingException();

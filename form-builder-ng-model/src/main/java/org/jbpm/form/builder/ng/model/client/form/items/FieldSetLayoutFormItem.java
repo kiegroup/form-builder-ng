@@ -20,22 +20,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.I18NFormItem;
+import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.common.panels.FieldSetPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.FieldSetPanelRepresentation;
-import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.common.panels.FieldSetPanel;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class FieldSetLayoutFormItem extends LayoutFormItem implements I18NFormItem {
@@ -155,48 +154,36 @@ public class FieldSetLayoutFormItem extends LayoutFormItem implements I18NFormIt
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof FieldSetPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "FieldSetPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("FieldSetPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "FieldSetPanelRepresentation"));
         }
-        super.populate(rep);
-        FieldSetPanelRepresentation fsrep = (FieldSetPanelRepresentation) rep;
-        
-        this.cssClassName = fsrep.getCssClassName();
-        this.id = fsrep.getId();
-        this.legend = fsrep.getLegend();
-        if (fsrep.getWidth() != null && !"".equals(fsrep.getWidth())) {
-            setWidth(fsrep.getWidth());
-        }
-        if (fsrep.getHeight() != null && !"".equals(fsrep.getHeight())) {
-            setHeight(fsrep.getHeight());
-        }
-        
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.legend = dto.getString("legend");
         populate(this.panel);
-        
-        if (fsrep.getItems() != null) {
-            for (FormItemRepresentation item : fsrep.getItems()) {
-                add(super.createItem(item));
+        List<FormBuilderDTO> items = dto.getListOfDtos("items");
+        if (items != null) {
+            for (FormBuilderDTO itemDto : items) {
+                add(super.createItem(itemDto));
             }
         }
-        
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        FieldSetPanelRepresentation rep = super.getRepresentation(new FieldSetPanelRepresentation());
-        rep.setCssClassName(this.cssClassName);
-        rep.setId(this.id);
-        rep.setHeight(getHeight());
-        rep.setWidth(getWidth());
-        rep.setLegend(this.legend);
-        List<FormItemRepresentation> items = new ArrayList<FormItemRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("id", this.id);
+        dto.setString("legend", this.legend);
+        List<Object> items = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            items.add(item.getRepresentation());
+            items.add(item.getRepresentation().getParameters());
         }
-        rep.setI18n(getI18nMap());
-        rep.setItems(items);
-        return rep;
+        dto.setMapOfStrings("i18n", getI18nMap());
+        dto.setList("items", items);
+        return dto;
     }
 
     @Override

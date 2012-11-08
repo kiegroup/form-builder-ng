@@ -32,12 +32,8 @@ import org.jbpm.form.builder.ng.model.common.handler.EventHelper;
 import org.jbpm.form.builder.ng.model.common.handler.RightClickEvent;
 import org.jbpm.form.builder.ng.model.common.handler.RightClickHandler;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
-import org.jbpm.form.builder.ng.model.shared.api.ExternalData;
 import org.jbpm.form.builder.ng.model.shared.api.FBScript;
-import org.jbpm.form.builder.ng.model.shared.api.FBValidation;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.InputData;
-import org.jbpm.form.builder.ng.model.shared.api.OutputData;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 
 import com.google.gwt.core.client.JavaScriptObject;
@@ -71,9 +67,9 @@ public abstract class FBFormItem extends FocusPanel {
     private boolean alreadyEditing = false;
     private Widget auxiliarWidget = null;
 
-    private InputData input = null;
-    private OutputData output = null;
-    private ExternalData external = null;
+    private Map<String, Object> input = null;
+    private Map<String, Object> output = null;
+    private Map<String, Object> external = null;
     
     //unique identifier for this instance on runtime
     private final String ID = FormIDGenerator.nextId();
@@ -254,27 +250,27 @@ public abstract class FBFormItem extends FocusPanel {
         }
     }
 
-    public void setInput(InputData input) {
+    public void setInput(Map<String, Object> input) {
         this.input = input;
     }
 
-    public void setOutput(OutputData output) {
+    public void setOutput(Map<String, Object> output) {
         this.output = output;
     }
 
-    public void setExternal(ExternalData external) {
+    public void setExternal(Map<String, Object> external) {
         this.external = external;
     }
 
-    public OutputData getOutput() {
+    public Map<String, Object> getOutput() {
         return output;
     }
 
-    public InputData getInput() {
+    public Map<String, Object> getInput() {
         return input;
     }
 
-    public ExternalData getExternal() {
+    public Map<String, Object> getExternal() {
         return external;
     }
 
@@ -304,34 +300,47 @@ public abstract class FBFormItem extends FocusPanel {
         return clone;
     }
 
-    protected <T extends FormItemRepresentation> T getRepresentation(T rep) {
-        rep.setInput(getInput());
-        rep.setOutput(getOutput());
-        rep.setHeight(getHeight());
-        rep.setWidth(getWidth());
-        List<FBValidation> repValidations = new ArrayList<FBValidation>();
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = new FormBuilderDTO();
+    	dto.setMap("input", getInput());
+    	dto.setMap("output", getOutput());
+    	dto.setString("height", getHeight());
+    	dto.setString("width", getWidth());
+        /*List<FBValidation> repValidations = new ArrayList<FBValidation>();
         for (FBValidationItem item : getValidations()) {
             repValidations.add(item.createValidation());
         }
-        rep.setItemValidations(repValidations);
-        for (FBFormEffect effect : getFormEffects()) {
-            rep.addEffectClass(effect.getClass());
-        }
-        rep.setEventActions(getEventActions());
-        rep.setExternal(getExternal());
-        return rep;
+        rep.setItemValidations(repValidations);*/ //TODO porting
+    	if (getFormEffects() != null) {
+	    	List<Object> effectClasses = new ArrayList<Object>();
+	    	for (FBFormEffect effect : getFormEffects()) {
+	    		effectClasses.add(effect.getClass());
+	    	}
+	    	dto.setList("effectClasses", effectClasses);
+    	}
+    	if (getEventActions() != null) {
+    		int index = 0;
+    		Map<String, Object> eventActions = new HashMap<String, Object>();
+	    	for (Map.Entry<String, FBScript> entry : getEventActions().entrySet()) {
+	    		Map<String, Object> dataMap = entry.getValue().getDataMap();
+	    		eventActions.put(entry.getKey(), dataMap);
+	    	}
+	    	dto.setMap("eventActions", eventActions);
+    	}
+    	dto.setMap("external", getExternal());
+        return dto;
     }
 
-    public static FBFormItem createItem(FormItemRepresentation rep)
+    public static FBFormItem createItem(FormBuilderDTO dto)
             throws FormBuilderException {
-        if (rep == null) {
+        if (dto == null) {
             return null;
         }
-        String className = RepresentationFactory.getItemClassName(rep.getClass().getName());
+        String className = RepresentationFactory.getItemClassName(dto.getClassName());
         try {
             FBFormItem item = (FBFormItem) ReflectionHelper
                     .newInstance(className);
-            item.populate(rep);
+            item.populate(dto);
             return item;
         } catch (Exception e) {
             throw new FormBuilderException("Couldn't instantiate class "
@@ -410,14 +419,6 @@ public abstract class FBFormItem extends FocusPanel {
     public abstract void saveValues(Map<String, Object> asPropertiesMap);
 
     /**
-     * This method is used to create a POJO representation of the UI component
-     * that any java service can understand.
-     * 
-     * @return a POJO representation of this UI component
-     */
-    public abstract FormItemRepresentation getRepresentation();
-
-    /**
      * This method must be overriden by each {@link FBFormItem} subclass to
      * repopulate its properties from an outside POJO representation.
      * 
@@ -430,41 +431,47 @@ public abstract class FBFormItem extends FocusPanel {
      * @throws FormBuilderException
      *             in case of error or invalid content
      */
-    public void populate(FormItemRepresentation rep)
+    public void populate(FormBuilderDTO dto)
             throws FormBuilderException {
-        if (rep.getEffectClasses() != null) {
-            this.effects = new ArrayList<FBFormEffect>(rep.getEffectClasses()
-                    .size());
-            for (String className : rep.getEffectClasses()) {
+    	List<Object> repClasses = dto.getList("effectClasses");
+        if (repClasses != null) {
+            this.effects = new ArrayList<FBFormEffect>(repClasses.size());
+            for (Object objClassName : repClasses) {
+            	String className = String.valueOf(objClassName);
                 try {
-                    FBFormEffect effect = (FBFormEffect) ReflectionHelper
-                            .newInstance(className);
+                    FBFormEffect effect = (FBFormEffect) ReflectionHelper.newInstance(className);
                     this.effects.add(effect);
                 } catch (Exception e) {
-                    throw new FormBuilderException(
-                            "Couldn't instantiate class " + className, e);
+                    throw new FormBuilderException("Couldn't instantiate class " + className, e);
                 }
             }
         }
-        if (rep.getEventActions() != null) {
-            for(String key : rep.getEventActions().keySet()){
-                this.eventActions.put(key, rep.getEventActions().get(key));
+        FormBuilderDTO repActions = dto.getSubDto("eventActions");
+        if (repActions != null && repActions.getParameters() != null) {
+            for(String key : repActions.getParameters().keySet()){
+            	Map<String, Object> dataMap = repActions.getMap(key);
+            	if (dataMap == null) {
+            		this.eventActions.put(key, null);
+            	} else {
+	            	FBScript script = new FBScript();
+            		script.setDataMap(dataMap);
+            		this.eventActions.put(key, script);
+            	}
             }
         }
         this.validations.clear();
-        if (rep.getItemValidations() != null) {
-            for (FBValidation validation : rep.getItemValidations()) {
-                FBValidationItem validationItem = FBValidationItem
-                        .createValidation(validation);
+        List<FormBuilderDTO> repValidations = dto.getListOfDtos("itemValidations");
+        if (repValidations != null) {
+            for (FormBuilderDTO repValidation : repValidations) {
+                FBValidationItem validationItem = FBValidationItem.createValidation(repValidation.getParameters());
                 this.validations.add(validationItem);
             }
         }
-        setHeight(rep.getHeight());
-        setWidth(rep.getWidth());
-        this.input = rep.getInput();
-        this.output = rep.getOutput();
-        this.external = rep.getExternal();
-        this.eventActions = rep.getEventActions();
+        setHeight(dto.getString("height"));
+        setWidth(dto.getString("width"));
+        this.input = dto.getMap("input");
+        this.output = dto.getMap("output");
+        this.external = dto.getMap("external");
     }
 
     /**
@@ -493,9 +500,9 @@ public abstract class FBFormItem extends FocusPanel {
     }
 
     protected Object getInputValue(Map<String, Object> data) {
-        if (getInput() != null && getInput().getName() != null) {
-            if (data != null && data.containsKey(getInput().getName())) {
-                return data.get(getInput().getName());
+        if (getInput() != null && getInput().get("name") != null) {
+            if (data != null && data.containsKey(getInput().get("name"))) {
+                return data.get(getInput().get("name"));
             }
         }
         return null;

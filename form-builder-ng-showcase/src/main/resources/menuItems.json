@@ -267,27 +267,24 @@
      ],
      "Simple Fields": [
         {   "name": "Single Line Text",
-            "itemRepresentation": {
+            "itemRepresentationMap": {
                "eventActions": {},
-               "itemValidations": [],
+               "itemValidations": {},
                "external": null,
                "width": "95%",
-               "effectClasses": [
-               ],
+               "effectClasses": {},
                "id": "",
                "input": null,
                "height": "50px",
-               "items": [
-                  {
+               "items": {
+                  "0": {
                      "cssName": "",
                      "eventActions": {},
-                     "itemValidations": [],
+                     "itemValidations": {},
                      "external": null,
                      "width": "300px",
                      "format": null,
-                     "effectClasses": [
-                        
-                     ],
+                     "effectClasses": {},
                      "id": "",
                      "input": null,
                      "height": "18px",
@@ -297,14 +294,12 @@
                      "typeId": "label",
                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                   },
-                  {
+                  "1": {
                      "eventActions": {},
-                     "itemValidations": [],
+                     "itemValidations": {},
                      "external": null,
                      "width": "300px",
-                     "effectClasses": [
-                        
-                     ],
+                     "effectClasses": {},
                      "id": "",
                      "input": null,
                      "height": "25px",
@@ -315,14 +310,14 @@
                      "typeId": "textField",
                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.TextFieldRepresentation"
                   }
-               ],
+               },
                "output": null,
                "typeId": "flowPanel",
                "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
                "cssClassName": ""
             },
             "effects": [
-               { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect" },
+                { "className": "org.jbpm.formbuilder.parent.client.effect.RemoveEffect" },
                 { "className": "org.jbpm.formbuilder.parent.client.effect.CopyFormEffect" },
                 { "className": "org.jbpm.formbuilder.parent.client.effect.CutFormEffect" },
                 { "className": "org.jbpm.formbuilder.parent.client.effect.PasteFormEffect" },
@@ -346,28 +341,24 @@
          },
          {
             "name": "Number",
-            "itemRepresentation": {
+            "itemRepresentationMap": {
                "eventActions": {},
-               "itemValidations": [],
+               "itemValidations": {},
                "external": null,
                "width": "95%",
-               "effectClasses": [
-                  
-               ],
+               "effectClasses": {},
                "id": "",
                "input": null,
                "height": "50px",
-               "items": [
-                  {
+               "items": {
+                  "0": {
                      "cssName": "",
                      "eventActions": {},
-                     "itemValidations": [],
+                     "itemValidations": {},
                      "external": null,
                      "width": "300px",
                      "format": null,
-                     "effectClasses": [
-                        
-                     ],
+                     "effectClasses": {},
                      "id": "",
                      "input": null,
                      "height": "18px",
@@ -377,14 +368,12 @@
                      "typeId": "label",
                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                   },
-                  {
+                  "1": {
                      "eventActions": {},
-                     "itemValidations": [],
+                     "itemValidations": {},
                      "external": null,
                      "width": "300px",
-                     "effectClasses": [
-                        
-                     ],
+                     "effectClasses": {},
                      "id": "",
                      "input": null,
                      "height": "25px",
@@ -395,7 +384,7 @@
                      "typeId": "numberField",
                      "@className": "org.jbpm.form.builder.ng.model.shared.api.items.NumberFieldRepresentation"
                   }
-               ],
+               },
                "output": null,
                "typeId": "flowPanel",
                "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
@@ -426,28 +415,24 @@
          },
          {
             "name": "Paragraph Text",
-            "itemRepresentation": {
+            "itemRepresentationMap": {
                "eventActions": {},
-               "itemValidations": [],
+               "itemValidations": {},
                "external": null,
                "width": "95%",
-               "effectClasses": [
-                  
-                ],
+               "effectClasses": {},
                 "id": "",
                 "input": null,
                 "height": "150px",
-                "items": [
-                   {
+                "items": {
+                   "0": {
                       "cssName": "",
                       "eventActions": {},
-                      "itemValidations": [],
+                      "itemValidations": {},
                       "external": null,
                       "width": "300px",
                       "format": null,
-                      "effectClasses": [
-                         
-                      ],
+                      "effectClasses": {},
                       "id": "",
                       "input": null,
                       "height": "18px",
@@ -457,16 +442,14 @@
                       "typeId": "label",
                       "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                    },
-                   {
-                      "cols": 50,
+                   "1": {
+                      "cols": "50",
                       "eventActions": {},
-                      "itemValidations": [],
+                      "itemValidations": {},
                       "external": null,
                       "width": "90%",
-                      "effectClasses": [
-                         
-                      ],
-                      "rows": 7,
+                      "effectClasses": {},
+                      "rows": "7",
                       "id": null,
                       "input": null,
                       "height": "",
@@ -476,7 +459,7 @@
                       "typeId": "textArea",
                       "@className": "org.jbpm.form.builder.ng.model.shared.api.items.TextAreaRepresentation"
                    }
-                ],
+                },
                 "output": null,
                 "typeId": "flowPanel",
                 "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
@@ -507,28 +490,24 @@
         },
         {
            "name": "Checkboxes",
-           "itemRepresentation": {
+           "itemRepresentationMap": {
               "eventActions": {},
-              "itemValidations": [],
+              "itemValidations": {},
               "external": null,
               "width": "95%",
-              "effectClasses": [
-                 
-              ],
+              "effectClasses": {},
               "id": "",
               "input": null,
               "height": "100px",
-              "items": [
-                 {
+              "items": {
+                 "0": {
                     "cssName": "",
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "format": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "input": null,
                     "height": "18px",
@@ -538,31 +517,27 @@
                     "typeId": "label",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                  },
-                 {
+                 "1": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -572,16 +547,14 @@
                           "checked": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                            
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -591,38 +564,34 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
-                 {
+                 "2": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                            
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -632,16 +601,14 @@
                           "checked": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                            
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -651,38 +618,34 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
-                 {
+                 "3": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -692,16 +655,14 @@
                           "checked": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.CheckBoxRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                            
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -711,14 +672,14 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  }
-              ],
+              },
               "output": null,
               "typeId": "flowPanel",
               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",
@@ -749,28 +710,24 @@
        },
        {
           "name": "MultipleChoice",
-          "itemRepresentation": {
+          "itemRepresentationMap": {
               "eventActions": {},
-              "itemValidations": [],
+              "itemValidations": {},
               "external": null,
               "width": "95%",
-              "effectClasses": [
-                
-              ],
+              "effectClasses": {},
               "id": "",
               "input": null,
               "height": "100px",
-              "items": [
-                 {
+              "items": {
+                 "0": {
                     "cssName": "",
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "format": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "input": null,
                     "height": "18px",
@@ -780,31 +737,27 @@
                     "typeId": "label",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                  },
-                 {
+                 "1": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -814,16 +767,14 @@
                           "selected": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -833,38 +784,34 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
-                 {
+                 "2": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -874,16 +821,14 @@
                           "selected": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -893,38 +838,34 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  },
-                 {
+                 "3": {
                     "eventActions": {},
-                    "itemValidations": [],
+                    "itemValidations": {},
                     "external": null,
                     "width": "300px",
                     "spacing": null,
-                    "effectClasses": [
-                       
-                    ],
+                    "effectClasses": {},
                     "id": "",
                     "horizontalAlignment": "",
                     "title": "",
                     "verticalAlignment": "",
                     "input": null,
                     "height": "20px",
-                    "items": [
-                       {
+                    "items": {
+                       "0": {
                           "formValue": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "15px",
-                          "effectClasses": [
-                            
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": "15px",
@@ -934,16 +875,14 @@
                           "selected": false,
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation"
                        },
-                       {
+                       "1": {
                           "cssName": null,
                           "eventActions": {},
-                          "itemValidations": [],
+                          "itemValidations": {},
                           "external": null,
                           "width": "200px",
                           "format": null,
-                          "effectClasses": [
-                             
-                          ],
+                          "effectClasses": {},
                           "id": null,
                           "input": null,
                           "height": null,
@@ -953,14 +892,14 @@
                           "typeId": "label",
                           "@className": "org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation"
                        }
-                    ],
-                    "borderWidth": 0,
+                    },
+                    "borderWidth": "0",
                     "output": null,
                     "typeId": "horizontalPanel",
                     "@className": "org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation",
                     "cssClassName": ""
                  }
-              ],
+              },
               "output": null,
               "typeId": "flowPanel",
               "@className": "org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation",

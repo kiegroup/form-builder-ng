@@ -20,20 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.CanvasRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class CanvasFormItem extends FBFormItem implements HasSourceReference {
@@ -43,7 +42,7 @@ public class CanvasFormItem extends FBFormItem implements HasSourceReference {
     private final Canvas canvas = Canvas.createIfSupported();
     private final Label notSupported = new Label(i18n.CanvasNotSupported());
     
-    private String fallbackUrl = FormBuilderResources.INSTANCE.canvasNotSupported().getUrl();
+    private String fallbackUrl = FormBuilderResources.INSTANCE.canvasNotSupported().getSafeUri().asString();
     private String cssClassName;
     private String id;
     private String dataType;
@@ -101,26 +100,25 @@ public class CanvasFormItem extends FBFormItem implements HasSourceReference {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        CanvasRepresentation rep = super.getRepresentation(new CanvasRepresentation());
-        rep.setCssClassName(cssClassName);
-        rep.setFallbackUrl(fallbackUrl);
-        rep.setId(id);
-        rep.setDataType(dataType);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("cssClassName", cssClassName);
+        dto.setString("fallbackUrl", fallbackUrl);
+        dto.setString("id", id);
+        dto.setString("dataType", dataType);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof CanvasRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "CanvasRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("CanvasRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "CanvasRepresentation"));
         }
-        super.populate(rep);
-        CanvasRepresentation crep = (CanvasRepresentation) rep;
-        this.fallbackUrl = crep.getFallbackUrl();
-        this.cssClassName = crep.getCssClassName();
-        this.id = crep.getId();
-        this.dataType = crep.getDataType();
+        super.populate(dto);
+        this.fallbackUrl = dto.getString("fallbackUrl");
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.dataType = dto.getString("dataType");
 
         populate(this.canvas);
     }

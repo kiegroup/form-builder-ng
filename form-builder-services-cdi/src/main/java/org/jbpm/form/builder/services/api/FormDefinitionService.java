@@ -17,8 +17,9 @@ package org.jbpm.form.builder.services.api;
 
 import java.util.List;
 import java.util.Map;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
+
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
 

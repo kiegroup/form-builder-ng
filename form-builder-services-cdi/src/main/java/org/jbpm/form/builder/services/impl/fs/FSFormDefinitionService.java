@@ -20,18 +20,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.inject.Inject;
+
 import org.apache.commons.io.FileUtils;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationDecoder;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationEncoder;
 import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormDefinitionService;
 import org.jbpm.form.builder.services.api.FormServiceException;
 import org.jbpm.form.builder.services.impl.base.BaseFormDefinitionService;
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.forms.FormEncodingFactory;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationEncoder;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
 /**

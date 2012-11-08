@@ -25,8 +25,7 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.FBInplaceEditor;
 import org.jbpm.form.builder.ng.model.client.form.I18NFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.HeaderRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.form.editors.HeaderInplaceEditor;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
@@ -115,34 +114,33 @@ public class HeaderFormItem extends FBFormItem implements I18NFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        HeaderRepresentation rep = super.getRepresentation(new HeaderRepresentation());
-        rep.setValue(this.header.getText());
-        rep.setStyleClass(this.cssClassName);
-        rep.setCssId(this.id);
-        rep.setCssName(this.name);
-        rep.setI18n(getI18nMap());
-        rep.setFormat(getFormat() == null ? null : getFormat().toString());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("value", this.header.getText());
+        dto.setString("styleClass", this.cssClassName);
+        dto.setString("cssId", this.id);
+        dto.setString("cssName", this.name);
+        dto.setMapOfStrings("i18n", getI18nMap());
+        dto.setString("format", getFormat() == null ? null : getFormat().toString());
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof HeaderRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "HeaderRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("HeaderRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "HeaderRepresentation"));
         }
-        super.populate(rep);
-        HeaderRepresentation hrep = (HeaderRepresentation) rep;
-        this.cssClassName = hrep.getCssName();
-        this.id = hrep.getCssId();
-        saveI18nMap(hrep.getI18n());
-        if (hrep.getValue().startsWith("<h1>")) {
-            setContent(hrep.getValue());
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssName");
+        this.id = dto.getString("cssId");
+        saveI18nMap(dto.getMapOfStrings("i18n"));
+        if (dto.getString("value").startsWith("<h1>")) {
+            setContent(dto.getString("value"));
         } else {
-            setContent("<h1>" + hrep.getValue() + "</h1>");
+            setContent("<h1>" + dto.getString("value") + "</h1>");
         }
-        if (hrep.getFormat() != null && !"".equals(hrep.getFormat())) {
-            setFormat(Format.valueOf(hrep.getFormat()));
+        if (dto.getString("format") != null && !"".equals(dto.getString("format"))) {
+            setFormat(Format.valueOf(dto.getString("format")));
         }
     }
     

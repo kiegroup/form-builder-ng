@@ -20,14 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.HorizontalPanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.i18n.client.HasDirection.Direction;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
@@ -35,7 +35,6 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents an horizontal layout
@@ -130,40 +129,42 @@ public class HorizontalLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        HorizontalPanelRepresentation rep = super.getRepresentation(new HorizontalPanelRepresentation());
-        rep.setBorderWidth(this.borderWidth);
-        rep.setCssClassName(this.cssClassName);
-        rep.setHorizontalAlignment(this.horizontalAlignment);
-        rep.setId(this.id);
-        rep.setSpacing(this.spacing);
-        rep.setTitle(this.title);
-        rep.setVerticalAlignment(this.verticalAlignment);
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setInteger("borderWidth", this.borderWidth);
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("horizontalAlignment", this.horizontalAlignment);
+        dto.setString("id", this.id);
+        dto.setInteger("spacing", this.spacing);
+        dto.setString("title", this.title);
+        dto.setString("verticalAlignment", this.verticalAlignment);
+        List<Object> items = new ArrayList<Object>(); 
         for (FBFormItem item : getItems()) {
-            rep.addItem(item.getRepresentation());
+            items.add(item.getRepresentation().getParameters());
         }
-        return rep;
+        dto.setList("items", items);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof HorizontalPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "HorizontalPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("HorizontalPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "HorizontalPanelRepresentation"));
         }
-        super.populate(rep);
-        HorizontalPanelRepresentation hrep = (HorizontalPanelRepresentation) rep;
-        this.borderWidth = hrep.getBorderWidth();
-        this.cssClassName = hrep.getCssClassName();
-        this.horizontalAlignment = hrep.getHorizontalAlignment();
-        this.id = hrep.getId();
-        this.spacing = hrep.getSpacing();
-        this.title = hrep.getTitle();
-        this.verticalAlignment = hrep.getVerticalAlignment();
+        super.populate(dto);
+        this.borderWidth = dto.getInteger("borderWidth");
+        this.cssClassName = dto.getString("cssClassName");
+        this.horizontalAlignment = dto.getString("horizontalAlignment");
+        this.id = dto.getString("id");
+        this.spacing = dto.getInteger("spacing");
+        this.title = dto.getString("title");
+        this.verticalAlignment = dto.getString("verticalAlignment");
         this.panel.clear();
         super.getItems().clear();
         populate(this.panel);
-        if (hrep.getItems() != null) {
-            for (FormItemRepresentation item : hrep.getItems()) {
+        List<FormBuilderDTO> itemDtos = dto.getListOfDtos("items");
+        if (itemDtos != null) {
+            for (FormBuilderDTO item : itemDtos) {
                 add(super.createItem(item));
             }
         }

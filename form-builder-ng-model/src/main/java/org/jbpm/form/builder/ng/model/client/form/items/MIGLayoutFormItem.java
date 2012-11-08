@@ -23,14 +23,13 @@ import java.util.Map;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.bus.ui.NotificationEvent;
+import org.jbpm.form.builder.ng.model.client.effect.ChangeColspanFormEffect;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.MIGPanelRepresentation;
-import org.jbpm.form.builder.ng.model.client.effect.ChangeColspanFormEffect;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
@@ -196,13 +195,14 @@ public class MIGLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        MIGPanelRepresentation rep = super.getRepresentation(new MIGPanelRepresentation());
-        rep.setRows(this.rows);
-        rep.setBorderWidth(this.borderWidth);
-        rep.setCellPadding(this.cellpadding);
-        rep.setCellSpacing(this.cellspacing);
-        rep.setTitle(this.title);
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setInteger("rows", this.rows);
+        dto.setInteger("borderWidth", this.borderWidth);
+        dto.setInteger("cellPadding", this.cellpadding);
+        dto.setInteger("cellSpacing", this.cellspacing);
+        dto.setString("title", this.title);
+        List<Object> elements = new ArrayList<Object>();
         for (int r = 0; r < table.getRowCount(); r++) {
             for (int c = 0; c < table.getCellCount(r); c++) {
                 Widget widget = table.getWidget(r, c);
@@ -210,52 +210,49 @@ public class MIGLayoutFormItem extends LayoutFormItem {
                 int rowspan = table.getFlexCellFormatter().getRowSpan(r, c);
                 if (widget != null && widget instanceof FBFormItem) {
                     FBFormItem item = (FBFormItem) widget;
-                    FormItemRepresentation subRep = item.getRepresentation();
-                    rep.setElement(r, c, subRep, colspan, rowspan);
+                    FormBuilderDTO subDto = item.getRepresentation();
+                    subDto.setInteger("migLayoutColspan", colspan);
+                    subDto.setInteger("migLayoutRowspan", rowspan);
+                    subDto.setInteger("migLayoutRow", r);
+                    subDto.setInteger("migLayoutColumn", c);
+                    elements.add(subDto.getParameters());
                 }
             }
         }
-        return rep;
+        dto.setList("elements", elements);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof MIGPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "MIGPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("MIGPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "MIGPanelRepresentation"));
         }
-        super.populate(rep);
-        MIGPanelRepresentation mprep = (MIGPanelRepresentation) rep;
-        this.rows = mprep.getRows();
-        this.borderWidth = mprep.getBorderWidth();
-        this.cellpadding = mprep.getCellPadding();
-        this.cellspacing = mprep.getCellSpacing();
+        super.populate(dto);
+        this.rows = dto.getInteger("rows");
+        this.borderWidth = dto.getInteger("borderWidth");
+        this.cellpadding = dto.getInteger("cellPadding");
+        this.cellspacing = dto.getInteger("cellSpacing");
         populate(this.table);
         this.table.clear();
         super.getItems().clear();
-        if (mprep.getWidth() != null) {
-            setWidth(mprep.getWidth());
-        }
-        if (mprep.getHeight() != null) {
-            setHeight(mprep.getHeight());
-        }
-        if (mprep.getElements() != null) {
-            for (int rowindex = 0; rowindex < mprep.getElements().size(); rowindex++) {
-                List<FormItemRepresentation> row = mprep.getElements().get(rowindex);
-                if(row != null) {
-                    for (int cellindex = 0; cellindex < row.size(); cellindex++) {
-                        FormItemRepresentation cell = row.get(cellindex);
-                        FBFormItem subItem = super.createItem(cell);
-                        this.table.setWidget(rowindex, cellindex, subItem);
-                        int colspan = mprep.getColspan(rowindex, cellindex);
-                        int rowspan = mprep.getRowspan(rowindex, cellindex);
-                        if (colspan > 1) {
-                            this.table.getFlexCellFormatter().setColSpan(rowindex, cellindex, colspan);
-                        }
-                        if (rowspan > 1) {
-                            this.table.getFlexCellFormatter().setRowSpan(rowindex, cellindex, rowspan);
-                        }
-                        super.add(subItem);
+        List<FormBuilderDTO> elements = dto.getListOfDtos("elements");
+        if (elements != null) {
+        	for (FormBuilderDTO subDto : elements) {
+                if (subDto != null) {
+                	FBFormItem subItem = super.createItem(subDto);
+                	int row = subDto.getInteger("migLayoutRow");
+                	int column = subDto.getInteger("migLayoutColumn");
+                	this.table.setWidget(row, column, subItem);
+                	int colspan = subDto.getInteger("migLayoutColspan");
+                	int rowspan = subDto.getInteger("migLayoutRowspan");
+                	if (colspan > 1) {
+                        this.table.getFlexCellFormatter().setColSpan(row, column, colspan);
                     }
+                    if (rowspan > 1) {
+                        this.table.getFlexCellFormatter().setRowSpan(row, column, rowspan);
+                    }
+                    super.add(subItem);
                 }
             }
         }

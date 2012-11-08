@@ -15,13 +15,13 @@
  */
 package org.jbpm.form.builder.services;
 
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.OutputData;
-import org.jbpm.form.builder.ng.model.shared.api.items.CompleteButtonRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.HeaderRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TableRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TextFieldRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.OutputData;
+import org.jbpm.form.builder.services.model.items.CompleteButtonRepresentation;
+import org.jbpm.form.builder.services.model.items.HeaderRepresentation;
+import org.jbpm.form.builder.services.model.items.LabelRepresentation;
+import org.jbpm.form.builder.services.model.items.TableRepresentation;
+import org.jbpm.form.builder.services.model.items.TextFieldRepresentation;
 
 /**
  *

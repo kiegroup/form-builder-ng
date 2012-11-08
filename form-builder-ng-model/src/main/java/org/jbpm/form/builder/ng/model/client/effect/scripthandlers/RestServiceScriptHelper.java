@@ -18,13 +18,12 @@ package org.jbpm.form.builder.ng.model.client.effect.scripthandlers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.effect.scriptviews.RestServiceScriptHelperView;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * 
@@ -76,8 +75,7 @@ public class RestServiceScriptHelper extends AbstractScriptHelper {
         return map;
     }
 
-    @Override
-    public void setDataMap(Map<String, Object> dataMap) throws FormEncodingException {
+    public void setDataMap(Map<String, Object> dataMap) {
         String urlValue = (String) dataMap.get("urlValue");
         if (urlValue == null) urlValue = "";
         String methodValue = (String) dataMap.get("methodValue");

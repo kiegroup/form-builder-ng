@@ -27,10 +27,8 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.BorderPanelRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.BorderPanelRepresentation.Position;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Grid;
@@ -46,6 +44,10 @@ public class BorderLayoutFormItem extends LayoutFormItem {
 
     private EventBus bus = CommonGlobals.getInstance().getEventBus();
     private I18NConstants i18n = CommonGlobals.getInstance().getI18n();
+    
+    public static enum Position {
+        SOUTH, SOUTHWEST, WEST, NORTHWEST, NORTH, NORTHEAST, EAST, SOUTHEAST, CENTER;
+    }
     
     private Map<Position, FBFormItem> locations = new HashMap<Position, FBFormItem>();
     
@@ -135,31 +137,30 @@ public class BorderLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        BorderPanelRepresentation rep = super.getRepresentation(new BorderPanelRepresentation());
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = super.getRepresentation();
         for (Map.Entry<Position, FBFormItem> entry : this.locations.entrySet()) {
             Position key = entry.getKey();
-            FormItemRepresentation value = entry.getValue().getRepresentation();
-            rep.putItem(key, value);
+            FormBuilderDTO value = entry.getValue().getRepresentation();
+            dto.setMap(key.toString(), value.getParameters());
         }
-        return rep;
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof BorderPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "BorderPanelRepresentation"));
+    @SuppressWarnings("unchecked")
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("BorderPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "BorderPanelRepresentation"));
         }
-        super.populate(rep);
-        BorderPanelRepresentation brep = (BorderPanelRepresentation) rep;
-        Map<Position, FormItemRepresentation> repItems = brep.getItems();
-        if (repItems != null) {
-            for (Map.Entry<Position, FormItemRepresentation> entry : repItems.entrySet()) {
-                Position key = entry.getKey();
-                FBFormItem value = super.createItem(entry.getValue());
-                this.currentPosition = key;
-                this.add(value);
-            }
+        super.populate(dto);
+        for (Map.Entry<String, Object> entry : dto.getParameters().entrySet()) {
+            Position key = Position.valueOf(entry.getKey());
+            Map<String, Object> subMap = (Map<String, Object>) entry.getValue();
+            FormBuilderDTO subDto = new FormBuilderDTO(subMap);
+            FBFormItem value = super.createItem(subDto);
+            this.currentPosition = key;
+            this.add(value);
         }
     }
 

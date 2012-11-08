@@ -27,7 +27,7 @@ import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionEvent;
 import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionHandler;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.model.shared.menu.items.CustomMenuItem;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
 import org.uberfire.client.mvp.PlaceManager;
@@ -82,19 +82,20 @@ public class FormBuilderPaletteViewImpl extends AbsolutePanel
      public void addItem(@Observes PaletteItemAddedEvent event) {
         try {
             String group = event.getGroupName();
-            MenuItemDescription menuItemDescription = event.getMenuItemDescription();
-            Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getClassName());
+            FormBuilderDTO menuItemDescription = new FormBuilderDTO(event.getMenuItemDescriptionMap());
+            Object newInstance = ReflectionHelper.newInstance(menuItemDescription.getString("className"));
             if (newInstance instanceof CustomMenuItem) {
                 
                    CustomMenuItem customItem = (CustomMenuItem) newInstance;
-                   String optionName = menuItemDescription.getName();
+                   String optionName = menuItemDescription.getString("name");
                    
-                   customItem.setRepresentation(menuItemDescription.getItemRepresentation());
+                   FormBuilderDTO itemDto = new FormBuilderDTO(menuItemDescription.getMap("itemRepresentationMap"));
+                   customItem.setRepresentation(itemDto);
                    customItem.setOptionName(optionName);
                    customItem.setGroupName(event.getGroupName());
-                   if (menuItemDescription.getIconUrl() != null) {
+                   if (menuItemDescription.getString("iconUrl") != null) {
                      String baseUrl = GWT.getHostPageBaseURL().replace(GWT.getModuleName() + "/", "");
-                     customItem.setIconUrlAsString(baseUrl + menuItemDescription.getIconUrl());
+                     customItem.setIconUrlAsString(baseUrl + menuItemDescription.getString("iconUrl"));
                    }
                    customItem.repaint();                   
                }

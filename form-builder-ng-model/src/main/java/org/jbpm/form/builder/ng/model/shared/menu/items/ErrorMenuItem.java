@@ -21,8 +21,6 @@ import java.util.Map;
 
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
 
 import com.google.gwt.resources.client.ImageResource;
@@ -31,6 +29,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * This class is used to represent an error when transforming {@link MenuItemDescription}s
@@ -74,12 +73,12 @@ public class ErrorMenuItem extends FBMenuItem {
             }
             
             @Override
-            public FormItemRepresentation getRepresentation() {
+            public FormBuilderDTO getRepresentation() {
                 return null;
             }
             
             @Override
-            public void populate(FormItemRepresentation rep) {
+            public void populate(FormBuilderDTO rep) {
             }
             
             @Override

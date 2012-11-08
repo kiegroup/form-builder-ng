@@ -20,20 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.AbsolutePanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form layout item. Represents an absolute layout
@@ -93,32 +92,37 @@ public class AbsoluteLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        AbsolutePanelRepresentation rep = super.getRepresentation(new AbsolutePanelRepresentation());
-        rep.setId(this.id);
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("id", this.id);
+        List<Object> items = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            rep.addItem(item.getRepresentation(), 
-                    item.getDesiredX() - panel.getAbsoluteLeft(), 
-                    item.getDesiredY() - panel.getAbsoluteTop());
+        	FormBuilderDTO subDto = item.getRepresentation();
+        	int x = item.getDesiredX() - panel.getAbsoluteLeft();
+        	int y = item.getDesiredY() - panel.getAbsoluteTop();
+        	subDto.setInteger("x", x);
+        	subDto.setInteger("y", y);
+        	items.add(subDto.getParameters());
         }
-        return rep;
+        dto.setList("items", items);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof AbsolutePanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "AbsolutePanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("AbsolutePanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "AbsolutePanelRepresentation"));
         }
-        super.populate(rep);
-        AbsolutePanelRepresentation arep = (AbsolutePanelRepresentation) rep;
+        super.populate(dto);
         panel.clear();
         getItems().clear();
-        if (arep.getItems() != null) {
-            for (Map.Entry<AbsolutePanelRepresentation.Position, FormItemRepresentation> entry : arep.getItems().entrySet()) {
-                FBFormItem item = super.createItem(entry.getValue());
-                item.setDesiredPosition(entry.getKey().getX(), entry.getKey().getY());
-                this.add(item);
-            }
+        List<FormBuilderDTO> items = dto.getListOfDtos("items");
+        if (items != null) {
+        	for (FormBuilderDTO itemDto : items) {
+        		FBFormItem item = super.createItem(itemDto);
+        		item.setDesiredPosition(itemDto.getInteger("x"), itemDto.getInteger("y"));
+        		this.add(item);
+        	}
         }
         populate(this.panel);
     }

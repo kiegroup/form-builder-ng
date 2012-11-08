@@ -20,19 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.AudioRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.media.client.Audio;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class AudioFormItem extends FBFormItem implements HasSourceReference {
@@ -108,26 +107,25 @@ public class AudioFormItem extends FBFormItem implements HasSourceReference {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        AudioRepresentation rep = super.getRepresentation(new AudioRepresentation());
-        rep.setAudioUrl(this.audioUrl);
-        rep.setCssClassName(this.cssClassName);
-        rep.setDataType(this.dataType);
-        rep.setId(this.id);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("audioUrl", this.audioUrl);
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("dataType", this.dataType);
+        dto.setString("id", this.id);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof AudioRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "AudioRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("AudioRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "AudioRepresentation"));
         }
-        super.populate(rep);
-        AudioRepresentation arep = (AudioRepresentation) rep;
-        this.audioUrl = arep.getAudioUrl();
-        this.cssClassName = arep.getCssClassName();
-        this.id = arep.getId();
-        this.dataType = arep.getDataType();
+        super.populate(dto);
+        this.audioUrl = dto.getString("audioUrl");
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.dataType = dto.getString("dataType");
 
         populate(this.audio);
     }

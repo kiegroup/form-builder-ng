@@ -15,8 +15,8 @@
  */
 package org.jbpm.form.builder.services.encoders;
 
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationDecoder;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationEncoder;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationEncoder;
 
 public class FormEncodingServerFactory {
 

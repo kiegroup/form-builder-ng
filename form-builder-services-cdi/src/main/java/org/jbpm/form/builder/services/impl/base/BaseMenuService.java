@@ -18,8 +18,9 @@ package org.jbpm.form.builder.services.impl.base;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
+
 import org.jbpm.form.builder.services.api.MenuService;
+import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
 
 
 public abstract class BaseMenuService implements MenuService {

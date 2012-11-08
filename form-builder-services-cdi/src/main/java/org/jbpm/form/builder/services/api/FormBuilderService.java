@@ -17,11 +17,12 @@ package org.jbpm.form.builder.services.api;
 
 import java.util.List;
 import java.util.Map;
+
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.Settings;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
 
@@ -52,6 +53,8 @@ public interface FormBuilderService {
      * @param form The form to be saved
      * @throws FormBuilderException in case of error
      */
+    String saveFormGWT(Map<String, Object> form) throws FormBuilderException;
+    
     String saveForm(FormRepresentation form) throws FormBuilderException;
     
     /**
@@ -60,6 +63,8 @@ public interface FormBuilderService {
      * @param formItemName the UI component name
      * @throws FormBuilderException in case of error
      */
+    void saveFormItemGWT(final Map<String, Object> formItem, String formItemName) throws FormBuilderException;
+    
     void saveFormItem(final FormItemRepresentation formItem, String formItemName) throws FormBuilderException;
     
     /**
@@ -159,7 +164,7 @@ public interface FormBuilderService {
      */
     void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderException;
 
-    public FormRepresentation loadForm(String json);
+    public Map<String, Object> loadForm(String json);
 
     
     

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.jbpm.form.builder.ng.model.shared.api;
+ 
+import java.util.Map;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,7 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Helper to create visually attractive components for 
  * generating javascript editors
  */
-public interface FBScriptHelper extends Mappable {
+public interface FBScriptHelper {
 
     /**
      * Transform any UI loaded content into a script implementation
@@ -45,4 +47,8 @@ public interface FBScriptHelper extends Mappable {
      * @param script
      */
     void setScript(FBScript script);
+    
+    Map<String, Object> getDataMap();
+    
+    void setDataMap(Map<String, Object> dataMap);
 }

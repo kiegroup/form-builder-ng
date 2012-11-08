@@ -20,21 +20,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.FBInplaceEditor;
 import org.jbpm.form.builder.ng.model.client.form.I18NFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.LabelRepresentation;
 import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.form.editors.LabelInplaceEditor;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents a label
@@ -106,35 +105,28 @@ public class LabelFormItem extends FBFormItem implements I18NFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        LabelRepresentation rep = super.getRepresentation(new LabelRepresentation());
-        rep.setValue(this.label.getText());
-        rep.setCssName(this.cssClassName);
-        rep.setId(this.id);
-        rep.setI18n(getI18nMap());
-        rep.setFormat(getFormat() == null ? null : getFormat().toString());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("value", this.label.getText());
+        dto.setString("cssName", this.cssClassName);
+        dto.setString("id", this.id);
+        dto.setMapOfStrings("i18n", getI18nMap());
+        dto.setString("format", getFormat() == null ? null : getFormat().toString());
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof LabelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "LabelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("LabelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "LabelRepresentation"));
         }
-        super.populate(rep);
-        LabelRepresentation lrep = (LabelRepresentation) rep;
-        this.label.setText(lrep.getValue());
-        this.cssClassName = lrep.getCssName();
-        this.id = lrep.getId();
-        if (lrep.getWidth() != null && !"".equals(lrep.getWidth())) {
-            setWidth(lrep.getWidth());
-        }
-        if (lrep.getHeight() != null && !"".equals(lrep.getHeight())) {
-            setHeight(lrep.getHeight());
-        }
-        saveI18nMap(lrep.getI18n());
-        if (lrep.getFormat() != null && !"".equals(lrep.getFormat())) {
-            setFormat(Format.valueOf(lrep.getFormat()));
+        super.populate(dto);
+        this.label.setText(dto.getString("value"));
+        this.cssClassName = dto.getString("cssName");
+        this.id = dto.getString("id");
+        saveI18nMap(dto.getMapOfStrings("i18n"));
+        if (dto.getString("format") != null && !"".equals(dto.getString("format"))) {
+            setFormat(Format.valueOf(dto.getString("format")));
         }
         populate(this.label);
     }

@@ -18,14 +18,9 @@ package org.jbpm.form.builder.ng.model.client.validation;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.bus.ui.NotificationEvent;
-import org.jbpm.form.builder.ng.model.client.bus.ui.NotificationEvent.Level;
 import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
-import org.jbpm.form.builder.ng.model.shared.api.FBValidation;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
 
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
@@ -48,40 +43,41 @@ public abstract class FBValidationItem {
         propertiesMap.putAll(map);
     }
     
-    public <T extends FBValidation> T getRepresentation(T representation) {
+    public Map<String, Object> getDataMap() {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         for (Map.Entry<String, HasValue<String>> entry : propertiesMap.entrySet()) {
             dataMap.put(entry.getKey(), entry.getValue().getValue());
         }
-        try {
-            representation.setDataMap(dataMap);
-        } catch (FormEncodingException e) {
-            CommonGlobals.getInstance().getEventBus().fireEvent(
-                    new NotificationEvent(Level.ERROR, "Couldn't create validation", e));
-        }
-        return representation;
+        return dataMap;
     }
     
     public abstract String getName();
 
-    public abstract FBValidation createValidation();
-    
     public abstract Widget createDisplay();
 
     public abstract FBValidationItem cloneItem();
     
-    public abstract void populate(FBValidation validation) throws FormBuilderException;
+    public abstract void setDataMap(Map<String, Object> dataMap) throws FormBuilderException;
 
-    public static FBValidationItem createValidation(FBValidation validationRep) throws FormBuilderException {
+    public static FBValidationItem createValidation(Map<String, Object> validationMap) throws FormBuilderException {
         try {
-            String repClassName = (String) validationRep.getDataMap().get("@className");
+            String repClassName = (String) validationMap.get("@className");
             String className = RepresentationFactory.getItemClassName(repClassName);
             Object obj = ReflectionHelper.newInstance(className);
             FBValidationItem item = (FBValidationItem) obj;
-            item.populate(validationRep);
+            item.setDataMap(validationMap);
             return item;
         } catch (Exception e) {
             throw new FormBuilderException(e);
         }
     }
+
+	public boolean canValidateOnClient() {
+		return false; //TODO override to validate something on the client-side
+	}
+
+	public boolean isValid(Object object) {
+		return true; //By default all client-side validations (unless specified) are valid
+	}
+	
 }

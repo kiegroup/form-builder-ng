@@ -20,20 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.MenuPanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class MenuLayoutFormItem extends LayoutFormItem {
@@ -150,48 +149,38 @@ public class MenuLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof MenuPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "MenuPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("MenuPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "MenuPanelRepresentation"));
         }
-        super.populate(rep);
-        MenuPanelRepresentation mrep = (MenuPanelRepresentation) rep;
-        
-        this.cssClassName = mrep.getCssClassName();
-        this.id = mrep.getId();
-        this.dir = mrep.getDir();
-        this.type = mrep.getType();
-        if (mrep.getWidth() != null && !"".equals(mrep.getWidth())) {
-            setWidth(mrep.getWidth());
-        }
-        if (mrep.getHeight() != null && !"".equals(mrep.getHeight())) {
-            setHeight(mrep.getHeight());
-        }
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.dir = dto.getString("dir");
+        this.type = dto.getString("type");
         
         populate(this.panel);
-        
-        if (mrep.getItems() != null) {
-            for (FormItemRepresentation item : mrep.getItems()) {
-                add(super.createItem(item));
+        List<FormBuilderDTO> itemDtos = dto.getListOfDtos("items");
+        if (itemDtos != null) {
+            for (FormBuilderDTO itemDto : itemDtos) {
+                add(super.createItem(itemDto));
             }
         }
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        MenuPanelRepresentation rep = super.getRepresentation(new MenuPanelRepresentation());
-        rep.setCssClassName(this.cssClassName);
-        rep.setId(this.id);
-        rep.setHeight(getHeight());
-        rep.setWidth(getWidth());
-        rep.setDir(this.dir);
-        rep.setType(this.type);
-        List<FormItemRepresentation> items = new ArrayList<FormItemRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("id", this.id);
+        dto.setString("dir", this.dir);
+        dto.setString("type", this.type);
+        List<Object> itemDtos = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            items.add(item.getRepresentation());
+        	itemDtos.add(item.getRepresentation().getParameters());
         }
-        rep.setItems(items);
-        return rep;
+        dto.setList("items", itemDtos);
+        return dto;
     }
 
     @Override

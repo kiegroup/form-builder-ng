@@ -15,24 +15,28 @@
  */
 package org.jbpm.form.builder.ng.client.fb.view.canvas;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
 import org.jboss.errai.bus.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.Caller;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
 import org.uberfire.client.mvp.UberView;
 import org.uberfire.client.workbench.widgets.dnd.WorkbenchPickupDragController;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Builder - Canvas")
@@ -67,24 +71,24 @@ public class FormBuilderCanvasPresenter {
     
     public void decodeForm(String jsonForm) {
         
-        formServices.call(new RemoteCallback<FormRepresentation>() {
+        formServices.call(new RemoteCallback<Map<String, Object>>() {
                 @Override
-                public void callback(FormRepresentation formRep) {
-                    ((CanvasViewImpl)view.getLayoutView()).getFormDisplay().populate(formRep);
+                public void callback(Map<String, Object> formRep) {
+                    ((CanvasViewImpl)view.getLayoutView()).getFormDisplay().populate(new FormBuilderDTO(formRep));
                 }
         }).loadForm(jsonForm);
     
     }
     
     @UiHandler(value="saveButton")
-    public void saveForm(FormRepresentation formRep){
+    public void saveForm(FormBuilderDTO formRep){
         
         formServices.call(new RemoteCallback<String>() {
                 @Override
                 public void callback(String content) {
                     System.out.println("XXXXX  RETURN List Menu Items"+content);
                 }
-        }).saveForm(formRep);
+        }).saveForm(formRep.getParameters());
     
     }
     

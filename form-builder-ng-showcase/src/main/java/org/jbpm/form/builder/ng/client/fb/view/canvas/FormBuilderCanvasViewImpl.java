@@ -23,7 +23,7 @@ import org.jbpm.form.builder.ng.model.client.form.EditionContext;
 import org.jbpm.form.builder.ng.model.client.form.FBCompositeItem;
 import org.jbpm.form.builder.ng.model.client.form.FBForm;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.shared.events.FormLoadedEvent;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemUpdatedEvent;
 import org.uberfire.client.mvp.PlaceManager;
@@ -112,7 +112,7 @@ public class FormBuilderCanvasViewImpl extends AbsolutePanel
     public void saveButton(ClickEvent e) {
 
         FBForm formDisplay = ((CanvasViewImpl) layoutView).getFormDisplay();
-        FormRepresentation createRepresentation = formDisplay.createRepresentation();
+        FormBuilderDTO createRepresentation = formDisplay.createRepresentation();
         presenter.saveForm(createRepresentation);
 
     }

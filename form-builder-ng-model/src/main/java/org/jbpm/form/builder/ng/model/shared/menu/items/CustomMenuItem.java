@@ -22,7 +22,6 @@ import java.util.Map;
 
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.bus.FormItemSelectionEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableEvent;
 import org.jbpm.form.builder.ng.model.client.bus.UndoableHandler;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
@@ -30,7 +29,7 @@ import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.menu.FBMenuItem;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
 import org.jbpm.form.builder.ng.model.common.panels.CommandPopupPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
@@ -52,7 +51,7 @@ import com.gwtent.reflection.client.Reflectable;
 public class CustomMenuItem extends FBMenuItem {
 
     private String optionName;
-    private FormItemRepresentation representation;
+    private FormBuilderDTO representation;
     private String groupName;
     private String iconUrlAsString;
 
@@ -62,7 +61,7 @@ public class CustomMenuItem extends FBMenuItem {
         this(null, null, new ArrayList<FBFormEffect>(), null);
     }
     
-    public CustomMenuItem(FormItemRepresentation representation, String optionName, List<FBFormEffect> formEffects, String groupName) {
+    public CustomMenuItem(FormBuilderDTO representation, String optionName, List<FBFormEffect> formEffects, String groupName) {
         super(formEffects);
         this.representation = representation;
         this.optionName = optionName;
@@ -135,11 +134,11 @@ public class CustomMenuItem extends FBMenuItem {
         return optionName;
     }
     
-    public FormItemRepresentation getRepresentation() {
+    public FormBuilderDTO getRepresentation() {
         return representation;
     }
     
-    public void setRepresentation(FormItemRepresentation representation) {
+    public void setRepresentation(FormBuilderDTO representation) {
         this.representation = representation;
     }
     

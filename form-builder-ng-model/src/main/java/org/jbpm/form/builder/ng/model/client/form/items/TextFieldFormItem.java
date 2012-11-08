@@ -20,17 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TextFieldRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents a text field
@@ -108,32 +107,25 @@ public class TextFieldFormItem extends FBFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        TextFieldRepresentation rep = super.getRepresentation(new TextFieldRepresentation());
-        rep.setDefaultValue(this.defaultContent);
-        rep.setName(this.name);
-        rep.setId(this.id);
-        rep.setMaxLength(this.maxlength);
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO rep = super.getRepresentation();
+        rep.setString("defaultValue", this.defaultContent);
+        rep.setString("name", this.name);
+        rep.setString("id", this.id);
+        rep.setInteger("maxLength", this.maxlength);
         return rep;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof TextFieldRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TextFieldRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("TextFieldRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TextFieldRepresentation"));
         }
-        super.populate(rep);
-        TextFieldRepresentation trep = (TextFieldRepresentation) rep;
-        this.defaultContent = trep.getDefaultValue();
-        this.name = trep.getName();
-        this.id = trep.getId();
-        this.maxlength = trep.getMaxLength();
-        if (trep.getWidth() != null && !"".equals(trep.getWidth())) {
-            setWidth(trep.getWidth());
-        }
-        if (trep.getHeight() != null && !"".equals(trep.getHeight())) {
-            setHeight(trep.getHeight());
-        }
+        super.populate(dto);
+        this.defaultContent = dto.getString("defaultValue");
+        this.name = dto.getString("name");
+        this.id = dto.getString("id");
+        this.maxlength = dto.getInteger("maxLength");
         populate(this.textBox);
     }
 
@@ -159,8 +151,8 @@ public class TextFieldFormItem extends FBFormItem {
         if (input != null) {
             tb.setValue(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            tb.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            tb.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(tb.getElement());
         return tb;

@@ -17,6 +17,7 @@ package org.jbpm.form.builder.ng.model.client.form.items;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,6 @@ import java.util.Map;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.LineGraphRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -35,6 +34,7 @@ import com.google.gwt.visualization.client.visualizations.LineChart;
 import com.google.gwt.visualization.client.visualizations.LineChart.Options;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form item. Represents a line graph
@@ -112,28 +112,63 @@ public class LineGraphFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        LineGraphRepresentation rep = super.getRepresentation(new LineGraphRepresentation());
-        rep.setDataStructure(new ArrayList<Map.Entry<String, String>>(dataStructRep));
-        rep.setDataTable(new ArrayList<List<String>>(dataTableRep));
-        rep.setGraphTitle(graphTitle);
-        rep.setGraphXTitle(graphXTitle);
-        rep.setGraphYTitle(graphYTitle);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("graphTitle", graphTitle);
+        dto.setString("graphXTitle", graphXTitle);
+        dto.setString("graphYTitle", graphYTitle);
+        List<Object> structMap = new ArrayList<Object>();
+        for (Map.Entry<String, String> entry : dataStructRep) {
+        	Map<String, Object> itemMap = new HashMap<String, Object>();
+        	itemMap.put("key", entry.getKey());
+        	itemMap.put("value", entry.getValue());
+        	structMap.add(itemMap);
+        }
+        dto.setList("dataStructure", structMap);
+        List<Object> tableMap = new ArrayList<Object>();
+        for (List<String> yPoint : dataTableRep) {
+        	Map<String, Object> itemMap = new HashMap<String, Object>();
+        	if (yPoint != null) {
+        		int index = 0;
+        		for (String point : yPoint) {
+        			itemMap.put(String.valueOf(index), point);
+        			index++;
+        		}
+        	}
+        	tableMap.add(itemMap);
+        }
+        dto.setList("dataTable", tableMap);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof LineGraphRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "LineGraphRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("LineGraphRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "LineGraphRepresentation"));
         }
-        super.populate(rep);
-        LineGraphRepresentation grep = (LineGraphRepresentation) rep;
-        this.dataStructRep = new ArrayList<Map.Entry<String, String>>(grep.getDataStructure());
-        this.dataTableRep = new ArrayList<List<String>>(grep.getDataTable());
-        this.graphTitle = grep.getGraphTitle();
-        this.graphXTitle = grep.getGraphXTitle();
-        this.graphYTitle = grep.getGraphYTitle();
+        super.populate(dto);
+        List<FormBuilderDTO> dataStructList = dto.getListOfDtos("dataStructure");
+        this.dataStructRep.clear();
+        for (FormBuilderDTO structDto : dataStructList) {
+        	LineGraphEntry entry = new LineGraphEntry();
+        	entry.setKey(structDto.getString("key"));
+        	entry.setValue(structDto.getString("value"));
+        	dataStructRep.add(entry);
+        }
+        this.dataTableRep.clear();
+        List<FormBuilderDTO> dataTableList = dto.getListOfDtos("dataTable");
+        for (FormBuilderDTO pointDto : dataTableList) {
+        	List<String> keys = new ArrayList<String>(pointDto.getParameters().keySet());
+        	Collections.sort(keys);
+        	List<String> item = new ArrayList<String>();
+        	for (String key : keys) {
+        		item.add(pointDto.getString(key));
+        	}
+        	this.dataTableRep.add(item);
+        }
+        this.graphTitle = dto.getString("graphTitle");
+        this.graphXTitle = dto.getString("graphXTitle");
+        this.graphYTitle = dto.getString("graphYTitle");
         populate(this.chart);
     }
 
@@ -153,9 +188,9 @@ public class LineGraphFormItem extends FBFormItem {
     public Widget cloneDisplay(Map<String, Object> data) {
         LineChart chart = new LineChart();
         populate(chart);
-        if (getInput() != null && getInput().getName() != null) {
+        if (getInput() != null && getInput().get("name") != null) {
             DataTable dataTable = DataTable.create();
-            Object myData = data.get(getInput().getName());
+            Object myData = data.get(getInput().get("name"));
             populateInput(dataTable, myData);
             chart.draw(dataTable);
         }
@@ -221,4 +256,31 @@ public class LineGraphFormItem extends FBFormItem {
         }
     }
 
+    private class LineGraphEntry implements Map.Entry<String, String> {
+
+    	private String key;
+    	
+    	private String value;
+
+    	@Override
+		public String getKey() {
+			return key;
+		}
+
+		public void setKey(String key) {
+			this.key = key;
+		}
+
+		@Override
+		public String getValue() {
+			return value;
+		}
+
+		@Override
+		public String setValue(String value) {
+			String aux = this.value;
+			this.value = value;
+			return aux;
+		}
+    }
 }

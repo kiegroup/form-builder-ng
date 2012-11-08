@@ -20,20 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.FlowPanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form layout item. Represents a flow layout
@@ -100,33 +99,33 @@ public class FlowLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        FlowPanelRepresentation rep = super.getRepresentation(new FlowPanelRepresentation());
-        List<FormItemRepresentation> items = new ArrayList<FormItemRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        List<Object> itemMaps = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            items.add(item.getRepresentation());
+            itemMaps.add(item.getRepresentation().getParameters());
         }
-        rep.setItems(items);
-        rep.setId(this.id);
-        rep.setCssClassName(this.cssClassName);
-        return rep;
+        dto.setList("items", itemMaps);
+        dto.setString("id", this.id);
+        dto.setString("cssClassName", this.cssClassName);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof FlowPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "FlowPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("FlowPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "FlowPanelRepresentation"));
         }
-        super.populate(rep);
-        FlowPanelRepresentation frep = (FlowPanelRepresentation) rep;
-        this.cssClassName = frep.getCssClassName();
-        this.id = frep.getId();
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
         super.getItems().clear();
         populate(this.panel);
-        if (frep.getItems() != null) {
-            for (FormItemRepresentation item : frep.getItems()) {
-                add(super.createItem(item));
-            }
+        List<FormBuilderDTO> itemDtos = dto.getListOfDtos("items");
+        if (itemDtos != null) {
+        	for (FormBuilderDTO subDto : itemDtos) {
+        		add(super.createItem(subDto));
+        	}
         }
     }
 

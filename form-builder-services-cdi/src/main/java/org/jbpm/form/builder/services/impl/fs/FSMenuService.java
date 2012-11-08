@@ -23,36 +23,46 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs.AllFileSelector;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.VFS;
-
+import org.jbpm.form.builder.services.api.MenuServiceException;
+import org.jbpm.form.builder.services.impl.base.BaseMenuService;
+import org.jbpm.form.builder.services.model.forms.FormEncodingException;
+import org.jbpm.form.builder.services.model.forms.FormEncodingFactory;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
+import org.jbpm.form.builder.services.model.forms.FormRepresentationEncoder;
+import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
+import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
+import org.jbpm.form.builder.services.model.menu.ValidationDescription;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.apache.commons.io.IOUtils;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationDecoder;
-import org.jbpm.form.builder.ng.model.shared.form.FormRepresentationEncoder;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.ValidationDescription;
-import org.jbpm.form.builder.services.api.MenuServiceException;
-import org.jbpm.form.builder.services.impl.base.BaseMenuService;
 
 public class FSMenuService extends BaseMenuService {
 
     @Override
+    public List<Map<String, Object>> listOptionsGWT() throws MenuServiceException {
+        List<MenuOptionDescription> response = listOptions();
+        List<Map<String, Object>> retval = new ArrayList<Map<String, Object>>();
+        for (MenuOptionDescription option : response) {
+        	retval.add(option.getDataMap());
+        }
+        return retval;
+    }
+    
+    @Override
     public List<MenuOptionDescription> listOptions() throws MenuServiceException {
-        Gson gson = new Gson();
-        List<MenuOptionDescription> retval = null;
+    	Gson gson = new Gson();
+        List<MenuOptionDescription> retval = new ArrayList<MenuOptionDescription>();
         try {
             URL url = asURL("/menuOptions.json");
             retval = gson.fromJson(createReader(url), new TypeToken<List<MenuOptionDescription>>(){}.getType());
@@ -65,10 +75,24 @@ public class FSMenuService extends BaseMenuService {
         }
         return retval;
     }
+    
+    @Override
+    public Map<String, List<Map<String, Object>>> listMenuItemsGWT() throws MenuServiceException {
+    	Map<String, List<MenuItemDescription>> response = listMenuItems();
+        Map<String, List<Map<String, Object>>> retval = new HashMap<String, List<Map<String, Object>>>();
+        for (String groupName : response.keySet()) {
+        	List<Map<String, Object>> itemsGroup = new ArrayList<Map<String, Object>>();
+        	for (MenuItemDescription menuItem : response.get(groupName)) {
+        		itemsGroup.add(menuItem.getDataMap());
+        	}
+        	retval.put(groupName, itemsGroup);
+        }
+        return retval;
+    }
 
     @Override
     public Map<String, List<MenuItemDescription>> listMenuItems() throws MenuServiceException {
-        Map<String, List<MenuItemDescription>> retval = null;
+    	Map<String, List<MenuItemDescription>> retval = null;
         try {
             FormRepresentationDecoder decoder = FormEncodingFactory.getDecoder();
             URL url = asURL("/menuItems.json");
@@ -88,10 +112,22 @@ public class FSMenuService extends BaseMenuService {
         return retval;
     }
 
+    
+    @Override
+    public List<Map<String, Object>> listValidationsGWT() throws MenuServiceException {
+        List<Map<String, Object>> retval = null;
+        List<ValidationDescription> response = listValidations();
+        retval = new ArrayList<Map<String, Object>>();
+        for (ValidationDescription valDesc : response) {
+          	retval.add(valDesc.getDataMap());
+        }
+        return retval;
+    }
+    
     @Override
     public List<ValidationDescription> listValidations() throws MenuServiceException {
-        Gson gson = new Gson();
-        List<ValidationDescription> retval = null;
+    	Gson gson = new Gson();
+    	List<ValidationDescription> retval = null;
         try {
             URL url = asURL("/validations.json");
             retval = gson.fromJson(createReader(url), new TypeToken<List<ValidationDescription>>(){}.getType());
@@ -106,15 +142,29 @@ public class FSMenuService extends BaseMenuService {
     }
     
     @Override
+    public void saveMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException {
+        MenuItemDescription menuItem = new MenuItemDescription();
+        menuItem.setDataMap(item);
+        saveMenuItem(groupName, menuItem);
+    }
+    
+    @Override
     public void saveMenuItem(String groupName, MenuItemDescription item) throws MenuServiceException {
-        Map<String, List<MenuItemDescription>> items = listMenuItems();
+    	Map<String, List<MenuItemDescription>> items = listMenuItems();
         addToMap(groupName, item, items);
         writeMenuItems(items);
     }
     
     @Override
+    public void deleteMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException {
+        MenuItemDescription menuItem = new MenuItemDescription();
+        menuItem.setDataMap(item);
+        deleteMenuItem(groupName, menuItem);
+    }
+    
+    @Override
     public void deleteMenuItem(String groupName, MenuItemDescription item) throws MenuServiceException {
-        Map<String, List<MenuItemDescription>> items = listMenuItems();
+    	Map<String, List<MenuItemDescription>> items = listMenuItems();
         removeFromMap(groupName, item, items);
         writeMenuItems(items);
     }

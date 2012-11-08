@@ -21,14 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.common.panels.CalendarPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.CalendarRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
+import org.jbpm.form.builder.ng.model.common.panels.CalendarPanel;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,7 +43,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class CalendarFormItem extends FBFormItem {
@@ -64,7 +63,7 @@ public class CalendarFormItem extends FBFormItem {
     
     public CalendarFormItem(List<FBFormEffect> formEffects) {
         super(formEffects);
-        this.iconUrl = FormBuilderResources.INSTANCE.calendarSquare().getURL();
+        this.iconUrl = FormBuilderResources.INSTANCE.calendarSquare().getSafeUri().asString();
         icon.setUrl(this.iconUrl);
         icon.getElement().getStyle().setCursor(Style.Cursor.POINTER);
         icon.addClickHandler(new ClickHandler() {
@@ -144,24 +143,23 @@ public class CalendarFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        CalendarRepresentation crep = super.getRepresentation(new CalendarRepresentation());
-        crep.setIconUrl(this.iconUrl);
-        crep.setCalendarCss(this.calendarCss);
-        crep.setDefaultValue(this.defaultValue);
-        return crep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("iconUrl", this.iconUrl);
+        dto.setString("calendarCss", this.calendarCss);
+        dto.setString("defaultValue", this.defaultValue);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof CalendarRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "CalendarRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("CalendarRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "CalendarRepresentation"));
         }
-        super.populate(rep);
-        CalendarRepresentation crep = (CalendarRepresentation) rep;
-        this.calendarCss = crep.getCalendarCss();
-        this.iconUrl = crep.getIconUrl();
-        this.defaultValue = crep.getDefaultValue();
+        super.populate(dto);
+        this.calendarCss = dto.getString("calendarCss");
+        this.iconUrl = dto.getString("iconUrl");
+        this.defaultValue = dto.getString("defaultValue");
         populate(this.calendar, this.text, this.icon);
     }
     
@@ -200,8 +198,8 @@ public class CalendarFormItem extends FBFormItem {
         if (input != null) {
             textBox.setValue(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            textBox.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            textBox.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(textBox.getElement());
         return display;

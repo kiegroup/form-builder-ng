@@ -20,17 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TextAreaRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents a text area
@@ -111,28 +110,27 @@ public class TextAreaFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        TextAreaRepresentation rep = super.getRepresentation(new TextAreaRepresentation());
-        rep.setCols(this.cols);
-        rep.setId(this.id);
-        rep.setName(this.name);
-        rep.setRows(this.rows);
-        rep.setValue(this.defaultValue);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setInteger("cols", this.cols);
+        dto.setString("id", this.id);
+        dto.setString("name", this.name);
+        dto.setInteger("rows", this.rows);
+        dto.setString("value", this.defaultValue);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof TextAreaRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TextAreaRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("TextAreaRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TextAreaRepresentation"));
         }
-        super.populate(rep);
-        TextAreaRepresentation trep = (TextAreaRepresentation) rep;
-        this.cols = trep.getCols();
-        this.id = trep.getId();
-        this.name = trep.getName();
-        this.rows = trep.getRows();
-        this.defaultValue = trep.getValue();
+        super.populate(dto);
+        this.cols = dto.getInteger("cols");
+        this.id = dto.getString("id");
+        this.name = dto.getString("name");
+        this.rows = dto.getInteger("rows");
+        this.defaultValue = dto.getString("value");
         populate(this.area);
     }
     
@@ -156,8 +154,8 @@ public class TextAreaFormItem extends FBFormItem {
         if (input != null) {
             ta.setValue(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            ta.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            ta.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(ta.getElement());
         return ta;

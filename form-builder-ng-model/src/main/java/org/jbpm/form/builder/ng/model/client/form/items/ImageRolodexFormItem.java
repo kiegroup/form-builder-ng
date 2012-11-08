@@ -21,21 +21,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.OptionsFormItem;
-import org.jbpm.form.builder.ng.model.common.panels.ImageRolodexPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ImageRolodexRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
+import org.jbpm.form.builder.ng.model.common.panels.ImageRolodexPanel;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
+import com.google.gwt.safehtml.shared.SafeUri;
+import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.impl.ClippedImagePrototype;
 import com.gwtent.reflection.client.Reflectable;
 import com.yesmail.gwt.rolodex.client.RolodexCard;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class ImageRolodexFormItem extends OptionsFormItem { 
@@ -96,9 +97,10 @@ public class ImageRolodexFormItem extends OptionsFormItem {
     }
     
     private RolodexCard createCard(String url) {
-        ClippedImagePrototype expanded = new ClippedImagePrototype(url, 0, 0, getOffsetWidth() / 2, getOffsetHeight());
-        ClippedImagePrototype collapseLeft = new ClippedImagePrototype(url, 0, 0, getOffsetWidth() / 4, getOffsetHeight() / 2);
-        ClippedImagePrototype collapseRight = new ClippedImagePrototype(url, 0, 0, getOffsetWidth() / 4, getOffsetHeight() / 2);
+    	SafeUri surl = UriUtils.fromString(url);
+        ClippedImagePrototype expanded = new ClippedImagePrototype(surl, 0, 0, getOffsetWidth() / 2, getOffsetHeight());
+        ClippedImagePrototype collapseLeft = new ClippedImagePrototype(surl, 0, 0, getOffsetWidth() / 4, getOffsetHeight() / 2);
+        ClippedImagePrototype collapseRight = new ClippedImagePrototype(surl, 0, 0, getOffsetWidth() / 4, getOffsetHeight() / 2);
         int expandedWidth = getOffsetWidth() / 2;
         int collapsedWidth = getOffsetWidth() / 4;
         int heightOffset = getOffsetHeight() / 4;
@@ -107,24 +109,28 @@ public class ImageRolodexFormItem extends OptionsFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ImageRolodexRepresentation irrep = new ImageRolodexRepresentation();
-        irrep.setAnimated(this.animated);
-        irrep.setImageUrls(this.urls);
-        irrep.setSelectedIndex(this.selectedIndex);
-        return irrep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setBoolean("animated", this.animated);
+        List<Object> urlList = new ArrayList<Object>(this.urls);
+        dto.setList("urls", urlList);
+        dto.setInteger("selectedIndex", this.selectedIndex);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ImageRolodexRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "ImageRolodexRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ImageRolodexRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "ImageRolodexRepresentation"));
         }
-        super.populate(rep);
-        ImageRolodexRepresentation irep = (ImageRolodexRepresentation) rep;
-        this.selectedIndex = irep.getSelectedIndex();
-        this.animated = irep.isAnimated();
-        this.urls = irep.getImageUrls();
+        super.populate(dto);
+        this.selectedIndex = dto.getInteger("selectedIndex");
+        this.animated = dto.getBoolean("animated");
+        List<Object> list = dto.getList("urls");
+        this.urls.clear();
+        for (Object objUrl : list) {
+        	this.urls.add(String.valueOf(objUrl));
+        }
         populate(this.panel);
     }
     

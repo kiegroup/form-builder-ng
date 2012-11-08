@@ -24,8 +24,7 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.common.panels.RichTextEditor;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.RichTextEditorRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -86,26 +85,19 @@ public class RichTextEditorFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        RichTextEditorRepresentation rep = super.getRepresentation(new RichTextEditorRepresentation());
-        rep.setHtml(this.html);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("html", this.html);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof RichTextEditorRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "RichTextEditorRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("RichTextEditorRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "RichTextEditorRepresentation"));
         }
-        super.populate(rep);
-        RichTextEditorRepresentation rrep = (RichTextEditorRepresentation) rep;
-        this.html = rrep.getHtml();
-        if (rrep.getWidth() != null && !"".equals(rrep.getWidth())) {
-            setWidth(rrep.getWidth());
-        }
-        if (rrep.getHeight() != null && !"".equals(rrep.getHeight())) {
-            setHeight(rrep.getHeight());
-        }
+        super.populate(dto);
+        this.html = dto.getString("html");
         populate(this.editor);
     }
     
@@ -125,8 +117,8 @@ public class RichTextEditorFormItem extends FBFormItem {
         if (input != null) {
             display.setHTML(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            display.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            display.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(display.getElement());
         return display;

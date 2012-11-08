@@ -27,8 +27,7 @@ import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.VerticalPanelRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -100,31 +99,31 @@ public class VerticalLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        VerticalPanelRepresentation rep = super.getRepresentation(new VerticalPanelRepresentation());
-        List<FormItemRepresentation> items = new ArrayList<FormItemRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        List<Object> items = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            items.add(item.getRepresentation());
+            items.add(item.getRepresentation().getParameters());
         }
-        rep.setItems(items);
-        rep.setId(this.id);
-        rep.setCssClassName(this.cssClassName);
-        return rep;
+        dto.setList("items", items);
+        dto.setString("id", this.id);
+        dto.setString("cssClassName", this.cssClassName);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof VerticalPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "VerticalPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("VerticalPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "VerticalPanelRepresentation"));
         }
-        super.populate(rep);
-        VerticalPanelRepresentation frep = (VerticalPanelRepresentation) rep;
-        this.cssClassName = frep.getCssClassName();
-        this.id = frep.getId();
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
         super.getItems().clear();
         populate(this.panel);
-        if (frep.getItems() != null) {
-            for (FormItemRepresentation item : frep.getItems()) {
+        List<FormBuilderDTO> itemDtos = dto.getListOfDtos("items");
+        if (itemDtos != null) {
+            for (FormBuilderDTO item : itemDtos) {
                 add(super.createItem(item));
             }
         }

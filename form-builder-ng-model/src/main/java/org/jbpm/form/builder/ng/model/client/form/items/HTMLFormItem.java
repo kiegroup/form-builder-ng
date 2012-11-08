@@ -24,8 +24,6 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.FBInplaceEditor;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.HTMLRepresentation;
 import org.jbpm.form.builder.ng.model.client.form.editors.HTMLFormItemEditor;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
@@ -33,6 +31,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form item. Represents a piece of user entered HTML
@@ -91,20 +90,19 @@ public class HTMLFormItem extends FBFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        HTMLRepresentation rep = super.getRepresentation(new HTMLRepresentation());
-        rep.setContent(html.getHTML());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("content", html.getHTML());
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof HTMLRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "HTMLRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("HTMLRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "HTMLRepresentation"));
         }
-        super.populate(rep);
-        HTMLRepresentation hrep = (HTMLRepresentation) rep;
-        this.setContent(hrep.getContent());
+        super.populate(dto);
+        this.setContent(dto.getString("content"));
     }
     
     @Override

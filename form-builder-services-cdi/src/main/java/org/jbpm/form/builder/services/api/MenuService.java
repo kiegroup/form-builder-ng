@@ -17,24 +17,32 @@ package org.jbpm.form.builder.services.api;
 
 import java.util.List;
 import java.util.Map;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuItemDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
-import org.jbpm.form.builder.ng.model.shared.menu.ValidationDescription;
 
-
-
+import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
+import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
+import org.jbpm.form.builder.services.model.menu.ValidationDescription;
 
 public interface MenuService {
 
+    List<Map<String, Object>> listOptionsGWT() throws MenuServiceException; //List<MenuOptionDescription>
+    
     List<MenuOptionDescription> listOptions() throws MenuServiceException;
+    
+    Map<String, List<Map<String, Object>>> listMenuItemsGWT() throws MenuServiceException; //Map<String, List<MenuItemDescription>>
     
     Map<String, List<MenuItemDescription>> listMenuItems() throws MenuServiceException;
     
+    void saveMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException; //item: MenuItemDescription
+    
     void saveMenuItem(String groupName, MenuItemDescription item) throws MenuServiceException;
+    
+    void deleteMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException; //item: MenuItemDescription
     
     void deleteMenuItem(String groupName, MenuItemDescription item) throws MenuServiceException;
 
     Map<String, String> getFormBuilderProperties() throws MenuServiceException;
 
+    List<Map<String, Object>> listValidationsGWT() throws MenuServiceException; //List<ValidationDescription>
+    
     List<ValidationDescription> listValidations() throws MenuServiceException;
 }

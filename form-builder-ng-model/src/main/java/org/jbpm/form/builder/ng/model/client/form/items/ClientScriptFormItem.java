@@ -24,8 +24,6 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ClientScriptRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
 
@@ -39,6 +37,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 @Reflectable
 public class ClientScriptFormItem extends FBFormItem implements HasSourceReference {
@@ -105,22 +104,21 @@ public class ClientScriptFormItem extends FBFormItem implements HasSourceReferen
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ClientScriptRepresentation rep = super.getRepresentation(new ClientScriptRepresentation());
-        rep.setType(this.type);
-        rep.setSrc(this.src);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("type", this.type);
+        dto.setString("src", this.src);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ClientScriptRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "ClientScriptRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ClientScriptRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "ClientScriptRepresentation"));
         }
-        super.populate(rep);
-        ClientScriptRepresentation csrep = (ClientScriptRepresentation) rep;
-        this.src = csrep.getSrc();
-        this.type = csrep.getType();
+        super.populate(dto);
+        this.src = dto.getString("src");
+        this.type = dto.getString("type");
         populate(this.script);
     }
     

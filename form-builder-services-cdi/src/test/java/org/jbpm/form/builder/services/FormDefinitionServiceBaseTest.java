@@ -16,20 +16,25 @@
 package org.jbpm.form.builder.services;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.apache.commons.io.FileUtils;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingFactory;
 import org.jbpm.form.builder.services.encoders.FormEncodingServerFactory;
 import org.jbpm.form.builder.services.impl.fs.FSFileService;
 import org.jbpm.form.builder.services.impl.fs.FSFormDefinitionService;
-
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.forms.FormEncodingFactory;
 import org.junit.After;
 import org.junit.Before;
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 public abstract class FormDefinitionServiceBaseTest{

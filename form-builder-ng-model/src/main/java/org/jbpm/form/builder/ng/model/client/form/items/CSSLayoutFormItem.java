@@ -26,8 +26,6 @@ import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.CSSPanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.dom.client.Document;
@@ -37,6 +35,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form layout item. Represents a css based layout
@@ -114,34 +113,34 @@ public class CSSLayoutFormItem extends LayoutFormItem implements HasSourceRefere
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        CSSPanelRepresentation rep = super.getRepresentation(new CSSPanelRepresentation());
-        List<FormItemRepresentation> items = new ArrayList<FormItemRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        List<Object> items = new ArrayList<Object>();
         for (FBFormItem item : getItems()) {
-            items.add(item.getRepresentation());
+            items.add(item.getRepresentation().getParameters());
         }
-        rep.setItems(items);
-        rep.setId(this.id);
-        rep.setCssClassName(this.cssClassName);
-        rep.setCssStylesheetUrl(this.cssStylesheetUrl);
-        return rep;
+        dto.setList("items", items);
+        dto.setString("id", this.id);
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("cssStylesheetUrl", this.cssStylesheetUrl);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof CSSPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "CSSPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("CSSPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "CSSPanelRepresentation"));
         }
-        super.populate(rep);
-        CSSPanelRepresentation crep = (CSSPanelRepresentation) rep;
-        this.cssClassName = crep.getCssClassName();
-        this.id = crep.getId();
-        this.cssStylesheetUrl = crep.getCssStylesheetUrl();
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.cssStylesheetUrl = dto.getString("cssStylesheetUrl");
         super.getItems().clear();
         populate(this.panel, this.link);
-        if (crep.getItems() != null) {
-            for (FormItemRepresentation item : crep.getItems()) {
-                add(super.createItem(item));
+        List<FormBuilderDTO> items = dto.getListOfDtos("items");
+        if (items != null) {
+            for (FormBuilderDTO itemDto : items) {
+                add(super.createItem(itemDto));
             }
         }
     }

@@ -25,8 +25,6 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
 import org.jbpm.form.builder.ng.model.client.form.I18NFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ImageRepresentation;
 import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
@@ -35,6 +33,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form item. Represents an image
@@ -103,26 +102,25 @@ public class ImageFormItem extends FBFormItem implements I18NFormItem, HasSource
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ImageRepresentation rep = super.getRepresentation(new ImageRepresentation());
-        rep.setAltText(this.altText);
-        rep.setUrl(this.url);
-        rep.setId(this.id);
-        rep.setI18n(getI18nMap());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("altText", this.altText);
+        dto.setString("url", this.url);
+        dto.setString("id", this.id);
+        dto.setMapOfStrings("i18n", getI18nMap());
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ImageRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "ImageRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ImageRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "ImageRepresentation"));
         }
-        super.populate(rep);
-        ImageRepresentation irep = (ImageRepresentation) rep;
-        this.altText = irep.getAltText();
-        this.url = irep.getUrl();
-        this.id = irep.getId();
-        saveI18nMap(irep.getI18n());
+        super.populate(dto);
+        this.altText = dto.getString("altText");
+        this.url = dto.getString("url");
+        this.id = dto.getString("id");
+        saveI18nMap(dto.getMapOfStrings("i18n"));
         if (this.altText == null || "".equals(this.altText)) {
             String i18nAltText = getI18n("default");
             if (i18nAltText != null) {

@@ -23,14 +23,13 @@ import java.util.Map;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.NumberFieldRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 @Reflectable
 public class NumberFieldFormItem extends FBFormItem {
@@ -105,32 +104,25 @@ public class NumberFieldFormItem extends FBFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        NumberFieldRepresentation rep = super.getRepresentation(new NumberFieldRepresentation());
-        rep.setDefaultValue(this.defaultContent);
-        rep.setName(this.name);
-        rep.setId(this.id);
-        rep.setMaxLength(this.maxlength);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setDouble("defaultValue", this.defaultContent);
+        dto.setString("name", this.name);
+        dto.setString("id", this.id);
+        dto.setInteger("maxLength", this.maxlength);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof NumberFieldRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TextFieldRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("NumberFieldRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TextFieldRepresentation"));
         }
-        super.populate(rep);
-        NumberFieldRepresentation nrep = (NumberFieldRepresentation) rep;
-        this.defaultContent = nrep.getDefaultValue();
-        this.name = nrep.getName();
-        this.id = nrep.getId();
-        this.maxlength = nrep.getMaxLength();
-        if (nrep.getWidth() != null && !"".equals(nrep.getWidth())) {
-            setWidth(nrep.getWidth());
-        }
-        if (nrep.getHeight() != null && !"".equals(nrep.getHeight())) {
-            setHeight(nrep.getHeight());
-        }
+        super.populate(dto);
+        this.defaultContent = dto.getDouble("defaultValue");
+        this.name = dto.getString("name");
+        this.id = dto.getString("id");
+        this.maxlength = dto.getInteger("maxLength");
         populate(this.doubleBox);
     }
     
@@ -157,8 +149,8 @@ public class NumberFieldFormItem extends FBFormItem {
             String s = input.toString();
             tb.setValue(s.equals("") ? null : Double.valueOf(s));
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            tb.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            tb.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(tb.getElement());
         return tb;

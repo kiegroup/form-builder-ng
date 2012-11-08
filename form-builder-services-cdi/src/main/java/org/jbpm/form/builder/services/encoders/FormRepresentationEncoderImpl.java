@@ -18,8 +18,9 @@ package org.jbpm.form.builder.services.encoders;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import org.jbpm.form.builder.ng.model.shared.api.Mappable;
-import org.jbpm.form.builder.ng.model.shared.form.AbstractFormRepresentationEncoder;
+
+import org.jbpm.form.builder.services.model.Mappable;
+import org.jbpm.form.builder.services.model.forms.AbstractFormRepresentationEncoder;
 
 
 public class FormRepresentationEncoderImpl extends

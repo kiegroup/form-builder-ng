@@ -24,13 +24,12 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.common.panels.RangeBox;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.RangeFieldRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 @Reflectable
 public class RangeFieldFormItem extends FBFormItem {
@@ -118,36 +117,29 @@ public class RangeFieldFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        RangeFieldRepresentation rep = super.getRepresentation(new RangeFieldRepresentation());
-        rep.setDefaultValue(this.defaultValue);
-        rep.setName(this.name);
-        rep.setId(this.id);
-        rep.setMax(this.max);
-        rep.setMin(this.min);
-        rep.setStep(this.step);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setDouble("defaultValue", this.defaultValue);
+        dto.setString("name", this.name);
+        dto.setString("id", this.id);
+        dto.setDouble("max", this.max);
+        dto.setDouble("min", this.min);
+        dto.setDouble("step", this.step);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof RangeFieldRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "RangeFieldRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("RangeFieldRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "RangeFieldRepresentation"));
         }
-        super.populate(rep);
-        RangeFieldRepresentation rrep = (RangeFieldRepresentation) rep;
-        this.defaultValue = rrep.getDefaultValue();
-        this.name = rrep.getName();
-        this.id = rrep.getId();
-        this.max = rrep.getMax();
-        this.min = rrep.getMin();
-        this.step = rrep.getStep();
-        if (rrep.getWidth() != null && !"".equals(rrep.getWidth())) {
-            setWidth(rrep.getWidth());
-        }
-        if (rrep.getHeight() != null && !"".equals(rrep.getHeight())) {
-            setHeight(rrep.getHeight());
-        }
+        super.populate(dto);
+        this.defaultValue = dto.getDouble("defaultValue");
+        this.name = dto.getString("name");
+        this.id = dto.getString("id");
+        this.max = dto.getDouble("max");
+        this.min = dto.getDouble("min");
+        this.step = dto.getDouble("step");
         populate(this.rangeBox);
     }
     
@@ -176,8 +168,8 @@ public class RangeFieldFormItem extends FBFormItem {
             String inputValue = input.toString();
             tb.setValue(inputValue.equals("") ? null : Double.valueOf(inputValue));
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            tb.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            tb.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(tb.getElement());
         return tb;

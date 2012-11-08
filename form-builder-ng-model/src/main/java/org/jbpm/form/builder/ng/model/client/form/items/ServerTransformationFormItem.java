@@ -24,8 +24,6 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.FBInplaceEditor;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ServerTransformationRepresentation;
 import org.jbpm.form.builder.ng.model.client.form.editors.ServerScriptEditor;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
@@ -35,6 +33,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * server-side form item. Represents a piece of server script
@@ -72,22 +71,21 @@ public class ServerTransformationFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ServerTransformationRepresentation rep = getRepresentation(new ServerTransformationRepresentation());
-        rep.setScript(this.script.getValue());
-        rep.setLanguage(this.language);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("script", this.script.getValue());
+        dto.setString("language", this.language);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ServerTransformationRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "ServerTransformationRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ServerTransformationRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "ServerTransformationRepresentation"));
         }
-        super.populate(rep);
-        ServerTransformationRepresentation srep = (ServerTransformationRepresentation) rep;
-        this.setScriptContent(srep.getScript());
-        srep.setLanguage(this.language);
+        super.populate(dto);
+        this.setScriptContent(dto.getString("script"));
+        this.language = dto.getString("language");
     }
 
     @Override

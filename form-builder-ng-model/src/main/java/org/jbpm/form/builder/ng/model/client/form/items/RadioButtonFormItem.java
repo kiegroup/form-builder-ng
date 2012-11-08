@@ -20,17 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.RadioButtonRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents a radio button
@@ -101,26 +100,25 @@ public class RadioButtonFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        RadioButtonRepresentation rep = super.getRepresentation(new RadioButtonRepresentation());
-        rep.setId(this.id);
-        rep.setName(this.name);
-        rep.setSelected(this.selected);
-        rep.setValue(this.value);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("id", this.id);
+        dto.setString("name", this.name);
+        dto.setBoolean("selected", this.selected);
+        dto.setString("value", this.value);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof RadioButtonRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "RadioButtonRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("RadioButtonRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "RadioButtonRepresentation"));
         }
-        super.populate(rep);
-        RadioButtonRepresentation rrep = (RadioButtonRepresentation) rep;
-        this.id = rrep.getId();
-        this.name = rrep.getName();
-        this.selected = rrep.getSelected();
-        this.value = rrep.getValue();
+        super.populate(dto);
+        this.id = dto.getString("id");
+        this.name = dto.getString("name");
+        this.selected = dto.getBoolean("selected");
+        this.value = dto.getString("value");
         populate(this.button);
     }
     
@@ -145,8 +143,8 @@ public class RadioButtonFormItem extends FBFormItem {
         if (input != null) {
             rb.setValue(Boolean.valueOf(input.toString()));
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            rb.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            rb.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(rb.getElement());
         return rb;

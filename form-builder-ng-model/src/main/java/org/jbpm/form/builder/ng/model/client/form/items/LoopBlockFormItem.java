@@ -29,10 +29,8 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.InputData;
-import org.jbpm.form.builder.ng.model.shared.api.items.LoopBlockRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -77,33 +75,33 @@ public class LoopBlockFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        LoopBlockRepresentation rep = getRepresentation(new LoopBlockRepresentation());
-        rep.setInputName(getInput() == null ? null : getInput().getName());
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("inputName", getInput() == null ? null : String.valueOf(getInput().get("name")));
         FBFormItem loopItem = (FBFormItem) this.loopBlock.getWidget();
         if (loopItem != null) {
-            rep.setLoopBlock(loopItem.getRepresentation());
+            dto.setMap("loopBlock", loopItem.getRepresentation().getParameters());
         }
-        rep.setVariableName(this.variableName);
-        return rep;
+        dto.setString("variableName", this.variableName);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof LoopBlockRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "LoopBlockRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("LoopBlockRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "LoopBlockRepresentation"));
         }
-        super.populate(rep);
-        LoopBlockRepresentation lrep = (LoopBlockRepresentation) rep;
-        this.variableName = lrep.getVariableName();
+        super.populate(dto);
+        this.variableName = dto.getString("variableName");
         this.loopBlock.clear();
-        if (lrep.getInputName() != null && !"".equals(lrep.getInputName())) {
-            InputData input = new InputData();
-            input.setName(lrep.getInputName());
-            lrep.setInput(input);
+        if (dto.getString("inputName") != null && !"".equals(dto.getString("inputName"))) {
+            Map<String, Object> input = new HashMap<String, Object>();
+            input.put("name", dto.getString("inputName"));
+            setInput(input);
         }
-        if (lrep.getLoopBlock() != null) {
-            FBFormItem child = super.createItem(lrep.getLoopBlock());
+        if (dto.getMap("loopBlock") != null) {
+        	FormBuilderDTO loopDto = new FormBuilderDTO(dto.getMap("loopBlock"));
+            FBFormItem child = super.createItem(loopDto);
             this.loopBlock.add(child);
         }
     }
@@ -122,7 +120,7 @@ public class LoopBlockFormItem extends LayoutFormItem {
         FlowPanel display = new FlowPanel();
         FBFormItem subItem = (FBFormItem) loopBlock.getWidget();
         Object input = getInputValue(data);
-        String inputName = getInput() == null ? null : getInput().getName(); 
+        String inputName = getInput() == null ? null : String.valueOf(getInput().get("name")); 
         if (subItem != null && input != null && inputName != null) {
             Map<String, Object> subData = new HashMap<String, Object>();
             if (input.getClass().isArray()) {

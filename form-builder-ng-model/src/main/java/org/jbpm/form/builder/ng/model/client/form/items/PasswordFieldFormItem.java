@@ -20,17 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.PasswordFieldRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 /**
  * UI form item. Represents a password field
@@ -108,32 +107,25 @@ public class PasswordFieldFormItem extends FBFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        PasswordFieldRepresentation rep = super.getRepresentation(new PasswordFieldRepresentation());
-        rep.setDefaultValue(this.defaultContent);
-        rep.setName(this.name);
-        rep.setId(this.id);
-        rep.setMaxLength(this.maxlength);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("defaultValue", this.defaultContent);
+        dto.setString("name", this.name);
+        dto.setString("id", this.id);
+        dto.setInteger("maxLength", this.maxlength);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof PasswordFieldRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "PasswordFieldRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("PasswordFieldRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "PasswordFieldRepresentation"));
         }
-        super.populate(rep);
-        PasswordFieldRepresentation prep = (PasswordFieldRepresentation) rep;
-        this.defaultContent = prep.getDefaultValue();
-        this.name = prep.getName();
-        this.id = prep.getId();
-        this.maxlength = prep.getMaxLength();
-        if (prep.getWidth() != null && !"".equals(prep.getWidth())) {
-            setWidth(prep.getWidth());
-        }
-        if (prep.getHeight() != null && !"".equals(prep.getHeight())) {
-            setHeight(prep.getHeight());
-        }
+        super.populate(dto);
+        this.defaultContent = dto.getString("defaultValue");
+        this.name = dto.getString("name");
+        this.id = dto.getString("id");
+        this.maxlength = dto.getInteger("maxLength");
         populate(this.textBox);
     }
     
@@ -159,8 +151,8 @@ public class PasswordFieldFormItem extends FBFormItem {
         if (input != null) {
             pb.setValue(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null) {
-            pb.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null) {
+            pb.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(pb.getElement());
         return pb;

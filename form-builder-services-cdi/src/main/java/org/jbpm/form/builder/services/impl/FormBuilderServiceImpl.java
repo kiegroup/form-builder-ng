@@ -18,14 +18,16 @@ package org.jbpm.form.builder.services.impl;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
+
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.Settings;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
 import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.encoders.FormEncodingServerFactory;
+import org.jbpm.form.builder.services.model.FormItemRepresentation;
+import org.jbpm.form.builder.services.model.FormRepresentation;
+import org.jbpm.form.builder.services.model.forms.FormEncodingException;
 import org.jbpm.form.builder.services.tasks.TaskRef;
 
 /**
@@ -43,21 +45,39 @@ public class FormBuilderServiceImpl implements FormBuilderService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public String saveForm(FormRepresentation form) throws FormBuilderException {
+    public String saveFormGWT(Map<String, Object> form) throws FormBuilderException {
+    	FormRepresentation formRep = new FormRepresentation();
         String encode = null;
         try {
-            encode = FormEncodingServerFactory.getEncoder().encode(form);
-            
+        	formRep.setDataMap(form);
+            encode = saveForm(formRep);
         } catch (FormEncodingException ex) {
             Logger.getLogger(FormBuilderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return encode;
     }
 
-    public void saveFormItem(FormItemRepresentation formItem, String formItemName) throws FormBuilderException {
+    @Override
+    public String saveForm(FormRepresentation form) throws FormBuilderException {
+        String encode = null;
+        try {
+            encode = FormEncodingServerFactory.getEncoder().encode(form);
+        } catch (FormEncodingException ex) {
+            Logger.getLogger(FormBuilderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return encode;
+    }
+    
+    @Override
+    public void saveFormItemGWT(Map<String, Object> formItem, String formItemName) throws FormBuilderException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void saveFormItem(FormItemRepresentation formItem, String formItemName) throws FormBuilderException {
+    	throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     public void deleteForm(FormRepresentation form) throws FormBuilderException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -138,15 +158,14 @@ public class FormBuilderServiceImpl implements FormBuilderService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public FormRepresentation loadForm(String json) {
-        FormRepresentation formRep = null;
+    public Map<String, Object> loadForm(String json) {
+        Map<String, Object> dataMap = null;
         try {
-            formRep = FormEncodingServerFactory.getDecoder().decode(json);
-            
+            FormRepresentation formRep = FormEncodingServerFactory.getDecoder().decode(json);
+            dataMap = formRep == null ? null : formRep.getDataMap();
         } catch (FormEncodingException ex) {
             Logger.getLogger(FormBuilderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return formRep;
+        return dataMap;
     }
-    
 }

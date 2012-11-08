@@ -17,12 +17,11 @@ package org.jbpm.form.builder.ng.shared;
 
 import java.util.List;
 import java.util.Map;
+
 import org.jboss.errai.bus.server.annotations.Remote;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.menu.MenuOptionDescription;
 import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.MenuServiceException;
+import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
 
 /**
  *
@@ -35,7 +34,7 @@ public interface FormServiceEntryPoint {
 
     void listMenuItems() throws MenuServiceException;
 
-    List<MenuOptionDescription> listOptions() throws MenuServiceException;
+    List<Map<String, Object>> listOptions() throws MenuServiceException;
 
     public String storeFile(String packageName, String fileName, byte[] content) throws FileException;
 
@@ -47,9 +46,9 @@ public interface FormServiceEntryPoint {
 
     public String getFormDisplay(long taskId);
 
-    public String saveForm(FormRepresentation form);
+    public String saveForm(Map<String, Object> form);
     
-    public FormRepresentation loadForm(String json) ;
+    public Map<String, Object> loadForm(String json) ;
 
-    public void saveFormItem(FormItemRepresentation formItem, String formItemName) ;
+    public void saveFormItem(Map<String, Object> formItem, String formItemName) ;
 }

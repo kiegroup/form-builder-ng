@@ -27,8 +27,7 @@ import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.I18NFormItem;
 import org.jbpm.form.builder.ng.model.client.form.OptionsFormItem;
 import org.jbpm.form.builder.ng.model.common.panels.ListWidget;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.SummaryRepresentation;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 import org.jbpm.form.builder.ng.model.client.form.I18NUtils;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
@@ -110,38 +109,32 @@ public class SummaryFormItem extends OptionsFormItem implements I18NFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        SummaryRepresentation rep = super.getRepresentation(new SummaryRepresentation());
-        rep.setCssClassName(this.cssClassName);
-        rep.setDir(this.dir);
-        rep.setId(this.id);
-        rep.setScrollLeft(this.scrollLeft);
-        rep.setScrollTop(this.scrollTop);
-        rep.setI18n(this.getI18nMap());
-        rep.setItems(this.listWidget.getItems());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("dir", this.dir);
+        dto.setString("id", this.id);
+        dto.setInteger("scrollLeft", this.scrollLeft);
+        dto.setInteger("scrollTop", this.scrollTop);
+        dto.setMapOfStrings("i18n", this.getI18nMap());
+        List<Object> items = new ArrayList<Object>(this.listWidget.getItems());
+        dto.setList("items", items);
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof SummaryRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "SummaryRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("SummaryRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "SummaryRepresentation"));
         }
-        super.populate(rep);
-        SummaryRepresentation srep = (SummaryRepresentation) rep;
-        this.cssClassName = srep.getCssClassName();
-        this.dir = srep.getDir();
-        if (srep.getWidth() != null && !"".equals(srep.getWidth())) {
-            setWidth(srep.getWidth());
-        }
-        if (srep.getHeight() != null && !"".equals(srep.getHeight())) {
-            setHeight(srep.getHeight());
-        }
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.dir = dto.getString("dir");
         
-        this.utils.saveI18nMap(srep.getI18n());
-        this.id = srep.getId();
-        this.scrollLeft = srep.getScrollLeft();
-        this.scrollTop = srep.getScrollTop();
+        this.saveI18nMap(dto.getMapOfStrings("i18n"));
+        this.id = dto.getString("id");
+        this.scrollLeft = dto.getInteger("scrollLeft");
+        this.scrollTop = dto.getInteger("scrollTop");
         
         populate(this.listWidget);
     }

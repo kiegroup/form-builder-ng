@@ -28,9 +28,8 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ConditionalBlockRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
@@ -91,33 +90,32 @@ public class ConditionalBlockFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ConditionalBlockRepresentation rep = super.getRepresentation(new ConditionalBlockRepresentation());
-        rep.setCondition(conditionScript);
-        rep.setIfBlock(ifBlock == null ? null : ifBlock.getRepresentation());
-        rep.setElseBlock(elseBlock == null ? null : elseBlock.getRepresentation());
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("condition", conditionScript);
+        dto.setMap("ifBlock", ifBlock == null ? null : ifBlock.getRepresentation().getParameters());
+        dto.setMap("elseBlock", elseBlock == null ? null : elseBlock.getRepresentation().getParameters());
+        return dto;
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ConditionalBlockRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "ConditionalBlockRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ConditionalBlockRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "ConditionalBlockRepresentation"));
         }
-        super.populate(rep);
-        ConditionalBlockRepresentation srep = (ConditionalBlockRepresentation) rep;
-        this.conditionScript = srep.getCondition();
-        FormItemRepresentation ifRep = srep.getIfBlock();
-        if (ifRep == null) {
+        super.populate(dto);
+        this.conditionScript = dto.getString("condition");
+        FormBuilderDTO ifDto = new FormBuilderDTO(dto.getMap("ifBlock"));
+        if (ifDto.getParameters() == null || ifDto.getParameters().isEmpty()) {
             this.ifBlock = null;
         } else {
-            this.ifBlock = createItem(ifRep);
+            this.ifBlock = createItem(ifDto);
         }
-        FormItemRepresentation elseRep = srep.getElseBlock();
-        if (elseRep == null) {
+        FormBuilderDTO elseDto = new FormBuilderDTO(dto.getMap("elseBlock"));
+        if (elseDto.getParameters() == null || elseDto.getParameters().isEmpty()) {
             this.elseBlock = null;
         } else {
-            this.elseBlock = createItem(elseRep);
+            this.elseBlock = createItem(elseDto);
         }
     }
     

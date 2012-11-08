@@ -20,19 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.HasSourceReference;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.VideoRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.media.client.Video;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class VideoFormItem extends FBFormItem implements HasSourceReference {
@@ -110,26 +109,25 @@ public class VideoFormItem extends FBFormItem implements HasSourceReference {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        VideoRepresentation rep = super.getRepresentation(new VideoRepresentation());
-        rep.setVideoUrl(this.videoUrl);
-        rep.setCssClassName(this.cssClassName);
-        rep.setDataType(this.dataType);
-        rep.setId(this.id);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("videoUrl", this.videoUrl);
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("dataType", this.dataType);
+        dto.setString("id", this.id);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof VideoRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "VideoRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("VideoRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "VideoRepresentation"));
         }
-        super.populate(rep);
-        VideoRepresentation vrep = (VideoRepresentation) rep;
-        this.videoUrl = vrep.getVideoUrl();
-        this.cssClassName = vrep.getCssClassName();
-        this.id = vrep.getId();
-        this.dataType = vrep.getDataType();
+        super.populate(dto);
+        this.videoUrl = dto.getString("videoUrl");
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.dataType = dto.getString("dataType");
 
         populate(this.video);
     }

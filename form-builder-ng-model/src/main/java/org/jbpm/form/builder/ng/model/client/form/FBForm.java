@@ -19,29 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
-import org.jbpm.form.builder.ng.model.client.form.FBCompositeItem;
-import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
+import org.jbpm.form.builder.ng.model.client.menu.FormDataPopupPanel;
 import org.jbpm.form.builder.ng.model.client.validation.FBValidationItem;
 import org.jbpm.form.builder.ng.model.common.handler.ControlKeyHandler;
 import org.jbpm.form.builder.ng.model.common.handler.EventHelper;
 import org.jbpm.form.builder.ng.model.common.handler.RightClickEvent;
 import org.jbpm.form.builder.ng.model.common.handler.RightClickHandler;
 import org.jbpm.form.builder.ng.model.shared.api.FBScript;
-import org.jbpm.form.builder.ng.model.shared.api.FBValidation;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.FormRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.InputData;
-import org.jbpm.form.builder.ng.model.shared.api.OutputData;
-import org.jbpm.form.builder.ng.model.client.bus.ui.FormItemAddedEvent;
-import org.jbpm.form.builder.ng.model.client.bus.ui.FormItemRemovedEvent;
-import org.jbpm.form.builder.ng.model.client.menu.FormDataPopupPanel;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.FormElement;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -53,24 +45,20 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Display class for a {@link FormRepresentation}
  */
 public class FBForm extends FlowPanel implements FBCompositeItem {
 
-    
-    
     private String name;
     private String taskId;
     private String processId;
     private String method;
     private String enctype;
     private String action;
-    private Map<String, InputData> inputs;
-    private Map<String, OutputData> outputs;
+    private Map<String, Object> inputs;
+    private Map<String, Object> outputs;
     private List<FBScript> onLoadScripts = new ArrayList<FBScript>();
     private List<FBScript> onSubmitScripts = new ArrayList<FBScript>();
     
@@ -78,7 +66,6 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
     private List<FBValidationItem> validationItems = new ArrayList<FBValidationItem>();
     
     private final FormDataPopupPanel popup = new FormDataPopupPanel();
-    private final EventBus bus = CommonGlobals.getInstance().getEventBus();
     private boolean saved = false;
     private long lastModified = 0L;
     
@@ -266,19 +253,19 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
         
     }
     
-    public void setInputs(Map<String, InputData> inputs) {
+    public void setInputs(Map<String, Object> inputs) {
         this.inputs = inputs;
     }
     
-    public Map<String, InputData> getInputs() {
+    public Map<String, Object> getInputs() {
         return inputs;
     }
     
-    public void setOutputs(Map<String, OutputData> outputs) {
+    public void setOutputs(Map<String, Object> outputs) {
         this.outputs = outputs;
     }
     
-    public Map<String, OutputData> getOutputs() {
+    public Map<String, Object> getOutputs() {
         return outputs;
     }
     
@@ -287,75 +274,114 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
         this.lastModified = System.currentTimeMillis();
     }
     
-    public FormRepresentation createRepresentation() {
-        FormRepresentation rep = new FormRepresentation();
-        rep.setName(name);
-        rep.setTaskId(taskId);
-        rep.setProcessName(processId);
-        rep.setAction(action);
-        rep.setMethod(method);
-        rep.setEnctype(enctype);
-        for (FBFormItem item : formItems) {
-            rep.addFormItem(item.getRepresentation());
+    public FormBuilderDTO createRepresentation() {
+        FormBuilderDTO dto = new FormBuilderDTO();
+        dto.setString("name", name);
+        dto.setString("taskId", taskId);
+        dto.setString("processName", processId);
+        dto.setString("action", action);
+        dto.setString("method", method);
+        dto.setString("enctype", enctype);
+        List<Object> formItems = new ArrayList<Object>();
+        if (this.formItems != null) {
+	        for (FBFormItem item : this.formItems) {
+	            formItems.add(item.getRepresentation().getParameters());
+	        }
+	        dto.setList("formItems", formItems);
         }
-        for (FBValidationItem item : validationItems) {
-            rep.addFormValidation(item.createValidation());
+        if (validationItems != null) {
+	        List<Object> formValidations = new ArrayList<Object>();
+	        for (FBValidationItem item : validationItems) {
+	        	formValidations.add(item.getDataMap());
+	        }
+	        dto.setList("formValidations", formValidations);
         }
-        rep.setInputs(inputs);
-        rep.setOutputs(outputs);
-        rep.setSaved(saved);
-        rep.setLastModified(lastModified);
-        rep.setOnLoadScripts(this.onLoadScripts);
-        rep.setOnSubmitScripts(this.onSubmitScripts);
-        return rep;
+        dto.setMap("inputs", inputs);
+        dto.setMap("outputs", outputs);
+        dto.setBoolean("saved", saved);
+        dto.setLong("lastModified", lastModified);
+        if (onLoadScripts != null) {
+        	List<Object> loadScripts = new ArrayList<Object>();
+        	for (FBScript script : onLoadScripts) {
+        		loadScripts.add(script.getDataMap());
+        	}
+        	dto.setList("onLoadScripts", loadScripts);
+        }
+        if (onSubmitScripts != null) {
+        	List<Object> submitScripts = new ArrayList<Object>();
+        	for (FBScript script : onSubmitScripts) {
+        		submitScripts.add(script.getDataMap());
+        	}
+        	dto.setList("onSubmitScripts", submitScripts);
+        }
+        return dto;
     }
 
-    public void populate(FormRepresentation rep){
-        setName(rep.getName());
-        setTaskId(rep.getTaskId());
-        setProcessId(rep.getProcessName());
-        setAction(rep.getAction());
-        setMethod(rep.getMethod());
-        setEnctype(rep.getEnctype());
+    public void populate(FormBuilderDTO dto){
+        setName(dto.getString("name"));
+        setTaskId(dto.getString("taskId"));
+        setProcessId(dto.getString("processName"));
+        setAction(dto.getString("action"));
+        setMethod(dto.getString("method"));
+        setEnctype(dto.getString("enctype"));
+        
         for (FBFormItem item : new ArrayList<FBFormItem>(formItems)) {
             remove(item);
             //bus.fireEvent(new FormItemRemovedEvent(item));
         }
-        for (FormItemRepresentation itemRep : rep.getFormItems()) {
-            FBFormItem item = null;
-            try {
-                item = FBFormItem.createItem(itemRep);
-            } catch (FormBuilderException ex) {
-                Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            add(item);
-            ensureMinimumSize(item);
-            //bus.fireEvent(new FormItemAddedEvent(item, this));
+        List<FormBuilderDTO> itemReps = dto.getListOfDtos("formItems");
+        if (itemReps != null) {
+        	for (FormBuilderDTO itemRep : itemReps) {
+        		FBFormItem item = null;
+        		try {
+        			item = FBFormItem.createItem(itemRep);
+        		} catch (FormBuilderException ex) {
+        			Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+        		}
+        		add(item);
+        		ensureMinimumSize(item);
+        	}
         }
-        for (FBValidation validationRep : rep.getFormValidations()) {
-            FBValidationItem validation = null;
-            try {
-                validation = FBValidationItem.createValidation(validationRep);
-            } catch (FormBuilderException ex) {
-                Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            addValidation(validation);
+        List<FormBuilderDTO> validationsRep = dto.getListOfDtos("formValidations");
+		if (validationsRep != null) {
+	        for (FormBuilderDTO subDto : validationsRep) {
+	        	try {
+	        		FBValidationItem validation = FBValidationItem.createValidation(subDto.getParameters());
+	        		addValidation(validation);
+	        	} catch (FormBuilderException ex) {
+	        		Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+	        	}
+	        }
         }
-        setInputs(rep.getInputs());
-        setOutputs(rep.getOutputs());
-        this.saved = rep.isSaved();
-        this.lastModified = rep.getLastModified();
+        setInputs(dto.getMap("inputs"));
+        setOutputs(dto.getMap("outputs"));
+        this.saved = dto.getBoolean("saved");
+        this.lastModified = dto.getLong("lastModified");
         this.onLoadScripts.clear();
-        if (rep.getOnLoadScripts() != null) {
-            for (FBScript onLoad : rep.getOnLoadScripts()) {
-                this.onLoadScripts.add(onLoad);
-            }
+        List<FormBuilderDTO> loadScriptsRep = dto.getListOfDtos("onLoadScripts");
+        if (loadScriptsRep != null) {
+	        for (FormBuilderDTO scriptRep : loadScriptsRep) {
+	        	FBScript script = new FBScript();
+	        	try {
+	        		script.setDataMap(scriptRep.getParameters());
+	        		this.onLoadScripts.add(script);
+	        	} catch (FormBuilderException ex) {
+	        		Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+	        	}
+	        }
         }
         this.onSubmitScripts.clear();
-        if (rep.getOnSubmitScripts() != null) {
-            for (FBScript onSubmit : rep.getOnSubmitScripts()) {
-                this.onSubmitScripts.add(onSubmit);
-            }
+        List<FormBuilderDTO> submitScriptsRep = dto.getListOfDtos("onSubmitScripts");
+        if (submitScriptsRep != null) {
+	        for (FormBuilderDTO scriptRep : submitScriptsRep) {
+	        	FBScript script = new FBScript();
+	        	try{
+	        		script.setDataMap(scriptRep.getParameters());
+	        		this.onSubmitScripts.add(script);
+	        	} catch (FormBuilderException ex) { 
+	        		Logger.getLogger(FBForm.class.getName()).log(Level.SEVERE, null, ex);
+	        	}
+	        }
         }
     }
     
@@ -412,10 +438,12 @@ public class FBForm extends FlowPanel implements FBCompositeItem {
             @Override
             public void onSubmit(SubmitEvent event) {
                 for (FBValidationItem item : getValidationItems()) {
-                    if (!item.createValidation().isValid(null)) {
-                        Window.alert("Validation " + item.getName() + " failed");
-                        event.cancel();
-                    }
+                	if (item.canValidateOnClient()) {
+                		if (!item.isValid(null)) {
+                			Window.alert("Validation " + item.getName() + " failed");
+                			event.cancel();
+                		}
+                	}
                 }
             }
         });

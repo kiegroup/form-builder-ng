@@ -23,8 +23,6 @@ import java.util.Map;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.HiddenRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.client.resources.FormBuilderResources;
 
@@ -36,6 +34,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form item. Represents a hidden field
@@ -97,24 +96,23 @@ public class HiddenFormItem extends FBFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        HiddenRepresentation rep = super.getRepresentation(new HiddenRepresentation());
-        rep.setId(id);
-        rep.setName(name);
-        rep.setValue(value);
-        return rep;
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("id", id);
+        dto.setString("name", name);
+        dto.setString("value", value);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof HiddenRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "HiddenRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("HiddenRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "HiddenRepresentation"));
         }
-        super.populate(rep);
-        HiddenRepresentation hrep = (HiddenRepresentation) rep;
-        this.id = hrep.getId();
-        this.name = hrep.getName();
-        this.value = hrep.getValue();
+        super.populate(dto);
+        this.id = dto.getString("id");
+        this.name = dto.getString("name");
+        this.value = dto.getString("value");
         populate(this.hidden);
     }
 
@@ -136,8 +134,8 @@ public class HiddenFormItem extends FBFormItem {
         if (input != null) {
             hi.setValue(input.toString());
         }
-        if (getOutput() != null && getOutput().getName() != null && !"".equals(getOutput().getName())) {
-            hi.setName(getOutput().getName());
+        if (getOutput() != null && getOutput().get("name") != null && !"".equals(getOutput().get("name"))) {
+            hi.setName(String.valueOf(getOutput().get("name")));
         }
         super.populateActions(hi.getElement());
         return hi;

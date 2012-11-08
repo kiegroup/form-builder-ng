@@ -20,21 +20,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TabbedPanelRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
-import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 
 @Reflectable
 public class TabbedLayoutFormItem extends LayoutFormItem {
@@ -186,10 +185,12 @@ public class TabbedLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public FormItemRepresentation getRepresentation() {
-        TabbedPanelRepresentation trep = super.getRepresentation(new TabbedPanelRepresentation());
-        trep.setCssClassName(this.cssClassName);
-        trep.setId(this.id);
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        dto.setString("cssClassName", this.cssClassName);
+        dto.setString("id", this.id);
+        dto.setString("tabWidth", this.tabWidth);
+        List<Object> itemMaps = new ArrayList<Object>();
         for (int index = 0; index < titles.size(); index++) {
             FlowLayoutFormItem tabContent = null;
             if (index < tabs.size()) {
@@ -198,10 +199,14 @@ public class TabbedLayoutFormItem extends LayoutFormItem {
             if (tabContent == null) {
                 tabContent = new FlowLayoutFormItem(getFormEffects());
             }
+            Map<String, Object> subItemMap = tabContent.getRepresentation().getParameters();
             String tabTitle = titles.get(index).getLabel().getText();
-            trep.putTab(index, tabTitle, tabContent.getRepresentation());
+            subItemMap.put("tabLayoutTitle", tabTitle);
+            subItemMap.put("tabLayoutIndex", String.valueOf(index));
+            itemMaps.add(subItemMap);
         }
-        return trep;
+        dto.setList("tabs", itemMaps);
+        return dto;
     }
     
     private void populate(TabLayoutPanel panel) {
@@ -266,24 +271,23 @@ public class TabbedLayoutFormItem extends LayoutFormItem {
     }
 
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof TabbedPanelRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TabbedPanelRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("TabbedPanelRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TabbedPanelRepresentation"));
         }
-        super.populate(rep);
-        TabbedPanelRepresentation trep = (TabbedPanelRepresentation) rep;
-        this.cssClassName = trep.getCssClassName();
-        this.id = trep.getId();
-        this.tabWidth = trep.getTabWidth();
+        super.populate(dto);
+        this.cssClassName = dto.getString("cssClassName");
+        this.id = dto.getString("id");
+        this.tabWidth = dto.getString("tabWidth");
         this.titles.clear();
-        for (TabbedPanelRepresentation.IndexedString title : trep.getTabTitles()) {
-            TabLabelFormItem label = new TabLabelFormItem(getFormEffects());
-            label.getLabel().setText(title.getString());
+        List<FormBuilderDTO> itemDtos = dto.getListOfDtos("tabs");
+        for (FormBuilderDTO subDto : itemDtos) {
+        	TabLabelFormItem label = new TabLabelFormItem(getFormEffects());
+            label.getLabel().setText(subDto.getString("tabLayoutTitle"));
             if (this.tabWidth != null && !"".equals(tabWidth)) {
                 label.setWidth(this.tabWidth);
             }
-            FormItemRepresentation subRep = trep.getTabContents().get(title);
-            FlowLayoutFormItem subItem = (FlowLayoutFormItem) FBFormItem.createItem(subRep);
+            FlowLayoutFormItem subItem = (FlowLayoutFormItem) FBFormItem.createItem(subDto);
             if (this.cssClassName != null && !"".equals(this.cssClassName)) {
                 subItem.setStyleName(this.cssClassName);
             }

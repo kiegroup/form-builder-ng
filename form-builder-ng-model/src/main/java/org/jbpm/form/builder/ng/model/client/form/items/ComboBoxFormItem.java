@@ -25,15 +25,13 @@ import org.jbpm.form.builder.ng.model.client.FormBuilderException;
 import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.OptionsFormItem;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.ComboBoxRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.OptionRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflectable;
 import org.jbpm.form.builder.ng.model.client.CommonGlobals;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 /**
  * UI form item. Represents a combo box.
@@ -138,40 +136,39 @@ public class ComboBoxFormItem extends OptionsFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        ComboBoxRepresentation rep = super.getRepresentation(new ComboBoxRepresentation());
-        List<OptionRepresentation> elements = new ArrayList<OptionRepresentation>();
+    public FormBuilderDTO getRepresentation() {
+        FormBuilderDTO dto = super.getRepresentation();
+        List<Object> elements = new ArrayList<Object>();
         for (String label : this.items.keySet()) {
-            OptionRepresentation opt = new OptionRepresentation();
-            opt.setLabel(label);
-            opt.setValue(this.items.get(label));
-            elements.add(opt);
+        	Map<String, Object> dataMap = new HashMap<String, Object>();
+        	dataMap.put("label", label);
+        	dataMap.put("value", this.items.get(label));
+            elements.add(dataMap);
         }
-        rep.setElements(elements);
-        rep.setName(this.name);
-        rep.setId(this.id);
-        return rep;
+        dto.setList("elements", elements);
+        dto.setString("name", this.name);
+        dto.setString("id", this.id);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof ComboBoxRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TextFieldRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("ComboBoxRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TextFieldRepresentation"));
         }
-        super.populate(rep);
-        ComboBoxRepresentation crep = (ComboBoxRepresentation) rep;
-        List<OptionRepresentation> options = crep.getElements();
+        super.populate(dto);
+        List<FormBuilderDTO> options = dto.getListOfDtos("elements");
         this.items.clear();
         if (options != null) {
-            for (OptionRepresentation option : options) {
-                this.items.put(option.getLabel(), option.getValue());
-                this.listBox.addItem(option.getLabel(), option.getValue());
+            for (FormBuilderDTO subDto : options) {
+                this.items.put(subDto.getString("label"), subDto.getString("value"));
+                this.listBox.addItem(subDto.getString("label"), subDto.getString("value"));
             }
         }
         this.listBox.clear();
         addItems(this.items, this.listBox);
-        this.name = crep.getName();
-        this.id = crep.getId();
+        this.name = dto.getString("name");
+        this.id = dto.getString("id");
         populate(this.listBox);
     }
 
@@ -217,7 +214,7 @@ public class ComboBoxFormItem extends OptionsFormItem {
         populate(lb);
         addItems(getItems(), lb);
         Object input = getInputValue(data);
-        String inputName = getInput() == null ? null : getInput().getName();
+        String inputName = getInput() == null ? null : String.valueOf(getInput().get("name"));
         if (input != null && inputName != null) {
             if (input.getClass().isArray()) {
                 Object[] arr = (Object[]) input;

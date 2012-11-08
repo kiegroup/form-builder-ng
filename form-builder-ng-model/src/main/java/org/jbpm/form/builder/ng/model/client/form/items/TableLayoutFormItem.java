@@ -27,9 +27,8 @@ import org.jbpm.form.builder.ng.model.client.effect.FBFormEffect;
 import org.jbpm.form.builder.ng.model.client.form.FBFormItem;
 import org.jbpm.form.builder.ng.model.client.form.LayoutFormItem;
 import org.jbpm.form.builder.ng.model.client.form.PhantomPanel;
-import org.jbpm.form.builder.ng.model.shared.api.FormItemRepresentation;
-import org.jbpm.form.builder.ng.model.shared.api.items.TableRepresentation;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
+import org.jbpm.form.builder.ng.model.shared.api.FormBuilderDTO;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
@@ -399,58 +398,54 @@ public class TableLayoutFormItem extends LayoutFormItem {
     }
     
     @Override
-    public FormItemRepresentation getRepresentation() {
-        TableRepresentation rep = super.getRepresentation(new TableRepresentation());
-        rep.setRows(this.rows);
-        rep.setColumns(this.columns);
-        rep.setBorderWidth(this.borderWidth);
-        rep.setCellPadding(this.cellpadding);
-        rep.setCellSpacing(this.cellspacing);
+    public FormBuilderDTO getRepresentation() {
+    	FormBuilderDTO dto = super.getRepresentation();
+        dto.setInteger("rows", this.rows);
+        dto.setInteger("columns", this.columns);
+        dto.setInteger("borderWidth", this.borderWidth);
+        dto.setInteger("cellPadding", this.cellpadding);
+        dto.setInteger("cellSpacing", this.cellspacing);
+        List<Object> elements = new ArrayList<Object>();
         for (int index = 0; index < this.columns * this.rows; index++) {
-            int column = index%this.columns;
-            int row = index/this.columns;
+            int column = index % this.columns;
+            int row = index / this.columns;
             Widget widget = grid.getWidget(row, column);
             if (widget != null && widget instanceof FBFormItem) {
                 FBFormItem item = (FBFormItem) widget;
-                FormItemRepresentation subRep = item.getRepresentation();
-                rep.setElement(row, column, subRep);
+                FormBuilderDTO subDto = item.getRepresentation();
+                subDto.setInteger("tableLayoutRow", row);
+                subDto.setInteger("tableLayoutColumn", column);
+                elements.add(subDto.getParameters());
             }
         }
-        return rep;
+        dto.setList("elements", elements);
+        return dto;
     }
     
     @Override
-    public void populate(FormItemRepresentation rep) throws FormBuilderException {
-        if (!(rep instanceof TableRepresentation)) {
-            throw new FormBuilderException(i18n.RepNotOfType(rep.getClass().getName(), "TableRepresentation"));
+    public void populate(FormBuilderDTO dto) throws FormBuilderException {
+        if (!dto.getClassName().endsWith("TableRepresentation")) {
+            throw new FormBuilderException(i18n.RepNotOfType(dto.getClassName(), "TableRepresentation"));
         }
-        super.populate(rep);
-        TableRepresentation trep = (TableRepresentation) rep;
-        this.rows = trep.getRows();
-        this.columns = trep.getColumns();
-        this.borderWidth = trep.getBorderWidth();
-        this.cellpadding = trep.getCellPadding();
-        this.cellspacing = trep.getCellSpacing();
+        super.populate(dto);
+        this.rows = dto.getInteger("rows");
+        this.columns = dto.getInteger("columns");
+        this.borderWidth = dto.getInteger("borderWidth");
+        this.cellpadding = dto.getInteger("cellPadding");
+        this.cellspacing = dto.getInteger("cellSpacing");
         populate(this.grid);
         this.grid.clear();
         super.getItems().clear();
-        if (trep.getWidth() != null) {
-            setWidth(trep.getWidth());
-        }
-        if (trep.getHeight() != null) {
-            setHeight(trep.getHeight());
-        }
-        if (trep.getElements() != null) {
-            for (int rowindex = 0; rowindex < trep.getElements().size(); rowindex++) {
-                List<FormItemRepresentation> row = trep.getElements().get(rowindex);
-                if(row != null) {
-                    for (int cellindex = 0; cellindex < row.size(); cellindex++) {
-                        FormItemRepresentation cell = row.get(cellindex);
-                        FBFormItem subItem = super.createItem(cell);
-                        this.grid.setWidget(rowindex, cellindex, subItem);
-                        super.add(subItem);
-                    }
-                }
+        List<FormBuilderDTO> elements = dto.getListOfDtos("elements");
+        if (elements != null) {
+            for (FormBuilderDTO elem : elements) {
+            	if (elem != null) {
+            		Integer row = elem.getInteger("row");
+            		Integer col = elem.getInteger("column");
+            		FBFormItem subItem = super.createItem(elem);
+            		this.grid.setWidget(row, col, subItem);
+            		super.add(subItem);
+            	}
             }
         }
     }

@@ -16,18 +16,13 @@
 package org.jbpm.form.builder.ng.model.shared.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.form.builder.ng.model.client.FormBuilderException;
+import org.jbpm.form.builder.ng.model.common.reflect.ReflectionHelper;
 
-import com.gwtent.reflection.client.Reflectable;
-import org.jboss.errai.common.client.api.annotations.Portable;
-import org.jbpm.form.builder.ng.model.shared.form.FormEncodingException;
-
-@Reflectable
-@Portable
-public class FBScript implements Mappable {
+public class FBScript {
 
     private String documentation;
     private String id;
@@ -105,37 +100,34 @@ public class FBScript implements Mappable {
         this.invokeFunction = invokeFunction;
     }
 
-    @Override
     public Map<String, Object> getDataMap() {
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("@className", getClass().getName());
-        data.put("documentation", this.documentation);
-        data.put("id", this.id);
-        data.put("type", this.type);
-        data.put("src", this.src);
-        data.put("content", this.content);
+    	FormBuilderDTO dto = new FormBuilderDTO();
+        dto.setString("@className", getClass().getName());
+        dto.setString("documentation", this.documentation);
+        dto.setString("id", this.id);
+        dto.setString("type", this.type);
+        dto.setString("src", this.src);
+        dto.setString("content", this.content);
         if (getHelpers() != null) {
             List<Object> helpersMap = new ArrayList<Object>();
             for (FBScriptHelper helper : getHelpers()) {
                 helpersMap.add(helper.getDataMap());
             }
-            data.put("helpers", helpersMap);
+            dto.setList("helpers", helpersMap);
         }
-        data.put("invokeFunction", this.invokeFunction);
-        return data;
+        dto.setString("invokeFunction", this.invokeFunction);
+        return dto.getParameters();
     }
 
-    @Override
-    public void setDataMap(Map<String, Object> dataMap)
-            throws FormEncodingException {
-        this.documentation = (String) dataMap.get("documentation");
-        this.id = (String) dataMap.get("id");
-        this.type = (String) dataMap.get("type");
-        this.src = (String) dataMap.get("src");
-        this.content = (String) dataMap.get("content");
-        this.invokeFunction = (String) dataMap.get("invokeFunction");
-        @SuppressWarnings("unchecked")
-        List<Object> helpersMap = (List<Object>) dataMap.get("helpers");
+    public void setDataMap(Map<String, Object> dataMap) throws FormBuilderException {
+    	FormBuilderDTO dto = new FormBuilderDTO(dataMap);
+        this.documentation = dto.getString("documentation");
+        this.id = dto.getString("id");
+        this.type = dto.getString("type");
+        this.src = dto.getString("src");
+        this.content = dto.getString("content");
+        this.invokeFunction = dto.getString("invokeFunction");
+        List<Object> helpersMap = dto.getList("helpers");
         if (helpersMap != null) {
             List<FBScriptHelper> myHelpers = new ArrayList<FBScriptHelper>();
             for (Object obj : helpersMap) {
@@ -143,16 +135,10 @@ public class FBScript implements Mappable {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> helperMap = (Map<String, Object>) obj;
                     String helperClass = (String) helperMap.get("@className");
-//                    FBScriptHelper helper = (FBScriptHelper) ReflectionHelper
-//                            .newInstance(helperClass);
-                    Class<?> clazz = com.google.gwt.user.client.rpc.impl.ReflectionHelper
-                                    .loadClass(helperClass);
-                    FBScriptHelper helper = (FBScriptHelper) com.google.gwt.user.client.rpc.impl.ReflectionHelper
-                                                            .newInstance(clazz);
+                    FBScriptHelper helper = (FBScriptHelper) ReflectionHelper.newInstance(helperClass);
                     helper.setDataMap(helperMap);
                 } catch (Exception e) {
-                    throw new FormEncodingException("Problem creating helper "
-                            + obj, e);
+                    throw new FormBuilderException("Problem creating helper " + obj, e);
                 }
             }
             setHelpers(myHelpers);
