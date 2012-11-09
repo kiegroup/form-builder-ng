@@ -19,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jboss.errai.bus.server.annotations.Remote;
-import org.jbpm.form.builder.services.api.FileException;
-import org.jbpm.form.builder.services.api.MenuServiceException;
-import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
 
 /**
  *
@@ -30,19 +27,19 @@ import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
 @Remote
 public interface FormServiceEntryPoint {
 
-    Map<String, String> getFormBuilderProperties() throws MenuServiceException;
+    Map<String, String> getFormBuilderProperties();
 
-    void listMenuItems() throws MenuServiceException;
+    void listMenuItems();
 
-    List<Map<String, Object>> listOptions() throws MenuServiceException;
+    List<Map<String, Object>> listOptions();
 
-    public String storeFile(String packageName, String fileName, byte[] content) throws FileException;
+    public String storeFile(String packageName, String fileName, byte[] content);
 
-    public void deleteFile(String packageName, String fileName) throws FileException;
+    public void deleteFile(String packageName, String fileName);
 
-    public List<String> loadFilesByType(String packageName, String fileType) throws FileException;
+    public List<String> loadFilesByType(String packageName, String fileType);
 
-    public byte[] loadFile(String packageName, String fileName) throws FileException;
+    public byte[] loadFile(String packageName, String fileName);
 
     public String getFormDisplay(long taskId);
 

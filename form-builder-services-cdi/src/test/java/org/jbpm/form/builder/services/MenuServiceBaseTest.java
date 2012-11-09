@@ -40,6 +40,7 @@ import org.jbpm.form.builder.services.model.forms.FormRepresentationDecoder;
 import org.jbpm.form.builder.services.model.forms.FormRepresentationEncoder;
 import org.jbpm.form.builder.services.model.menu.FormEffectDescription;
 import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
+import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
 import org.jbpm.form.builder.services.model.menu.ValidationDescription;
 import org.junit.Before;
 import org.junit.Test;
@@ -121,7 +122,7 @@ public abstract class MenuServiceBaseTest {
     @Test
     public void testListOptionsOK() throws Exception {
         FSMenuService service = new FSMenuService();
-        List<Map<String, Object>> options = service.listOptionsGWT();
+        List<MenuOptionDescription> options = service.listOptions();
         assertNotNull("options shouldn't be null", options);
         assertFalse("options shouldn't be empty", options.isEmpty());
     }
@@ -177,7 +178,7 @@ public abstract class MenuServiceBaseTest {
     @Test
     public void testListItemsOK() throws Exception {
         FSMenuService service = new FSMenuService();
-        Map<String, List<Map<String, Object>>> items = service.listMenuItemsGWT();
+        Map<String, List<MenuItemDescription>> items = service.listMenuItems();
         assertNotNull("items shouldn't be null", items);
         assertFalse("items shouldn't be empty", items.isEmpty());
         for (String key : items.keySet()) {

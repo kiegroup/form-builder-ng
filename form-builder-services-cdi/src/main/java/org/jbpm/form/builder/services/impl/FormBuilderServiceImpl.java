@@ -69,11 +69,6 @@ public class FormBuilderServiceImpl implements FormBuilderService{
     }
     
     @Override
-    public void saveFormItemGWT(Map<String, Object> formItem, String formItemName) throws FormBuilderServiceException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void saveFormItem(FormItemRepresentation formItem, String formItemName) throws FormBuilderServiceException {
     	throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -158,14 +153,12 @@ public class FormBuilderServiceImpl implements FormBuilderService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Map<String, Object> loadForm(String json) {
-        Map<String, Object> dataMap = null;
-        try {
-            FormRepresentation formRep = FormEncodingServerFactory.getDecoder().decode(json);
-            dataMap = formRep == null ? null : formRep.getDataMap();
+    public FormRepresentation loadForm(String json) {
+    	try {
+    		return FormEncodingServerFactory.getDecoder().decode(json);
         } catch (FormEncodingException ex) {
             Logger.getLogger(FormBuilderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return dataMap;
+        return null;
     }
 }

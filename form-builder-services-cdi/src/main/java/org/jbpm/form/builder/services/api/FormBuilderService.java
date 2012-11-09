@@ -51,8 +51,6 @@ public interface FormBuilderService {
      * @param form The form to be saved
      * @throws FormBuilderException in case of error
      */
-    String saveFormGWT(Map<String, Object> form) throws FormBuilderServiceException;
-    
     String saveForm(FormRepresentation form) throws FormBuilderServiceException;
     
     /**
@@ -61,8 +59,6 @@ public interface FormBuilderService {
      * @param formItemName the UI component name
      * @throws FormBuilderException in case of error
      */
-    void saveFormItemGWT(final Map<String, Object> formItem, String formItemName) throws FormBuilderServiceException;
-    
     void saveFormItem(final FormItemRepresentation formItem, String formItemName) throws FormBuilderServiceException;
     
     /**
@@ -162,7 +158,7 @@ public interface FormBuilderService {
      */
     void loadFormTemplate(FormRepresentation form, String language) throws FormBuilderServiceException;
 
-    public Map<String, Object> loadForm(String json);
+    public FormRepresentation loadForm(String json);
 
     
     

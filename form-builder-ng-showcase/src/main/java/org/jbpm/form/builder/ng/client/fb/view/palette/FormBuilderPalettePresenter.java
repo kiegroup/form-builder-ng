@@ -20,8 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -32,7 +30,6 @@ import org.jbpm.form.builder.ng.model.client.CommonGlobals;
 import org.jbpm.form.builder.ng.model.client.messages.I18NConstants;
 import org.jbpm.form.builder.ng.model.shared.api.RepresentationFactory;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
-import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
@@ -66,30 +63,22 @@ public class FormBuilderPalettePresenter {
         PickupDragController dragController = new PickupDragController(dndController.getBoundaryPanel(), true);
         dragController.registerDropController(new DisposeDropController(view.getPanel()));
         CommonGlobals.getInstance().registerDragController(dragController);
-        try {
-            formServices.call(new RemoteCallback<Map<String, String>>() {
-                @Override
-                public void callback(Map<String, String> properties) {
-                    for (String key : properties.keySet()) {
-                        RepresentationFactory.registerItemClassName(key, properties.get(key));
-                    }
-
+        formServices.call(new RemoteCallback<Map<String, String>>() {
+            @Override
+            public void callback(Map<String, String> properties) {
+                for (String key : properties.keySet()) {
+                    RepresentationFactory.registerItemClassName(key, properties.get(key));
                 }
-            }).getFormBuilderProperties();
-            
-            
-            
-            formServices.call(new RemoteCallback<Void>() {
-                @Override
-                public void callback(Void nothing) {
-                    
-                }
-            }).listMenuItems();
 
-
-        } catch (MenuServiceException ex) {
-            Logger.getLogger(FormBuilderPalettePresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
+        }).getFormBuilderProperties();
+            
+        formServices.call(new RemoteCallback<Void>() {
+            @Override
+            public void callback(Void nothing) {
+                
+            }
+        }).listMenuItems();
     }
     
     

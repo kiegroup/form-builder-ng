@@ -50,16 +50,6 @@ import com.google.gson.reflect.TypeToken;
 public class FSMenuService extends BaseMenuService {
 
     @Override
-    public List<Map<String, Object>> listOptionsGWT() throws MenuServiceException {
-        List<MenuOptionDescription> response = listOptions();
-        List<Map<String, Object>> retval = new ArrayList<Map<String, Object>>();
-        for (MenuOptionDescription option : response) {
-        	retval.add(option.getDataMap());
-        }
-        return retval;
-    }
-    
-    @Override
     public List<MenuOptionDescription> listOptions() throws MenuServiceException {
     	Gson gson = new Gson();
         List<MenuOptionDescription> retval = new ArrayList<MenuOptionDescription>();
@@ -76,20 +66,6 @@ public class FSMenuService extends BaseMenuService {
         return retval;
     }
     
-    @Override
-    public Map<String, List<Map<String, Object>>> listMenuItemsGWT() throws MenuServiceException {
-    	Map<String, List<MenuItemDescription>> response = listMenuItems();
-        Map<String, List<Map<String, Object>>> retval = new HashMap<String, List<Map<String, Object>>>();
-        for (String groupName : response.keySet()) {
-        	List<Map<String, Object>> itemsGroup = new ArrayList<Map<String, Object>>();
-        	for (MenuItemDescription menuItem : response.get(groupName)) {
-        		itemsGroup.add(menuItem.getDataMap());
-        	}
-        	retval.put(groupName, itemsGroup);
-        }
-        return retval;
-    }
-
     @Override
     public Map<String, List<MenuItemDescription>> listMenuItems() throws MenuServiceException {
     	Map<String, List<MenuItemDescription>> retval = null;
@@ -112,18 +88,6 @@ public class FSMenuService extends BaseMenuService {
         return retval;
     }
 
-    
-    @Override
-    public List<Map<String, Object>> listValidationsGWT() throws MenuServiceException {
-        List<Map<String, Object>> retval = null;
-        List<ValidationDescription> response = listValidations();
-        retval = new ArrayList<Map<String, Object>>();
-        for (ValidationDescription valDesc : response) {
-          	retval.add(valDesc.getDataMap());
-        }
-        return retval;
-    }
-    
     @Override
     public List<ValidationDescription> listValidations() throws MenuServiceException {
     	Gson gson = new Gson();
@@ -142,24 +106,10 @@ public class FSMenuService extends BaseMenuService {
     }
     
     @Override
-    public void saveMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException {
-        MenuItemDescription menuItem = new MenuItemDescription();
-        menuItem.setDataMap(item);
-        saveMenuItem(groupName, menuItem);
-    }
-    
-    @Override
     public void saveMenuItem(String groupName, MenuItemDescription item) throws MenuServiceException {
     	Map<String, List<MenuItemDescription>> items = listMenuItems();
         addToMap(groupName, item, items);
         writeMenuItems(items);
-    }
-    
-    @Override
-    public void deleteMenuItemGWT(String groupName, Map<String, Object> item) throws MenuServiceException {
-        MenuItemDescription menuItem = new MenuItemDescription();
-        menuItem.setDataMap(item);
-        deleteMenuItem(groupName, menuItem);
     }
     
     @Override
