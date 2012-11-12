@@ -55,6 +55,20 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>droolsjbpm-knowledge-services</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>ecj</artifactId>
+                    <groupId>org.eclipse.jdt.core.compiler</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>javassist</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-server</artifactId>
         </dependency>

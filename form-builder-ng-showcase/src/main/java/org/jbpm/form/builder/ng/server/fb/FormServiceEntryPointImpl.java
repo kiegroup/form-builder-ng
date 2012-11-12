@@ -26,6 +26,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
+import org.droolsjbpm.services.api.FormProviderService;
 import org.jboss.errai.bus.server.annotations.Service;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
@@ -33,7 +34,6 @@ import org.jbpm.form.builder.services.api.FileException;
 import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.api.FormBuilderServiceException;
-import org.jbpm.form.builder.services.api.FormDisplayService;
 import org.jbpm.form.builder.services.api.MenuService;
 import org.jbpm.form.builder.services.api.MenuServiceException;
 import org.jbpm.form.builder.services.encoders.FormRepresentationDecoderImpl;
@@ -58,7 +58,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     @Inject
     private FileService fileService;
     @Inject
-    private FormDisplayService displayService;
+    private FormProviderService formProviderService;
     
     @Inject 
     private FormBuilderService formService;
@@ -116,9 +116,9 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     	return null;
     }
 
-    public String storeFile(String packageName, String fileName, byte[] content) {
+    public String storeFile(String fileName, byte[] content) {
     	try {
-    		return fileService.storeFile(packageName, fileName, content);
+    		return fileService.storeFile(fileName, content);
     	} catch (FileException ex) {
     		ex.printStackTrace();
             Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,18 +126,18 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     	return null;
     }
 
-    public void deleteFile(String packageName, String fileName) {
+    public void deleteFile(String fileName) {
     	try {
-    		fileService.deleteFile(packageName, fileName);
+    		fileService.deleteFile(fileName);
     	} catch (FileException ex) {
     		ex.printStackTrace();
     		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
     	}
     }
 
-    public List<String> loadFilesByType(String packageName, String fileType) {
+    public List<String> loadFilesByType(String fileType) {
     	try {
-    		return fileService.loadFilesByType(packageName, fileType);
+    		return fileService.loadFilesByType(fileType);
     	} catch (FileException ex) {
     		ex.printStackTrace();
     		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,9 +145,9 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     	return null;
     }
 
-    public byte[] loadFile(String packageName, String fileName) {
+    public byte[] loadFile(String fileName) {
     	try {
-    		return fileService.loadFile(packageName, fileName);
+    		return fileService.loadFile(fileName);
     	} catch (FileException ex) {
     		ex.printStackTrace();
             Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,7 +156,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     }
 
     public String getFormDisplay(long taskId) {
-        return displayService.getFormDisplay(taskId);
+        return formProviderService.getFormDisplay(taskId);
     }
 
   
