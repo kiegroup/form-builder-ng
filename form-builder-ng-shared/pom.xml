@@ -31,7 +31,7 @@
        
         <dependency>
             <groupId>org.jbpm</groupId>
-            <artifactId>form-builder-services-cdi</artifactId>
+            <artifactId>form-services</artifactId>
             <exclusions>
             	<exclusion>
             		<artifactId>ecj</artifactId>

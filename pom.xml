@@ -26,7 +26,6 @@
 
     <modules>
         <module>form-builder-ng-model</module>
-        <module>form-builder-services-cdi</module>
         <module>form-builder-ng-shared</module>
         <module>form-builder-ng-showcase</module>
     </modules>
@@ -50,11 +49,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>droolsjbpm-knowledge-services</artifactId>
-            <version>${jbpm.version}</version>
-            <type>jar</type>
-        </dependency>
+                <groupId>org.jbpm</groupId>
+                <artifactId>droolsjbpm-knowledge-services</artifactId>
+                <version>${jbpm.version}</version>
+                <type>jar</type>
+            </dependency>
             <dependency>
                 <groupId>org.jbpm</groupId>
                 <artifactId>form-builder-ng-shared</artifactId>
@@ -226,8 +225,8 @@
             </dependency>
             <dependency>
                 <groupId>org.jbpm</groupId>
-                <artifactId>form-builder-services-cdi</artifactId>
-                <version>${project.version}</version>
+                <artifactId>form-services</artifactId>
+                <version>${jbpm.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jbpm</groupId>
