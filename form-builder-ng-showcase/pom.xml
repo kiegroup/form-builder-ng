@@ -276,6 +276,7 @@
                     <module>org.jbpm.form.builder.ng.FastCompiledFormBuilderShowcase</module>
                     <logLevel>INFO</logLevel>
                     <compileSourcesArtifacts>
+                        <compileSourcesArtifact>org.kie:kie-commons</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:uberfire-commons</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:security-api</compileSourcesArtifact>
                         <compileSourcesArtifact>org.uberfire:security-client</compileSourcesArtifact>
