@@ -28,7 +28,6 @@
     <url-pattern>/org.jbpm.form.builder.ng.FormBuilderShowcase/FormBuilder.html</url-pattern>
   </servlet-mapping>
 
-
   <servlet>
     <servlet-name>UberFireImageServlet</servlet-name>
     <servlet-class>org.uberfire.server.UberfireImageServlet</servlet-class>
@@ -51,11 +50,6 @@ with the DefaultBlockingServlet. If you change this setting, make a backup of th
 profile in pom.xml to use that. -->
     <servlet-name>ErraiServlet</servlet-name>
     <servlet-class>org.jboss.errai.bus.server.servlet.DefaultBlockingServlet</servlet-class>
-
-    <init-param>
-      <param-name>service-locator</param-name>
-      <param-value>org.jboss.errai.cdi.server.CDIServiceLocator</param-value>
-    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
 

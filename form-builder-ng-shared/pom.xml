@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jbpm</groupId>
         <artifactId>form-builder-ng</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>6.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>form-builder-ng-shared</artifactId>
@@ -32,6 +32,7 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>form-services</artifactId>
+            <version>${project.version}</version>
             <exclusions>
             	<exclusion>
             		<artifactId>ecj</artifactId>
@@ -42,6 +43,7 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>form-builder-ng-model</artifactId>
+            <version>${project.version}</version>
         </dependency>
         
     </dependencies>

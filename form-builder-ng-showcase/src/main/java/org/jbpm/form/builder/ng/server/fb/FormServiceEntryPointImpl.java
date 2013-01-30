@@ -30,8 +30,6 @@ import org.droolsjbpm.services.api.FormProviderService;
 import org.jboss.errai.bus.server.annotations.Service;
 import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.PaletteItemAddedEvent;
-import org.jbpm.form.builder.services.api.FileException;
-import org.jbpm.form.builder.services.api.FileService;
 import org.jbpm.form.builder.services.api.FormBuilderService;
 import org.jbpm.form.builder.services.api.FormBuilderServiceException;
 import org.jbpm.form.builder.services.api.MenuService;
@@ -44,6 +42,8 @@ import org.jbpm.form.builder.services.model.forms.FormEncodingException;
 import org.jbpm.form.builder.services.model.forms.FormEncodingFactory;
 import org.jbpm.form.builder.services.model.menu.MenuItemDescription;
 import org.jbpm.form.builder.services.model.menu.MenuOptionDescription;
+import org.jbpm.shared.services.api.FileException;
+import org.jbpm.shared.services.api.FileService;
 
 /**
  *
@@ -117,31 +117,31 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     }
 
     public String storeFile(String fileName, byte[] content) {
-    	try {
-    		return fileService.storeFile(fileName, content);
-    	} catch (FileException ex) {
-    		ex.printStackTrace();
-            Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
-    	}
+//    	try {
+//    		return fileService.storeFile(fileName, content);
+//    	} catch (FileException ex) {
+//    		ex.printStackTrace();
+//            Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
+//    	}
     	return null;
     }
 
     public void deleteFile(String fileName) {
-    	try {
-    		fileService.deleteFile(fileName);
-    	} catch (FileException ex) {
-    		ex.printStackTrace();
-    		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
-    	}
+//    	try {
+//    		fileService.deleteFile(fileName);
+//    	} catch (FileException ex) {
+//    		ex.printStackTrace();
+//    		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
+//    	}
     }
 
     public List<String> loadFilesByType(String fileType) {
-    	try {
-    		return fileService.loadFilesByType(fileType);
-    	} catch (FileException ex) {
-    		ex.printStackTrace();
-    		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
-    	}
+//    	try {
+//    		return fileService.loadFilesByType(fileType);
+//    	} catch (FileException ex) {
+//    		ex.printStackTrace();
+//    		Logger.getLogger(FormServiceEntryPointImpl.class.getName()).log(Level.SEVERE, null, ex);
+//    	}
     	return null;
     }
 
@@ -156,7 +156,7 @@ public class FormServiceEntryPointImpl implements FormServiceEntryPoint {
     }
 
     public String getFormDisplay(long taskId) {
-        return formProviderService.getFormDisplay(taskId);
+        return formProviderService.getFormDisplayTask(taskId);
     }
 
   

@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.jbpm</groupId>
         <artifactId>form-builder-ng</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>6.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>form-builder-ng-showcase</artifactId>
@@ -35,14 +35,17 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>form-builder-ng-shared</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>form-builder-ng-model</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>form-services</artifactId>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>ecj</artifactId>
@@ -57,6 +60,7 @@
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>droolsjbpm-knowledge-services</artifactId>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>ecj</artifactId>
@@ -72,42 +76,46 @@
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-server</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>security-client</artifactId>
+            <artifactId>uberfire-backend-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>security-server</artifactId>
+            <artifactId>uberfire-security-client</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>backend-server</artifactId>
+      <artifactId>uberfire-security-server</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>uberfire-api</artifactId>
+      <artifactId>uberfire-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>widgets-core-client</artifactId>
+      <artifactId>uberfire-widgets-core-client</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>widgets-core-backend</artifactId>
+      <artifactId>uberfire-widgets-core-backend</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
-            <artifactId>widgets-commons</artifactId>
+      <artifactId>uberfire-widgets-commons</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>widget-markdown</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.uberfire</groupId>
             <artifactId>uberfire-workbench</artifactId>
         </dependency>
+
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
@@ -115,13 +123,29 @@
         </dependency>
 
         <dependency>
-            <groupId>org.uberfire</groupId>
-            <artifactId>vfs-jgit</artifactId>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kie-nio2-jgit</artifactId>
         </dependency>
+
+    <dependency>
+      <groupId>org.kie.commons</groupId>
+      <artifactId>kie-nio2-fs</artifactId>
+    </dependency>
 
         <!-- Errai Core -->
         <dependency>
             <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-bus</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-ioc</artifactId>
+    </dependency>
+
+    <!-- CDI Integration Modules -->
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
             <artifactId>errai-cdi-client</artifactId>
         </dependency>
 
@@ -178,7 +202,7 @@
 
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet</artifactId>
+      <artifactId>weld-servlet-core</artifactId>
         </dependency>
 
         <!-- GWT and GWT Extensions -->
@@ -188,14 +212,17 @@
             <scope>provided</scope>
         </dependency>
         
+    <!-- Rouge imports to avoid OSGi errors -->
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-human-task-workitems</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jbpm</groupId>
             <artifactId>jbpm-human-task-services</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -218,7 +245,6 @@
         <dependency>
             <groupId>org.mvel</groupId>
             <artifactId>mvel2</artifactId>
-            <version>2.1.3.Final</version>
         </dependency>
 
         <!-- Form Builder Related -->
@@ -248,25 +274,22 @@
             <artifactId>gwt-visualization</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <scope>provided</scope>
-        </dependency>
        
-        <!-- Charts -->
-        <dependency>
-            <groupId>com.googlecode.gchart</groupId>
-            <artifactId>gchart</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20090211</version>
-        </dependency>
     </dependencies>
+    
+    
 
     <build>
+      <resources>
+      <!-- Include src/main/java in order not to break the Eclipse GWT plug-in -->
+      <resource>
+        <directory>src/main/java</directory>
+      </resource>
+      <!-- Include module descriptors from src/main/resources in order not to break the Intellij GWT plug-in -->
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
         <plugins>
 
             <plugin>
@@ -276,20 +299,22 @@
                     <module>org.jbpm.form.builder.ng.FastCompiledFormBuilderShowcase</module>
                     <logLevel>INFO</logLevel>
                     <compileSourcesArtifacts>
-                        <compileSourcesArtifact>org.kie:kie-commons</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:uberfire-commons</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:security-api</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:security-client</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:widgets-core</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:widgets-commons</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:vfs-model</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:backend-api</compileSourcesArtifact>
-                        <compileSourcesArtifact>org.uberfire:backend-commons</compileSourcesArtifact>
                         <compileSourcesArtifact>org.jbpm:form-builder-ng-model</compileSourcesArtifact>
                         <compileSourcesArtifact>org.jbpm:form-builder-services-cdi</compileSourcesArtifact>
                         <compileSourcesArtifact>org.jbpm:form-builder-ng-shared</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.kie.commons:kie-commons-data</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.kie.commons:kie-commons-validation</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-widgets-core-client</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-widgets-commons</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-workbench</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-backend-api</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.uberfire:uberfire-backend-commons</compileSourcesArtifact>
+                        <compileSourcesArtifact>org.kie.commons:kie-nio2-model</compileSourcesArtifact>
+                        
+                        
                     </compileSourcesArtifacts>
                     <runTarget>org.jbpm.form.builder.ng.FormBuilderShowcase/FormBuilder.html</runTarget>
                     <extraJvmArgs>-Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
@@ -322,13 +347,9 @@
                     <warName>${project.artifactId}</warName>
                     <outputFileNameMapping>@{artifactId}@-@{baseVersion}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
                     <packagingExcludes>**/javax/**/*.*,**/client/**/*.class</packagingExcludes>
-
-                    <!--<webResources> -->
-                    <!--<resource> -->
-                    <!--&lt;!&ndash; this is relative to the pom.xml directory &ndash;&gt; -->
-                    <!--<directory>src/${webDescriptor}</directory> -->
-                    <!--</resource> -->
-                    <!--</webResources> -->
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
                 </configuration>
             </plugin>
 

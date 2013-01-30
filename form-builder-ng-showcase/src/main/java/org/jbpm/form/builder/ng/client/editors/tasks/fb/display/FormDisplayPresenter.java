@@ -27,6 +27,7 @@ import org.jbpm.form.builder.ng.shared.FormServiceEntryPoint;
 import org.jbpm.form.builder.ng.shared.events.FormRenderedEvent;
 import org.jbpm.task.api.TaskServiceEntryPoint;
 import org.uberfire.client.annotations.OnReveal;
+import org.uberfire.client.annotations.OnStart;
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
@@ -34,7 +35,6 @@ import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.mvp.UberView;
 import org.uberfire.security.Identity;
 import org.uberfire.shared.mvp.PlaceRequest;
-import org.uberfire.shared.mvp.impl.PassThroughPlaceRequest;
 
 @Dependent
 @WorkbenchScreen(identifier = "Form Display")
@@ -52,7 +52,7 @@ public class FormDisplayPresenter {
     private Identity identity;
     @Inject
     private PlaceManager                     placeManager;
-    
+    private PlaceRequest place;
     
     public interface FormBuilderView
             extends
@@ -72,6 +72,13 @@ public class FormDisplayPresenter {
     public void init() {
         publish(this);
         publishGetFormValues();
+    }
+    
+     
+
+    @OnStart
+    public void onStart(final PlaceRequest place) {
+        this.place = place;
     }
 
     public void renderForm(long taskId) {
@@ -163,8 +170,7 @@ public class FormDisplayPresenter {
 
     @OnReveal
     public void onReveal() {
-        final PlaceRequest p = placeManager.getCurrentPlaceRequest();
-        long taskId = Long.parseLong(((PassThroughPlaceRequest)p).getPassThroughParameter("taskId", "0").toString());
+        long taskId = Long.parseLong(place.getParameter("taskId", "0").toString());
         view.setTaskId(taskId);
         renderForm(taskId);
     }
